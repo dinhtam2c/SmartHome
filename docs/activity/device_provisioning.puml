@@ -1,0 +1,44 @@
+@startuml device_provisioning
+start
+
+:User adds device;
+note right
+identifier
+name
+gatewayId?
+end note
+
+:Server creates device record;
+
+:Server sends identifier to gateway;
+:Gateway adds identifier to whitelist;
+
+:Device attemps to connect to gateway;
+
+if (Gateway has identifier?) then (yes)
+  :Device connects to gateway;
+else (no)
+  :Device stays idle / retries later;
+  stop
+endif
+
+:Device sends provision request;
+note right
+key
+metadata
+sensors, actuators
+end note
+
+:Gateway forwards request to server;
+
+if (Key valid?) then (yes)
+  :Server updates metadata;
+  :Server sends deviceId, sensorIds, actuatorIds, credentials;
+  :Gateway forwards to device;
+  :Device stores IDs;
+else (no)
+  :Provision rejected;
+endif
+
+stop
+@enduml

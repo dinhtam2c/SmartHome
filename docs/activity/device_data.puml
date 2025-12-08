@@ -1,0 +1,19 @@
+@startuml "device_data"
+start
+
+:Device read sensors and sends to gateway;
+
+:Gateway check priority;
+if (HIGH?) then (yes)
+    :Send to server immediately;
+else (no)
+    :Store data in a buffer to send later;
+    :Send data to server;
+endif
+
+:Server receives data;
+:Server checks legit gateway and device;
+:Server stores sensor data;
+
+stop
+@enduml

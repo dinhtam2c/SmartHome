@@ -1,0 +1,2 @@
+esp32-gateway-device_dht22_led.code-workspace
+include/gateway/wifi_pass.h

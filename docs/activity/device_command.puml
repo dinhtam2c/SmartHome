@@ -1,0 +1,23 @@
+@startuml "device_command"
+start
+
+:User sends command to server;
+
+:Server checks deviceId, actuatorId;
+
+if (Exist?) then (yes)
+    :Server checks supported commands;
+    if (Supported?) then (yes)
+        :Server sends command to gateway;
+        :Gateway forwards command to device;
+        :Device executes command;
+    else (no)
+        :Return not supported;
+    endif
+else (no)
+    :Return not found error;
+    stop
+endif
+
+stop
+@enduml

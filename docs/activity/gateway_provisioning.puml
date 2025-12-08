@@ -1,0 +1,33 @@
+@startuml "gateway_provisioning"
+start
+
+:Gateway check if it has the id;
+
+:If it doesn't, gateway sends provision request;
+note right
+MAC address, Key, Metadata
+end note
+
+:Server receives request;
+
+if (Key valid?) then (yes)
+    if (MAC exists?) then (yes)
+        :Update metadata;
+        :Retrieve existing gateway_id;
+    else (no)
+        :Generate new gateway_id;
+        :Create new record;
+    endif
+
+    :Server sends Provision Response;
+    note right
+    gateway_id
+    end note
+
+    :Gateway receives id, store it and restart;
+else (no)
+    :Server sends error to gateway;
+endif
+
+stop
+@enduml

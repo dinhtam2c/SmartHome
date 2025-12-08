@@ -1,0 +1,22 @@
+MQTT Topic Design
+
+(1) : Gateway publish
+(2) : Server publish
+
+home/gateways/{gateway_id}
+    devices/
+        whitelist           (2), qos = 1, retain = true?
+        {device_id}/
+            provision
+                request     (1), qos = 1, retain = false
+                response    (2), qos = 0/1, retain = false
+            state           (1), qos = 1, retain = true
+            availability    (1), qos = 1, retain = true
+            command         (2), qos = 2, retain = false
+    provision
+        request         (1), qos = 1, retain = false
+        response        (2), qos = 0/1, retain = false
+    availability        (1), qos = 1, retain = true
+    state               (1), qos = 1, retain = true
+    data                (1), qos = 0/1, retain = false
+    rule                (2), qos = 1, retain = false

@@ -1,0 +1,154 @@
+@startuml "db"
+left to right direction
+!define table(x) class x << (T,#FFAAAA) >>
+
+table(Homes) {
+    * Id: UUID <<PK>>
+    --
+    Name: VARCHAR(50)
+    Description: TEXT?
+    CreatedAt: TIMESTAMP
+    UpdatedAt: TIMESTAMP
+}
+
+table(Locations) {
+    * Id: UUID <<PK>>
+    --
+    HomeId: UUID <<FK>>
+    Name: VARCHAR(50)
+    Description: TEXT?
+    CreatedAt: TIMESTAMP
+    UpdatedAt: TIMESTAMP
+}
+
+table(Gateways) {
+    * Id: UUID <<PK>>
+    --
+    HomeId: UUID? <<FK>>
+    Name: VARCHAR(50)?
+    Manufacturer: VARCHAR(50)?
+    Model: VARCHAR(50)?
+    FirmwareVersion: VARCHAR(10)
+    MacAddress: CHAR(17)
+    IsOnline: BOOLEAN
+    LastSeenAt: TIMESTAMP
+    Uptime: INT
+    DeviceCount: INT
+    CreatedAt: TIMESTAMP
+    UpdatedAt: TIMESTAMP
+
+    .. Constraints ..
+    UNIQUE(MacAddress)
+}
+
+table(Devices) {
+    * Id: UUID <<PK>>
+    --
+    GatewayId: UUID <<FK>>
+    LocationId: UUID? <<FK>>
+    Identifier: VARCHAR(100)
+    Name: VARCHAR(50)?
+    Manufacturer: VARCHAR(50)?
+    Model: VARCHAR(50)?
+    FirmwareVersion: VARCHAR(10)
+    IsOnline: BOOLEAN
+    LastSeenAt: TIMESTAMP
+    Uptime: INT
+    CreatedAt: TIMESTAMP
+    UpdatedAt: TIMESTAMP
+
+    .. Constraints ..
+    UNIQUE(Identifier)
+}
+
+table(Sensors) {
+    * Id: UUID <<PK>>
+    --
+    DeviceId: UUID <<FK>>
+    Name: VARCHAR(50)
+    Type: VARCHAR(50)
+    Unit: VARCHAR(10)
+    Min: DECIMAL(6, 1)
+    Max: DECIMAL(6, 1)
+    Accuracy: DECIMAL(3, 1)
+
+    .. Constraints ..
+    CHECK(Min <= Max)
+    CHECK(Accuracy >= 0)
+    CHECK(Name <> '')
+}
+
+table(Actuators) {
+    * Id: UUID <<PK>>
+    --
+    DeviceId: UUID <<FK>>
+    Name: VARCHAR(50)
+    Type: VARCHAR(50)
+    SupportedStates: JSON
+    SupportedCommands: JSON
+    States: JSON
+    
+    .. Constraints ..
+    CHECK(JSON_VALID(SupportedStates))
+    CHECK(JSON_VALID(SupportedCommands))
+    CHECK(JSON_VALID(States))
+}
+
+table(SensorData) {
+    * Id: UUID <<PK>>
+    --
+    SensorId: UUID <<FK>>
+    Location: VARCHAR(50)
+    Type: VARCHAR(50)
+    Unit: VARCHAR(10)
+    Value: DECIMAL(6, 1)
+    Timestamp: TIMESTAMP
+}
+
+table(Rules) {
+    * Id: UUID <<PK>>
+    --
+    Name: VARCHAR(50)
+    Description: TEXT?
+    Conditions: JSON
+    Logic: VARCHAR(100)
+    Actions: JSON
+    IsEnabled: BOOLEAN
+    CreatedAt: TIMESTAMP
+    UpdatedAt: TIMESTAMP
+}
+
+table(Users) {
+    * Id: UUID <<PK>>
+    --
+    Name: VARCHAR(50)
+    Username: VARCHAR(50)
+    PasswordHash: VARCHAR(200)
+    Role: VARCHAR(20)
+    Email: VARCHAR(100)?
+    Phone: VARCHAR(20)?
+    IsLocked: BOOLEAN
+    CreatedAt: TIMESTAMP
+    UpdatedAt: TIMESTAMP
+}
+
+table(ActionLogs) {
+    * Id: UUID <<PK>>
+    --
+    UserId: UUID <<FK>>
+    Action: VARCHAR(100)
+    Timestamp: TIMESTAMP
+}
+
+Homes ||--|{ Gateways : "has"
+Homes ||--o{ Locations : "has"
+Locations ||--o{ Devices : "has"
+Gateways ||--|{ Devices : "manage"
+Devices ||--o{ Sensors : "has"
+Devices ||--o{ Actuators : "has"
+Sensors ||--o{ SensorData : "record"
+Rules ||--|{ Gateways : "control"
+Rules ||--|{ Devices : "control"
+Users ||--o| ActionLogs : "has"
+
+@enduml
