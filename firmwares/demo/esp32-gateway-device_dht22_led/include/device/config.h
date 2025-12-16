@@ -10,4 +10,5 @@
 #define MODEL               ""
 #define FIRMWARE_VERSION    "1.0"
 
-#define SENSOR_INTERVAL     10
+#define DATA_INTERVAL       30
+#define STATE_INTERVAL      60

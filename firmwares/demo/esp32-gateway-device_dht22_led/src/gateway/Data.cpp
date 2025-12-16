@@ -8,7 +8,6 @@ void Gateway::handleDeviceData(const std::string& deviceId, const std::string& m
     // TODO: priority
 
     JsonDocument doc;
-    doc["gatewayId"] = _gatewayId;
     doc["timestamp"] = time(NULL);
     JsonArray dataArray = doc["data"].to<JsonArray>();
     dataArray.add(dataJson);

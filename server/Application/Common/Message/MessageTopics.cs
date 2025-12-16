@@ -4,6 +4,8 @@ public static class MessageTopics
 {
     public const string GatewayProvision = "home/gateways/+/provision/request";
     public const string DeviceProvision = "home/gateways/+/devices/+/provision/request";
+    public const string GatewayAvailability = "home/gateways/+/availability";
+    public const string DeviceAvailability = "home/gateways/+/devices/+/availability";
     public const string DeviceData = "home/gateways/+/data";
 
     public static string GatewayProvisionRequest(string gatewayId)

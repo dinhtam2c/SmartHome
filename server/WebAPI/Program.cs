@@ -33,6 +33,10 @@ builder.Services.AddSingleton<IMessageHandler, GatewayProvisionHandler>();
 builder.Services.AddSingleton<GatewayProvisionHandler>();
 builder.Services.AddSingleton<IMessageHandler, DeviceProvisionHandler>();
 builder.Services.AddSingleton<DeviceProvisionHandler>();
+builder.Services.AddSingleton<IMessageHandler, GatewayAvailabilityHandler>();
+builder.Services.AddSingleton<GatewayAvailabilityHandler>();
+builder.Services.AddSingleton<IMessageHandler, DeviceAvailabilityHandler>();
+builder.Services.AddSingleton<DeviceAvailabilityHandler>();
 builder.Services.AddSingleton<IMessageHandler, GatewayDataHandler>();
 builder.Services.AddSingleton<GatewayDataHandler>();
 

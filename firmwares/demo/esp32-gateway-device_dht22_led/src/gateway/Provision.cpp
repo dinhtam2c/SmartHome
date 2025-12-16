@@ -5,6 +5,7 @@ void Gateway::requestProvision() {
     std::string responseTopic = _topicPrefix + "response";
 
     _mqtt.subscribe(responseTopic, 1);
+    _mqtt.onMessage([this](const std::string& topic, const std::string& payload) { handleMqttMessage(topic, payload); });
     _mqtt.begin(&_wifi, MQTT_HOST, MQTT_PORT);
     _mqtt.waitForConnection(0);
 
@@ -51,16 +52,8 @@ void Gateway::handleProvisionResponse(const std::string& payload) {
 }
 
 void Gateway::handleDeviceProvision(const std::string& identifier, const std::string& message) {
-    JsonDocument request;
-    deserializeJson(request, message);
-    request["gatewayId"] = _gatewayId;
-
-    std::string payload;
-    serializeJson(request, payload);
-
     std::string topic = _topicPrefix + "/devices/" + identifier + "/provision/request";
-
-    _mqtt.publish(topic, payload, 1, false);
+    _mqtt.publish(topic, message, 1, false);
 }
 
 void Gateway::handleDeviceProvisionResponse(const std::string& identifier, const std::string& payload) {

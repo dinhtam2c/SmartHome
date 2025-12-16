@@ -21,7 +21,22 @@
 }
 ```
 
-## 3. Device provision request (device to gateway)
+## 3. Gateway availability (gateway to server)
+```json
+{
+    "state": "online"
+}
+```
+
+## 4. Gateway state
+```json
+{
+    "uptime": "120",    // seconds
+    "deviceCount": 1    // connected
+}
+```
+
+## 5. Device provision request (device to gateway to server)
 ```json
 {
     "key": "123456",
@@ -69,15 +84,7 @@
 }
 ```
 
-## 4. Device provision request (gateway to server)
-```json
-{
-    "gatewayId": "GW1",
-    // ... (see 3.)
-}
-```
-
-## 5. Device provision response (server to gateway)
+## 6. Device provision response (server to gateway to device)
 ```json
 {
     "deviceIdentifier": "sn",
@@ -88,16 +95,14 @@
 }
 ```
 
-## 6. Device offline (gateway to server)
+## 7. Device availability (gateway to server)
 ```json
 {
-    "gatewayId": "GW1",
-    "timestamp": 1762621085456,
-    "deviceId": "D1"
+    "state": "offline"
 }
 ```
 
-## 7. Device data (device to gateway)
+## 8. Device data (device to gateway)
 ```json
 {
     "deviceId": "D1",
@@ -134,35 +139,34 @@
 }
 ```
 
-## 8. Gateway data (gateway to server)
+## 9. Gateway data (gateway to server)
 ```json
 {
-    "gatewayId": "GW1",
     "timestamp": 1762621086,
     "data": [
         // See Device data
     ]
-
-    // "status": {
-    //     "connected_devices": 1,
-    //     "battery": 100,
-    //     "uptime": 2468,
-    //     "error": null
-    // },
 }
 ```
 
-## 9. Device command (server to gateway to device)
+## 10. Device state (device to gateway to server)
+```json
+{
+
+}
+```
+
+## 11. Device command (server to gateway to device)
 ```json
 {
     "deviceId": "D1",
     "actuatorId": "A1",
     "command": "TurnOn",
-    "parameters": null,
+    "parameters": null
 }
 ```
 
-## 10. New rule (server to gateway)
+## 12. New rule (server to gateway)
 ```json
 {
     "gatewayId": "GW1",

@@ -6,7 +6,7 @@
 #include "gateway/config.h"
 
 void MqttManager::begin(INetworkManager* networkManager, const std::string& host, uint16_t port,
-    const std::string& clientId, bool cleanSession) {
+    const std::string& clientId, bool cleanSession, Will* will) {
     _networkManager = networkManager;
     _host = host;
     _port = port;
@@ -24,6 +24,11 @@ void MqttManager::begin(INetworkManager* networkManager, const std::string& host
     }
     _client.setServer(_host.c_str(), _port);
     _client.setCleanSession(_cleanSession);
+
+    if (will) {
+        _will = *will;
+        _client.setWill(_will.topic.c_str(), _will.qos, _will.retain, _will.payload.c_str(), _will.payload.length());
+    }
 
     connect();  // async
     xTaskCreate(loopTask, "MqttLoop", 2048, this, 1, NULL);
@@ -81,7 +86,7 @@ void MqttManager::handleConnect(bool sessionPresent) {
     _retryInterval = _initialInterval;
     trying = false;
     if (_onConnected)
-        _onConnected(sessionPresent);
+        _onConnected();
 }
 
 void MqttManager::handleDisconnect(AsyncMqttClientDisconnectReason reason) {
@@ -102,7 +107,7 @@ bool MqttManager::isConnected() {
     return _client.connected();
 }
 
-void MqttManager::onConnected(std::function<void(bool)> callback) {
+void MqttManager::onConnected(std::function<void()> callback) {
     _onConnected = callback;
 }
 

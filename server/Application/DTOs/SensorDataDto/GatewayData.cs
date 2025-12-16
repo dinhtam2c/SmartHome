@@ -3,7 +3,6 @@
 namespace Application.DTOs.SensorDataDto;
 
 public record GatewayData(
-    Guid GatewayId,
     long Timestamp,
     IEnumerable<DevicaData> Data
 );

@@ -10,7 +10,6 @@ public record DeviceProvisionResponse(
 );
 
 public record DeviceProvisionRequest(
-    Guid GatewayId,
     string Key,
     string Identifier,
     string Name,

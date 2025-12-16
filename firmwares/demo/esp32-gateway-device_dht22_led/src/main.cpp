@@ -16,7 +16,7 @@ void setup() {
 
     device.loadPreferences();
     gateway.begin();
-    device.begin(SENSOR_INTERVAL);
+    device.begin();
 }
 
 void loop() {

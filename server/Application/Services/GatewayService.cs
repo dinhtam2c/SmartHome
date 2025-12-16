@@ -18,6 +18,8 @@ public interface IGatewayService
     Task EnsureGatewayExistOrReprovision(Guid gatewayId);
 
     Task GatewayProvision(GatewayProvisionRequest request);
+
+    Task HandleGatewayAvailability(Guid gatewayId, GatewayAvailability availability);
 }
 
 public class GatewayService : IGatewayService
@@ -99,5 +101,39 @@ public class GatewayService : IGatewayService
         var response = new GatewayProvisionResponse(gateway.Id);
 
         await _messagePublisher.PublishMessage(topic, response, new(1, false));
+    }
+
+    public async Task HandleGatewayAvailability(Guid gatewayId, GatewayAvailability availability)
+    {
+        var gateway = await _gatewayRepository.GetByIdWithDevices(gatewayId);   // TODO: optimize
+        if (gateway is null)
+        {
+            await SendReprovision(gatewayId);
+            throw new GatewayNotFoundException(gatewayId);
+        }
+
+        if (availability.State == "Online")
+        {
+            gateway.IsOnline = true;
+            gateway.LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        }
+        else if (availability.State == "Offline")
+        {
+            gateway.IsOnline = false;
+            gateway.UpTime = 0;
+            gateway.DeviceCount = 0;
+            foreach (var device in gateway.Devices)
+            {
+                device.IsOnline = false;
+            }
+        }
+        else
+        {
+            // TODO: custom exception
+            throw new Exception($"Unknown state {availability.State}");
+        }
+
+        await _unitOfWork.Commit();
+        _logger.LogInformation("Gateway {GatewayId} {Status}", gatewayId, availability.State);
     }
 }

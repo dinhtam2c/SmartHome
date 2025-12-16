@@ -67,7 +67,7 @@ public class MessageRouter
         {
             using var scope = _scopeFactory.CreateScope();
             var handler = (IMessageHandler)scope.ServiceProvider.GetRequiredService(handlerInfo.HandlerType);
-            await handler.HandleMessage(topic, message);
+            await handler.HandleMessage(topic.Split('/'), message);
         }
         catch (Exception ex)
         {

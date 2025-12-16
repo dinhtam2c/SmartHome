@@ -4,7 +4,6 @@ using Application.DTOs.ProvisionDto;
 using Application.Exceptions;
 using Application.Interfaces;
 using Application.Interfaces.Repositories;
-using Core.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Services;
@@ -21,7 +20,9 @@ public interface IDeviceService
 
     Task SendReprovision(Guid gatewayId, Guid deviceId);
 
-    Task DeviceProvision(DeviceProvisionRequest request);
+    Task DeviceProvision(Guid gatewayId, DeviceProvisionRequest request);
+
+    Task HandleDeviceAvailability(Guid gatewayId, Guid deviceId, DeviceAvailability availability);
 
     Task SendDeviceCommand(Guid deviceId, DeviceCommandRequest deviceCommandRequest);
 }
@@ -32,16 +33,18 @@ public class DeviceService : IDeviceService
 
     private readonly IUnitOfWork _unitOfWork;
     private readonly IDeviceRepository _deviceRepository;
+    private readonly IGatewayRepository _gatewayRepository;
 
     private readonly IGatewayService _gatewayService;
 
     private readonly IMessagePublisher _messagePublisher;
 
     public DeviceService(ILogger<DeviceService> logger, IUnitOfWork unitOfWork, IDeviceRepository deviceRepository,
-        IGatewayService gatewayService, IMessagePublisher messagePublisher)
+        IGatewayRepository gatewayRepository, IGatewayService gatewayService, IMessagePublisher messagePublisher)
     {
         _logger = logger;
         _deviceRepository = deviceRepository;
+        _gatewayRepository = gatewayRepository;
         _gatewayService = gatewayService;
         _unitOfWork = unitOfWork;
         _messagePublisher = messagePublisher;
@@ -101,9 +104,8 @@ public class DeviceService : IDeviceService
         throw new DeviceNotFoundException(deviceId);
     }
 
-    public async Task DeviceProvision(DeviceProvisionRequest request)
+    public async Task DeviceProvision(Guid gatewayId, DeviceProvisionRequest request)
     {
-        var gatewayId = request.GatewayId;
         await _gatewayService.EnsureGatewayExistOrReprovision(gatewayId);
         var device = await _deviceRepository.GetByIdentifierWithCapabilities(request.Identifier);
 
@@ -143,6 +145,46 @@ public class DeviceService : IDeviceService
         var response = new DeviceProvisionResponse(device.Identifier, device.Id, sensorIds, actuatorIds);
 
         await _messagePublisher.PublishMessage(topic, response, new(1, false));
+    }
+
+    public async Task HandleDeviceAvailability(Guid gatewayId, Guid deviceId, DeviceAvailability availability)
+    {
+        var gateway = await _gatewayRepository.GetById(gatewayId);
+        if (gateway is null)
+        {
+            await _gatewayService.SendReprovision(gatewayId);
+            throw new GatewayNotFoundException(gatewayId);
+        }
+
+        var device = await _deviceRepository.GetById(deviceId);
+        if (device is null)
+        {
+            await SendReprovision(gatewayId, deviceId);
+            throw new DeviceNotFoundException(deviceId);
+        }
+
+        if (!gateway.IsOnline)
+            return;
+
+
+        if (availability.State == "Online")
+        {
+            device.IsOnline = true;
+            device.LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        }
+        else if (availability.State == "Offline")
+        {
+            device.IsOnline = false;
+            device.UpTime = 0;
+        }
+        else
+        {
+            // TODO: custom exception
+            throw new Exception($"Device {deviceId} sent unknown state: {availability.State}");
+        }
+
+        await _unitOfWork.Commit();
+        _logger.LogInformation("Device {DeviceId} {Status}", deviceId, availability.State);
     }
 
     public async Task SendDeviceCommand(Guid deviceId, DeviceCommandRequest deviceCommandRequest)

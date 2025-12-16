@@ -41,7 +41,7 @@ struct ActuatorInfo {
 class Device {
 public:
     Device(IGatewayTransport* transport);
-    void begin(int interval);
+    void begin();
     void loop();
 
     void loadPreferences();
@@ -55,7 +55,8 @@ private:
     std::string _identifier;
     std::string _deviceId;
     long _lastMsgTime;
-    int _interval;
+    int _dataInterval;
+    int _stateInterval;
 
     IGatewayTransport* _transport;
 

@@ -6,5 +6,5 @@ public interface IMessageHandler
 
     Type MessageType { get; }
 
-    Task HandleMessage(string topic, object message);
+    Task HandleMessage(string[] topicTokens, object message);
 }

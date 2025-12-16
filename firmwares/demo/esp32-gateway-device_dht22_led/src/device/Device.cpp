@@ -53,8 +53,8 @@ void Device::initCapabilities() {
     _led.commands.push_back("TurnOff");
 }
 
-void Device::begin(int interval) {
-    _interval = interval;
+void Device::begin() {
+    _dataInterval = DATA_INTERVAL;
 
     initCapabilities();
 
@@ -66,7 +66,6 @@ void Device::begin(int interval) {
     }
 
     pinMode(LED_PIN, OUTPUT);
-    digitalWrite(LED_PIN, HIGH);
 
     dht22.begin();
 }
@@ -74,7 +73,7 @@ void Device::begin(int interval) {
 void Device::loop() {
     time_t now = time(NULL);
 
-    if (now - _lastMsgTime < _interval)
+    if (now - _lastMsgTime < _dataInterval)
         return;
 
     _lastMsgTime = now;

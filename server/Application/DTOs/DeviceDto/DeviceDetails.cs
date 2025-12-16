@@ -41,7 +41,7 @@ public record DeviceDetails(
             CreatedAt: device.CreatedAt,
             UpdatedAt: device.UpdatedAt,
             Sensors: device.Sensors?.Select(SensorDetail.FromSensor),
-            Actuators: device.Actuators.Select(ActuatorDetail.FromActuator)
+            Actuators: device.Actuators.Select(a => ActuatorDetail.FromActuator(a, device.IsOnline))
         );
     }
 }
@@ -78,13 +78,13 @@ public record ActuatorDetail(
     IEnumerable<ActuatorCommand>? SupportedCommands
 )
 {
-    public static ActuatorDetail FromActuator(Actuator actuator)
+    public static ActuatorDetail FromActuator(Actuator actuator, bool isOnline)
     {
         return new(
             Id: actuator.Id,
             Name: actuator.Name,
             Type: actuator.Type,
-            States: actuator.States,
+            States: isOnline ? actuator.States : null,
             SupportedCommands: actuator.SupportedCommands
         );
     }

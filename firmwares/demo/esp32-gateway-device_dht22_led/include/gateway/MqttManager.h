@@ -12,17 +12,24 @@ struct MqttTopic {
     int qos;
 };
 
+struct Will {
+    std::string topic;
+    std::string payload;
+    int qos;
+    bool retain;
+};
+
 class MqttManager {
 public:
     void begin(INetworkManager* networkManager, const std::string& host, uint16_t port,
-        const std::string& clientId = "", bool cleanSession = true);
+        const std::string& clientId = "", bool cleanSession = true, Will* will = nullptr);
 
     void subscribe(const std::string& topic, uint8_t qos = 1);
     void publish(const std::string& topic, const std::string& payload, uint8_t qos = 1, bool retain = false);
 
     bool isConnected();
 
-    void onConnected(std::function<void(bool)> callback);
+    void onConnected(std::function<void()> callback);
     void onDisconnected(std::function<void(AsyncMqttClientDisconnectReason)> callback);
     void onMessage(std::function<void(const std::string&, const std::string&)> callback);
 
@@ -36,6 +43,7 @@ private:
     uint16_t _port;
     std::string _clientId;
     bool _cleanSession;
+    Will _will;
 
     std::vector<MqttTopic> _topics;
 
@@ -46,7 +54,7 @@ private:
     unsigned long _maxInterval = 30000;
     unsigned long _intervalStep = 5000;
 
-    std::function<void(bool)> _onConnected;
+    std::function<void()> _onConnected;
     std::function<void(AsyncMqttClientDisconnectReason)> _onDisconnect;
     std::function<void(const std::string&, const std::string&)> _onMessage;
 

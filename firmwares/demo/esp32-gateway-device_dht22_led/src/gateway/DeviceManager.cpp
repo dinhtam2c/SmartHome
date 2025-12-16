@@ -72,6 +72,11 @@ void DeviceManager::handleDiscovery(IDeviceTransport* transporter, const DeviceI
     if (transporter->connectDevice(info.identifier)) {
         Serial.printf("Device connected: %s\r\n", info.identifier.c_str());
         _connectedDevices.push_back(info);
+
+        /* Notify server */
+        if (info.deviceId.length() > 0) {
+            _gateway->handleDeviceConnect(info.deviceId);
+        }
     }
 }
 

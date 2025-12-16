@@ -8,7 +8,7 @@ namespace Application.Services;
 
 public interface ISensorDataService
 {
-    Task StoreSensorData(GatewayData gatewayData);
+    Task StoreSensorData(Guid gatewayId, GatewayData gatewayData);
 
     Task<IEnumerable<SensorDataResponse>> GetAllSensorData();
 }
@@ -38,12 +38,12 @@ public class SensorDataService : ISensorDataService
         _deviceService = deviceService;
     }
 
-    public async Task StoreSensorData(GatewayData gatewayData)
+    public async Task StoreSensorData(Guid gatewayId, GatewayData gatewayData)
     {
-        await _gatewayService.EnsureGatewayExistOrReprovision(gatewayData.GatewayId);
+        await _gatewayService.EnsureGatewayExistOrReprovision(gatewayId);
 
         _logger.LogInformation("Storing sensor data for Gateway {GatewayId} with {DataCount} data points",
-            gatewayData.GatewayId, gatewayData.Data.Count());
+            gatewayId, gatewayData.Data.Count());
 
         var deviceIds = gatewayData.Data.Select(d => d.DeviceId);
         var devices = await _deviceRepository.GetByIdsWithLocationAndSensors(deviceIds);
@@ -55,7 +55,7 @@ public class SensorDataService : ISensorDataService
         {
             if (!deviceMap.TryGetValue(deviceData.DeviceId, out var device))
             {
-                _ = _deviceService.SendReprovision(gatewayData.GatewayId, deviceData.DeviceId);
+                _ = _deviceService.SendReprovision(gatewayId, deviceData.DeviceId);
                 continue;
             }
 

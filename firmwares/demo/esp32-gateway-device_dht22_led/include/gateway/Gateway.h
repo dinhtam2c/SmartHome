@@ -20,6 +20,7 @@ public:
     void begin();
     void loop();
 
+    void handleDeviceConnect(const std::string& deviceId);
     void handleDeviceMessage(const TransportMessage& message);
 
 private:
@@ -45,6 +46,7 @@ private:
 
     void handleDeviceData(const std::string& deviceId, const std::string& message);
 
+    void handleMqttConnect();
     void handleMqttMessage(const std::string& topic, const std::string& payload);
 
     void setupSubscriptions();

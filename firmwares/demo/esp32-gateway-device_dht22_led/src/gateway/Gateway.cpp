@@ -19,8 +19,6 @@ void Gateway::begin() {
     _wifi.waitForConnection();
     syncTimeAndWait();
 
-    _mqtt.onMessage([this](const std::string& topic, const std::string& payload) { handleMqttMessage(topic, payload); });
-
     if (_gatewayId.length() == 0) {
         requestProvision();
         return;
@@ -28,7 +26,13 @@ void Gateway::begin() {
 
     _topicPrefix = "home/gateways/" + _gatewayId;
     setupSubscriptions();
-    _mqtt.begin(&_wifi, MQTT_HOST, MQTT_PORT, _gatewayId, false);
+
+    std::string availTopic = _topicPrefix + "/availability";
+    Will will = { availTopic, "{\"state\":\"Offline\"}", 1, true };
+
+    _mqtt.onConnected([this]() { handleMqttConnect(); });
+    _mqtt.onMessage([this](const std::string& topic, const std::string& payload) { handleMqttMessage(topic, payload); });
+    _mqtt.begin(&_wifi, MQTT_HOST, MQTT_PORT, _gatewayId, false, &will);
     _mqtt.waitForConnection(0);
 
     _deviceManager.begin(this);
@@ -42,6 +46,11 @@ void Gateway::setupSubscriptions() {
     _mqtt.subscribe(_topicPrefix + "/devices/+/provision/response", 1);
     _mqtt.subscribe(_topicPrefix + "/devices/+/command", 2);
     _mqtt.subscribe(_topicPrefix + "/rule", 1);
+}
+
+void Gateway::handleMqttConnect() {
+    std::string availTopic = _topicPrefix + "/availability";
+    _mqtt.publish(availTopic, "{\"state\":\"Online\"}", 1, true);
 }
 
 void Gateway::handleMqttMessage(const std::string& topic, const std::string& payload) {
@@ -102,4 +111,11 @@ void Gateway::handleDeviceMessage(const TransportMessage& message) {
         Serial.printf("messageType: %d\r\n", messageType);
         break;
     }
+}
+
+void Gateway::handleDeviceConnect(const std::string& deviceId) {
+    // Send online message
+    // TODO: send periodically + timeout on server
+    std::string topic = _topicPrefix + "/devices/" + deviceId + "/availability";
+    _mqtt.publish(topic, "{\"state\":\"Online\"}", 1, true);
 }
