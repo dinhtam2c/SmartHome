@@ -18,7 +18,7 @@ public interface IHomeService
 
     Task DeleteHome(Guid homeId);
 
-    Task AssignGatewayToHome(Guid homeId, GatewayAssignRequest request);
+    Task AssignGatewayToHome(Guid homeId, GatewayHomeAssignRequest request);
 }
 
 public class HomeService : IHomeService
@@ -72,7 +72,7 @@ public class HomeService : IHomeService
         await _unitOfWork.Commit();
     }
 
-    public async Task AssignGatewayToHome(Guid homeId, GatewayAssignRequest request)
+    public async Task AssignGatewayToHome(Guid homeId, GatewayHomeAssignRequest request)
     {
         var home = await _homeRepository.GetById(homeId) ?? throw new HomeNotFoundException(homeId);
 

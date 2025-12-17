@@ -18,7 +18,7 @@ public interface ILocationService
 
     Task DeleteLocation(Guid locationId);
 
-    Task AssignDeviceToLocation(Guid locationId, DeviceAssignRequest request);
+    Task AssignDeviceToLocation(Guid locationId, DeviceLocationAssignRequest request);
 }
 
 public class LocationService : ILocationService
@@ -81,7 +81,7 @@ public class LocationService : ILocationService
         await _unitOfWork.Commit();
     }
 
-    public async Task AssignDeviceToLocation(Guid locationId, DeviceAssignRequest request)
+    public async Task AssignDeviceToLocation(Guid locationId, DeviceLocationAssignRequest request)
     {
         var location = await _locationRepository.GetById(locationId) ?? throw new LocationNotFoundException(locationId);
         var device = await _deviceRepository.GetById(request.DeviceId) ?? throw new DeviceNotFoundException(request.DeviceId);

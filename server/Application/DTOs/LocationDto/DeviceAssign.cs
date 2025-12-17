@@ -1,5 +1,5 @@
 namespace Application.DTOs.LocationDto;
 
-public record DeviceAssignRequest(
+public record DeviceLocationAssignRequest(
     Guid DeviceId
 );

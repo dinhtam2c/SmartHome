@@ -12,7 +12,7 @@ namespace WebAPI;
 [JsonSerializable(typeof(HomeAddRequest))]
 [JsonSerializable(typeof(HomeAddResponse))]
 [JsonSerializable(typeof(HomeUpdateRequest))]
-[JsonSerializable(typeof(GatewayAssignRequest))]
+[JsonSerializable(typeof(GatewayHomeAssignRequest))]
 
 
 [JsonSerializable(typeof(IEnumerable<LocationListElement>))]
@@ -20,7 +20,7 @@ namespace WebAPI;
 [JsonSerializable(typeof(LocationAddRequest))]
 [JsonSerializable(typeof(LocationAddResponse))]
 [JsonSerializable(typeof(LocationUpdateRequest))]
-[JsonSerializable(typeof(DeviceAssignRequest))]
+[JsonSerializable(typeof(DeviceLocationAssignRequest))]
 
 
 [JsonSerializable(typeof(IEnumerable<GatewayListElement>))]

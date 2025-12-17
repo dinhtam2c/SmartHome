@@ -49,7 +49,7 @@ public static class HomeController
     }
 
     private static async Task<IResult> AssignGatewayToHome(IHomeService service, Guid homeId,
-        GatewayAssignRequest request)
+        GatewayHomeAssignRequest request)
     {
         await service.AssignGatewayToHome(homeId, request);
         return Results.Ok();

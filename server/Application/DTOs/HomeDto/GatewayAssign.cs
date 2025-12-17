@@ -1,5 +1,5 @@
 namespace Application.DTOs.HomeDto;
 
-public record GatewayAssignRequest(
+public record GatewayHomeAssignRequest(
     Guid GatewayId
 );

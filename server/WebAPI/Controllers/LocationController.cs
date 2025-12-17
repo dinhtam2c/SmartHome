@@ -49,7 +49,7 @@ public static class LocationController
     }
 
     private static async Task<IResult> AssignDeviceToLocation(ILocationService service, Guid locationId,
-        DeviceAssignRequest request)
+        DeviceLocationAssignRequest request)
     {
         await service.AssignDeviceToLocation(locationId, request);
         return Results.NoContent();
