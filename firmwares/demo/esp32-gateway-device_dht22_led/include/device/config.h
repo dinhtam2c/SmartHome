@@ -10,5 +10,5 @@
 #define MODEL               ""
 #define FIRMWARE_VERSION    "1.0"
 
-#define DATA_INTERVAL       30
-#define STATE_INTERVAL      60
+#define DATA_INTERVAL       60
+#define STATE_INTERVAL      600
