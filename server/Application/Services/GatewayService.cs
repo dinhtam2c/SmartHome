@@ -20,6 +20,10 @@ public interface IGatewayService
     Task GatewayProvision(GatewayProvisionRequest request);
 
     Task HandleGatewayAvailability(Guid gatewayId, GatewayAvailability availability);
+
+    Task AssignDeviceToGateway(Guid gatewayId, Guid deviceId);
+
+    Task AddDeviceToWhiteList(Guid gatewayId, string identifier);
 }
 
 public class GatewayService : IGatewayService
@@ -28,15 +32,18 @@ public class GatewayService : IGatewayService
 
     private readonly IUnitOfWork _unitOfWork;
     private readonly IGatewayRepository _gatewayRepository;
+    private readonly IDeviceRepository _deviceRepository;
 
     private readonly IMessagePublisher _messagePublisher;
 
     public GatewayService(ILogger<GatewayService> logger, IUnitOfWork unitOfWork,
-        IGatewayRepository gatewayRepository, IMessagePublisher messagePublisher)
+        IGatewayRepository gatewayRepository, IDeviceRepository deviceRepository,
+        IMessagePublisher messagePublisher)
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
         _gatewayRepository = gatewayRepository;
+        _deviceRepository = deviceRepository;
         _messagePublisher = messagePublisher;
     }
 
@@ -135,5 +142,23 @@ public class GatewayService : IGatewayService
 
         await _unitOfWork.Commit();
         _logger.LogInformation("Gateway {GatewayId} {Status}", gatewayId, availability.State);
+    }
+
+    public async Task AssignDeviceToGateway(Guid gatewayId, Guid deviceId)
+    {
+        var gateway = await _gatewayRepository.GetById(gatewayId) ?? throw new GatewayNotFoundException(gatewayId);
+        var device = await _deviceRepository.GetById(deviceId) ?? throw new DeviceNotFoundException(deviceId);
+
+        device.GatewayId = gatewayId;
+        device.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+        await AddDeviceToWhiteList(gatewayId, device.Identifier);
+
+        await _unitOfWork.Commit();
+    }
+
+    public async Task AddDeviceToWhiteList(Guid gatewayId, string identifier)
+    {
+        // TODO: send message to gateway
     }
 }

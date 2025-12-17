@@ -24,6 +24,7 @@ namespace WebAPI;
 
 
 [JsonSerializable(typeof(IEnumerable<GatewayListElement>))]
+[JsonSerializable(typeof(DeviceGatewayAssignRequest))]
 
 
 [JsonSerializable(typeof(IEnumerable<DeviceListElement>))]

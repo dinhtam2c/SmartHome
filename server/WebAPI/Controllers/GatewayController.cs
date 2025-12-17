@@ -1,3 +1,4 @@
+using Application.DTOs.GatewayDto;
 using Application.Services;
 
 namespace WebAPI.Controllers;
@@ -9,11 +10,19 @@ public static class GatewayController
         var gatewayApi = routes.MapGroup("/gateways");
 
         gatewayApi.MapGet("/", GetAllGateways);
+        gatewayApi.MapPost("/{gatewayId}/devices", AssignDeviceToGateway);
     }
 
     private static async Task<IResult> GetAllGateways(IGatewayService service)
     {
         var response = await service.GetAllGateways();
         return Results.Ok(response);
+    }
+
+    private static async Task<IResult> AssignDeviceToGateway(IGatewayService service, Guid gatewayId,
+        DeviceGatewayAssignRequest request)
+    {
+        await service.AssignDeviceToGateway(gatewayId, request.DeviceId);
+        return Results.Ok();
     }
 }

@@ -72,10 +72,14 @@ public class DeviceService : IDeviceService
     {
         var device = request.ToDevice();
         if (device.GatewayId.HasValue)
+        {
             await _gatewayService.EnsureGatewayExistOrReprovision(device.GatewayId.Value);
+        }
 
         await _deviceRepository.Add(device);
         await _unitOfWork.Commit();
+
+        // TODO: add to whitelist
 
         return DeviceAddResponse.FromDevice(device);
     }
