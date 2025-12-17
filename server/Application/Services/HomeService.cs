@@ -79,7 +79,9 @@ public class HomeService : IHomeService
         var gatewayId = request.GatewayId;
         var gateway = await _gatewayRepository.GetById(gatewayId) ?? throw new GatewayNotFoundException(gatewayId);
 
-        gateway.HomeId = home.Id;
+        gateway.HomeId = homeId;
+        gateway.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
         await _unitOfWork.Commit();
     }
 }
