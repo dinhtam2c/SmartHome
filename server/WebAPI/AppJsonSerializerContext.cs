@@ -2,6 +2,7 @@
 using Application.DTOs.DeviceDto;
 using Application.DTOs.GatewayDto;
 using Application.DTOs.HomeDto;
+using Application.DTOs.LocationDto;
 using Application.DTOs.SensorDataDto;
 
 namespace WebAPI;
@@ -12,6 +13,14 @@ namespace WebAPI;
 [JsonSerializable(typeof(HomeAddResponse))]
 [JsonSerializable(typeof(HomeUpdateRequest))]
 [JsonSerializable(typeof(GatewayAssignRequest))]
+
+
+[JsonSerializable(typeof(IEnumerable<LocationListElement>))]
+[JsonSerializable(typeof(LocationDetails))]
+[JsonSerializable(typeof(LocationAddRequest))]
+[JsonSerializable(typeof(LocationAddResponse))]
+[JsonSerializable(typeof(LocationUpdateRequest))]
+[JsonSerializable(typeof(DeviceAssignRequest))]
 
 
 [JsonSerializable(typeof(IEnumerable<GatewayListElement>))]

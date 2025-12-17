@@ -52,6 +52,9 @@ builder.Services.AddScoped<IGatewayService, GatewayService>();
 builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
 builder.Services.AddScoped<IDeviceService, DeviceService>();
 
+builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+builder.Services.AddScoped<ILocationService, LocationService>();
+
 builder.Services.AddScoped<ISensorRepository, SensorRepository>();
 
 builder.Services.AddScoped<ISensorDataRepository, SensorDataRepository>();
@@ -83,6 +86,7 @@ var api = app.MapGroup("/api/v1");
 HomeController.MapEndpoints(api);
 GatewayController.MapEndpoints(api);
 DeviceController.MapEndpoints(api);
+LocationController.MapEndpoints(api);
 SensorDataController.MapEndpoints(api);
 
 app.Run();
