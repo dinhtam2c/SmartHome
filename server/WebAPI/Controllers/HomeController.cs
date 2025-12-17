@@ -1,5 +1,6 @@
 using Application.DTOs.HomeDto;
 using Application.Services;
+using Core.Entities;
 
 namespace WebAPI.Controllers;
 
@@ -7,13 +8,14 @@ public static class HomeController
 {
     public static void MapEndpoints(this IEndpointRouteBuilder routes)
     {
-        var gatewayApi = routes.MapGroup("/homes");
+        var homeApi = routes.MapGroup("/homes");
 
-        gatewayApi.MapGet("/", GetHomeList);
-        gatewayApi.MapGet("/{homeId}", GetHomeDetails);
-        gatewayApi.MapPost("/", AddHome);
-        gatewayApi.MapPatch("/{homeId}", UpdateHome);
-        gatewayApi.MapDelete("/{homeId}", DeleteHome);
+        homeApi.MapGet("/", GetHomeList);
+        homeApi.MapGet("/{homeId}", GetHomeDetails);
+        homeApi.MapPost("/", AddHome);
+        homeApi.MapPatch("/{homeId}", UpdateHome);
+        homeApi.MapDelete("/{homeId}", DeleteHome);
+        homeApi.MapPost("/{homeId}/gateways", AssignGatewayToHome);
     }
 
     private static async Task<IResult> GetHomeList(IHomeService service)
@@ -44,5 +46,12 @@ public static class HomeController
     {
         await service.DeleteHome(homeId);
         return Results.NoContent();
+    }
+
+    private static async Task<IResult> AssignGatewayToHome(IHomeService service, Guid homeId,
+        GatewayAssignRequest request)
+    {
+        await service.AssignGatewayToHome(homeId, request);
+        return Results.Ok();
     }
 }

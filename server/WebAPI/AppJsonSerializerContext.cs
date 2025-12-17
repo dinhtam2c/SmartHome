@@ -11,6 +11,7 @@ namespace WebAPI;
 [JsonSerializable(typeof(HomeAddRequest))]
 [JsonSerializable(typeof(HomeAddResponse))]
 [JsonSerializable(typeof(HomeUpdateRequest))]
+[JsonSerializable(typeof(GatewayAssignRequest))]
 
 
 [JsonSerializable(typeof(IEnumerable<GatewayListElement>))]

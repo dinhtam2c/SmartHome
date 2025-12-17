@@ -17,6 +17,8 @@ public interface IHomeService
     Task UpdateHome(Guid homeId, HomeUpdateRequest request);
 
     Task DeleteHome(Guid homeId);
+
+    Task AssignGatewayToHome(Guid homeId, GatewayAssignRequest request);
 }
 
 public class HomeService : IHomeService
@@ -24,12 +26,15 @@ public class HomeService : IHomeService
     private readonly ILogger<HomeService> _logger;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IHomeRepository _homeRepository;
+    private readonly IGatewayRepository _gatewayRepository;
 
-    public HomeService(ILogger<HomeService> logger, IUnitOfWork unitOfWork, IHomeRepository homeRepository)
+    public HomeService(ILogger<HomeService> logger, IUnitOfWork unitOfWork, IHomeRepository homeRepository,
+        IGatewayRepository gatewayRepository)
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
         _homeRepository = homeRepository;
+        _gatewayRepository = gatewayRepository;
     }
 
     public async Task<IEnumerable<HomeListElement>> GetHomeList()
@@ -64,6 +69,17 @@ public class HomeService : IHomeService
     {
         var home = await _homeRepository.GetById(homeId) ?? throw new HomeNotFoundException(homeId);
         await _homeRepository.Delete(home);
+        await _unitOfWork.Commit();
+    }
+
+    public async Task AssignGatewayToHome(Guid homeId, GatewayAssignRequest request)
+    {
+        var home = await _homeRepository.GetById(homeId) ?? throw new HomeNotFoundException(homeId);
+
+        var gatewayId = request.GatewayId;
+        var gateway = await _gatewayRepository.GetById(gatewayId) ?? throw new GatewayNotFoundException(gatewayId);
+
+        gateway.HomeId = home.Id;
         await _unitOfWork.Commit();
     }
 }
