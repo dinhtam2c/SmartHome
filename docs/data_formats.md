@@ -123,19 +123,6 @@
     //     "battery": 95,
     //     "uptime": 1234,
     //     "error": null
-
-    // },
-    // "actuators": [
-    //     {
-    //         "id": "A1",
-    //         "state": [
-    //             {
-    //                 "power": "on",
-    //                 "speed": "50"
-    //             }
-    //         ],
-    //     }
-    // ]
 }
 ```
 
@@ -156,7 +143,20 @@
 }
 ```
 
-## 11. Device command (server to gateway to device)
+## 11. Device actuator states
+```json
+[
+    {
+        "id": "A1",
+        "states": {
+            "Power": "On",
+            "Speed": "50"
+        }
+    }
+]
+```
+
+## 12. Device command (server to gateway to device)
 ```json
 {
     "deviceId": "D1",
@@ -166,7 +166,7 @@
 }
 ```
 
-## 12. New rule (server to gateway)
+## 13. New rule (server to gateway)
 ```json
 {
     "gatewayId": "GW1",

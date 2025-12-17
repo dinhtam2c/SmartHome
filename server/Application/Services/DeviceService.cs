@@ -1,4 +1,5 @@
-﻿using Application.Common.Message;
+﻿using System.Text.Json;
+using Application.Common.Message;
 using Application.DTOs.DeviceDto;
 using Application.DTOs.ProvisionDto;
 using Application.Exceptions;
@@ -23,6 +24,8 @@ public interface IDeviceService
     Task DeviceProvision(Guid gatewayId, DeviceProvisionRequest request);
 
     Task HandleDeviceAvailability(Guid gatewayId, Guid deviceId, DeviceAvailability availability);
+
+    Task HandleDeviceActuatorsStates(Guid gatewayId, Guid deviceId, IEnumerable<DeviceActuatorStates> states);
 
     Task SendDeviceCommand(Guid deviceId, DeviceCommandRequest deviceCommandRequest);
 }
@@ -187,6 +190,58 @@ public class DeviceService : IDeviceService
         _logger.LogInformation("Device {DeviceId} {Status}", deviceId, availability.State);
     }
 
+    public async Task HandleDeviceActuatorsStates(Guid gatewayId, Guid deviceId,
+        IEnumerable<DeviceActuatorStates> states)
+    {
+        await _gatewayService.EnsureGatewayExistOrReprovision(gatewayId);
+
+        var device = await _deviceRepository.GetByIdWithActuators(deviceId);
+        if (device is null)
+        {
+            await SendReprovision(gatewayId, deviceId);
+            throw new DeviceNotFoundException(deviceId);
+        }
+
+        if (!device.IsOnline)
+        {
+            _logger.LogWarning("Device {DeviceId} is offline", deviceId);
+            return;
+        }
+
+        _logger.LogInformation("Received actuators's states from device {DeviceId}", deviceId);
+
+        foreach (var actuatorStates in states)
+        {
+            var actuator = device.Actuators.FirstOrDefault(a => a.Id == actuatorStates.ActuatorId);
+            if (actuator is null)
+            {
+                _logger.LogWarning("Actuator {ActuatorId} not found", actuatorStates.ActuatorId);
+                await SendReprovision(gatewayId, deviceId);
+                break;
+            }
+
+            if (actuator.States is null)
+            {
+                _logger.LogWarning("Actuator {ActuatorId} does not have states", actuator.Id);
+                continue;
+            }
+
+            foreach (var state in actuatorStates.States)
+            {
+                if (!actuator.States.ContainsKey(state.Key))
+                {
+                    _logger.LogWarning("Actuator {ActuatorId} does not have state {state}",
+                        actuator.Id, nameof(state.Key));
+                    continue;
+                }
+
+                actuator.States[state.Key] = ((JsonElement)state.Value).GetString();
+            }
+        }
+
+        await _unitOfWork.Commit(); // TODO: update only if no reprovision
+    }
+
     public async Task SendDeviceCommand(Guid deviceId, DeviceCommandRequest deviceCommandRequest)
     {
         // TODO: no need to get location and sensors
@@ -205,6 +260,9 @@ public class DeviceService : IDeviceService
         {
             throw new Exception("Command not supported");
         }
+
+        _logger.LogInformation("Sending command {Command} to device {DeviceId}",
+            deviceCommandRequest.ToString(), deviceId);
 
         var topic = MessageTopics.DeviceCommand(gateway.Id.ToString(), device.Id.ToString());
         var payload = new DeviceCommand(deviceId, actuator.Id,

@@ -13,6 +13,7 @@ namespace Application.DTOs;
 [JsonSerializable(typeof(DeviceProvisionRequest))]
 [JsonSerializable(typeof(DeviceProvisionResponse))]
 [JsonSerializable(typeof(DeviceAvailability))]
+[JsonSerializable(typeof(IEnumerable<DeviceActuatorStates>))]
 [JsonSerializable(typeof(DeviceCommand))]
 
 [JsonSerializable(typeof(GatewayData))]

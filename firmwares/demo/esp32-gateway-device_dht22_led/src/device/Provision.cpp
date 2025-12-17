@@ -47,13 +47,12 @@ void Device::requestProvision() {
 
     /* Actuator */
     JsonArray actuatorArray = doc["actuators"].to<JsonArray>();
-    addActuator(actuatorArray, _led);
+    addActuator(actuatorArray, _led.info);
 
-    TransportMessage message;
-    serializeJson(doc, message.payload);
-    message.deviceId = _identifier;
-    message.messageType = DEVICE_PROVISION;
+    std::string payload;
+    serializeJson(doc, payload);
 
+    TransportMessage message = { _identifier, DEVICE_PROVISION, payload };
     _transport->send(message);
 
     delay(300000);

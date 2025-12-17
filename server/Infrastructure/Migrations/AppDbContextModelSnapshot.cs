@@ -52,6 +52,9 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("States")
+                        .HasColumnType("TEXT");
+
                     b.PrimitiveCollection<string>("SupportedCommands")
                         .HasColumnType("TEXT");
 

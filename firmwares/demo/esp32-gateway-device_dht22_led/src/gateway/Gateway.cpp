@@ -106,11 +106,19 @@ void Gateway::handleDeviceMessage(const TransportMessage& message) {
     case DEVICE_DATA:
         handleDeviceData(deviceId, payload);
         break;
+    case DEVICE_ACTUATORS_STATES:
+        handleDeviceActuatorsStates(deviceId, payload);
+        break;
     default:
         Serial.println("Unknown message type");
         Serial.printf("messageType: %d\r\n", messageType);
         break;
     }
+}
+
+void Gateway::handleDeviceActuatorsStates(const std::string& deviceId, const std::string& payload) {
+    std::string topic = _topicPrefix + "/devices/" + deviceId + "/states/actuators";
+    _mqtt.publish(topic, payload, 1, true);
 }
 
 void Gateway::handleDeviceConnect(const std::string& deviceId) {

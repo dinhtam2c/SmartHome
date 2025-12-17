@@ -10,7 +10,7 @@ home/gateways/{gateway_id}
             provision
                 request     (1), qos = 1, retain = false
                 response    (2), qos = 0/1, retain = false
-            state
+            states
                 system      (1), qos = 1, retain = false
                 actuators   (1), qos = 1, retain = true
             availability    (1), qos = 1, retain = true

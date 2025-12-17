@@ -180,7 +180,8 @@ namespace Infrastructure.Migrations
                     Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Type = table.Column<int>(type: "INTEGER", maxLength: 50, nullable: false),
                     SupportedStates = table.Column<string>(type: "TEXT", nullable: true),
-                    SupportedCommands = table.Column<string>(type: "TEXT", nullable: true)
+                    SupportedCommands = table.Column<string>(type: "TEXT", nullable: true),
+                    States = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -222,7 +223,7 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    SensorId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    SensorId = table.Column<Guid>(type: "TEXT", nullable: true),
                     Location = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
                     Unit = table.Column<string>(type: "TEXT", maxLength: 10, nullable: false),
@@ -237,7 +238,7 @@ namespace Infrastructure.Migrations
                         column: x => x.SensorId,
                         principalTable: "Sensors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(

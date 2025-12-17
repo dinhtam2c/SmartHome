@@ -14,5 +14,7 @@ public interface IDeviceRepository
 
     Task<Device?> GetByIdWithGatewayAndLocationAndCapabilities(Guid id);
 
+    Task<Device?> GetByIdWithActuators(Guid id);
+
     Task<Device?> GetByIdentifierWithCapabilities(string deviceIdentifier);
 }

@@ -5,7 +5,8 @@
 enum DeviceMessageType {
     DEVICE_PROVISION,
     DEVICE_DATA,
-    DEVICE_STATE,
+    DEVICE_STATES,
+    DEVICE_ACTUATORS_STATES,
 
     DEVICE_PROVISION_RESPONSE,
     DEVICE_COMMAND
@@ -14,5 +15,5 @@ enum DeviceMessageType {
 struct TransportMessage {
     std::string deviceId;
     DeviceMessageType messageType;
-    std::string payload;
+    const std::string& payload;
 };

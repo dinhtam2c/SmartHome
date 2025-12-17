@@ -55,6 +55,13 @@ public class DeviceRepository : IDeviceRepository
             .FirstOrDefaultAsync(d => d.Id == id);
     }
 
+    public async Task<Device?> GetByIdWithActuators(Guid id)
+    {
+        return await _context.Devices
+            .Include(d => d.Actuators)
+            .FirstOrDefaultAsync(d => d.Id == id);
+    }
+
     public async Task<Device?> GetByIdentifierWithCapabilities(string identifier)
     {
         return await _context.Devices

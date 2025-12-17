@@ -37,6 +37,8 @@ builder.Services.AddSingleton<IMessageHandler, GatewayAvailabilityHandler>();
 builder.Services.AddSingleton<GatewayAvailabilityHandler>();
 builder.Services.AddSingleton<IMessageHandler, DeviceAvailabilityHandler>();
 builder.Services.AddSingleton<DeviceAvailabilityHandler>();
+builder.Services.AddSingleton<IMessageHandler, DeviceActuatorsStatesHandler>();
+builder.Services.AddSingleton<DeviceActuatorsStatesHandler>();
 builder.Services.AddSingleton<IMessageHandler, GatewayDataHandler>();
 builder.Services.AddSingleton<GatewayDataHandler>();
 

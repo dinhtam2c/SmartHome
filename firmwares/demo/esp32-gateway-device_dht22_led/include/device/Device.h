@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <Preferences.h>
+#include <DHT_U.h>
 
 #include <vector>
 
@@ -38,6 +39,11 @@ struct ActuatorInfo {
     std::vector<std::string> commands;
 };
 
+struct LED {
+    ActuatorInfo info;
+    bool power;
+};
+
 class Device {
 public:
     Device(IGatewayTransport* transport);
@@ -57,12 +63,13 @@ private:
     long _lastMsgTime;
     int _dataInterval;
     int _stateInterval;
+    DHT _dht22;
 
     IGatewayTransport* _transport;
 
     SensorInfo _tempSensor;
     SensorInfo _humSensor;
-    ActuatorInfo _led;
+    LED _led;
 
     void initCapabilities();
 
@@ -74,5 +81,5 @@ private:
     void readSensors(float* temp, float* hum);
     void buildAndSendData(float temp, float hum);
 
-    void addSensorData(JsonArray& arr, const SensorInfo& info, float value);
+    void sendActuatorStates();
 };

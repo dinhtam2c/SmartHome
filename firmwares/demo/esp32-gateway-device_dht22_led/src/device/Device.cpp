@@ -3,13 +3,9 @@
 #include <Arduino.h>
 #include <Preferences.h>
 
-#include <DHT_U.h>
-
 #include "common/device_message.h"
 
-DHT dht22(DHT22_PIN, DHT22);
-
-Device::Device(IGatewayTransport* transport) {
+Device::Device(IGatewayTransport* transport) : _dht22(DHT22_PIN, DHT22) {
     _transport = transport;
 }
 
@@ -25,7 +21,7 @@ void Device::loadPreferences() {
     _deviceId = deviceId.c_str();
     _tempSensor.id = tempSensorId.c_str();
     _humSensor.id = humSensorId.c_str();
-    _led.id = ledId.c_str();
+    _led.info.id = ledId.c_str();
 }
 
 void Device::initCapabilities() {
@@ -44,13 +40,13 @@ void Device::initCapabilities() {
     _humSensor.accuracy = 5;
 
 
-    _led.name = "LED";
-    _led.type = "Light";
+    _led.info.name = "LED";
+    _led.info.type = "Light";
 
-    _led.states.push_back("Power");
+    _led.info.states.push_back("Power");
 
-    _led.commands.push_back("TurnOn");
-    _led.commands.push_back("TurnOff");
+    _led.info.commands.push_back("TurnOn");
+    _led.info.commands.push_back("TurnOff");
 }
 
 void Device::begin() {
@@ -66,8 +62,11 @@ void Device::begin() {
     }
 
     pinMode(LED_PIN, OUTPUT);
+    _dht22.begin();
 
-    dht22.begin();
+    digitalWrite(LED_PIN, HIGH);
+    _led.power = true;
+    sendActuatorStates();
 }
 
 void Device::loop() {
@@ -104,57 +103,4 @@ void Device::handleGatewayMessage(DeviceMessageType messageType, const std::stri
     default:
         break;
     }
-}
-
-void Device::handleCommand(const std::string& payload) {
-    JsonDocument doc;
-    deserializeJson(doc, payload);
-
-    const std::string& actuatorId = doc["actuatorId"];
-    const std::string& command = doc["command"];
-
-    if (actuatorId != _led.id) {
-        Serial.println("Received command for an unknown actuator");
-        return;
-    }
-
-    Serial.printf("[Device] Received command: %s\r\n", command.c_str());
-
-    if (command == "TurnOn") {
-        digitalWrite(LED_PIN, HIGH);
-    } else if (command == "TurnOff") {
-        digitalWrite(LED_PIN, LOW);
-    }
-}
-
-void Device::readSensors(float* temp, float* hum) {
-    *temp = dht22.readTemperature();
-    *hum = dht22.readHumidity();
-    Serial.printf("[Device] Temp: %.1f  Hum: %.1f\n", *temp, *hum);
-}
-
-void Device::buildAndSendData(float temp, float hum) {
-    long now = time(nullptr);
-
-    JsonDocument doc;
-    doc["deviceId"] = _deviceId;
-    doc["timestamp"] = now;
-    doc["priority"] = "LOW";
-
-    JsonArray dataArray = doc["data"].to<JsonArray>();
-    addSensorData(dataArray, _tempSensor, temp);
-    addSensorData(dataArray, _humSensor, hum);
-
-    TransportMessage message;
-    serializeJson(doc, message.payload);
-    message.deviceId = _deviceId;
-    message.messageType = DEVICE_DATA;
-
-    _transport->send(message);
-}
-
-void Device::addSensorData(JsonArray& arr, const SensorInfo& info, float value) {
-    JsonObject obj = arr.add<JsonObject>();
-    obj["sensorId"] = info.id;
-    obj["value"] = value;
 }

@@ -45,6 +45,7 @@ private:
     void handleDeviceProvisionResponse(const std::string& identifier, const std::string& payload);
 
     void handleDeviceData(const std::string& deviceId, const std::string& message);
+    void handleDeviceActuatorsStates(const std::string& deviceId, const std::string& payload);
 
     void handleMqttConnect();
     void handleMqttMessage(const std::string& topic, const std::string& payload);
