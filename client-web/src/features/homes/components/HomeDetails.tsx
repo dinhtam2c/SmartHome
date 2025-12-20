@@ -5,6 +5,7 @@ import { DetailRow } from "../../../components/DetailRow";
 import { timestampToDateTime } from "../../../utils/dateTimeUtils";
 import HomeForm from "./HomeForm";
 import type { HomeUpdateRequest } from "../home.types";
+import Button from "../../../components/Button";
 
 interface Props {
   id: string | null;
@@ -53,20 +54,10 @@ export default function HomeDetails({
         <DetailsView
           actions={
             <>
-              <button
-                              className="btn btn--secondary"
-                              onClick={handleEdit}
-                              disabled={isDeleting}
-                            >
-                              Edit
-                            </button>
-              <button
-                className="btn btn--danger"
-                onClick={handleDelete}
-                disabled={isDeleting}
-              >
+              <Button variant="secondary" onClick={handleEdit} disabled={isDeleting}>Edit</Button>
+              <Button variant="danger" onClick={handleDelete} disabled={isDeleting}>
                 {isDeleting ? "Deleting..." : "Delete"}
-              </button>
+              </Button>
             </>
           }
         >
@@ -79,7 +70,7 @@ export default function HomeDetails({
             {timestampToDateTime(home.updatedAt)}
           </DetailRow>
         </DetailsView>
-      </div>
+      </div >
     );
   } else {
     return (

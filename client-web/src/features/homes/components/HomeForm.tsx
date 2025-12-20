@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import type { HomeAddRequest, HomeUpdateRequest } from "../home.types";
+import Button from "../../../components/Button";
 
 interface Props {
   initialName?: string;
@@ -47,18 +48,18 @@ export default function HomeForm({
       />
 
       <div className="form__actions">
-        <button className="btn" type="submit" disabled={isSubmitting}>
+        <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "..." : submitLabel}
-        </button>
+        </Button>
         {onCancel && (
-          <button
-            className="btn btn--secondary"
+          <Button
+            variant="secondary"
             type="button"
             onClick={onCancel}
             disabled={isSubmitting}
           >
             Cancel
-          </button>
+          </Button>
         )}
       </div>
     </form>

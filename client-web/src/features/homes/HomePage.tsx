@@ -5,6 +5,7 @@ import HomeList from "./components/HomeList";
 import AddHomeForm from "./components/AddHomeForm";
 import Modal from "../../components/Modal";
 import HomeDetails from "./components/HomeDetails";
+import Button from "../../components/Button";
 
 export default function HomePage() {
   const { homes, loading, reloading, isAdding, error, addHome, reload } = useHomes();
@@ -34,9 +35,9 @@ export default function HomePage() {
     <>
       <div className="page-header">
         <h2>Homes {reloading && <small>Reloading...</small>}</h2>
-        <button className="btn" onClick={() => setIsAddModalOpen(true)}>
+        <Button variant="primary" onClick={() => setIsAddModalOpen(true)}>
           Add Home
-        </button>
+        </Button>
       </div>
 
       <HomeList homes={homes} onClick={setSelectedHomeId} />
