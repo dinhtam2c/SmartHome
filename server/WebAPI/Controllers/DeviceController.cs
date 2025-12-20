@@ -13,6 +13,8 @@ public static class DeviceController
         deviceApi.MapGet("/{deviceId}", GetDeviceDetails);
         deviceApi.MapPost("/", AddDevice);
         deviceApi.MapPost("/{deviceId}/commands", SendDeviceCommand);
+        deviceApi.MapPost("/{deviceId}/location", AssignLocationToDevice);
+        deviceApi.MapPost("/{deviceId}/gateway", AssignGatewayToDevice);
     }
 
     private static async Task<IResult> GetAllDevices(IDeviceService service)
@@ -38,5 +40,19 @@ public static class DeviceController
     {
         await service.SendDeviceCommand(deviceId, deviceCommandRequest);
         return Results.Ok();
+    }
+
+    private static async Task<IResult> AssignLocationToDevice(IDeviceService service, Guid deviceId,
+        DeviceLocationAssignRequest request)
+    {
+        await service.AssignLocationToDevice(deviceId, request);
+        return Results.NoContent();
+    }
+
+    private static async Task<IResult> AssignGatewayToDevice(IDeviceService service, Guid deviceId,
+        DeviceGatewayAssignRequest request)
+    {
+        await service.AssignGatewayToDevice(deviceId, request);
+        return Results.NoContent();
     }
 }

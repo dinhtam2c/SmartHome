@@ -28,6 +28,10 @@ public interface IDeviceService
     Task HandleDeviceActuatorsStates(Guid gatewayId, Guid deviceId, IEnumerable<DeviceActuatorStates> states);
 
     Task SendDeviceCommand(Guid deviceId, DeviceCommandRequest deviceCommandRequest);
+
+    Task AssignLocationToDevice(Guid deviceId, DeviceLocationAssignRequest request);
+
+    Task AssignGatewayToDevice(Guid deviceId, DeviceGatewayAssignRequest request);
 }
 
 public class DeviceService : IDeviceService
@@ -35,6 +39,7 @@ public class DeviceService : IDeviceService
     private readonly ILogger<DeviceService> _logger;
 
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ILocationRepository _locationRepository;
     private readonly IDeviceRepository _deviceRepository;
     private readonly IGatewayRepository _gatewayRepository;
 
@@ -42,10 +47,12 @@ public class DeviceService : IDeviceService
 
     private readonly IMessagePublisher _messagePublisher;
 
-    public DeviceService(ILogger<DeviceService> logger, IUnitOfWork unitOfWork, IDeviceRepository deviceRepository,
+    public DeviceService(ILogger<DeviceService> logger, IUnitOfWork unitOfWork,
+        ILocationRepository locationRepository, IDeviceRepository deviceRepository,
         IGatewayRepository gatewayRepository, IGatewayService gatewayService, IMessagePublisher messagePublisher)
     {
         _logger = logger;
+        _locationRepository = locationRepository;
         _deviceRepository = deviceRepository;
         _gatewayRepository = gatewayRepository;
         _gatewayService = gatewayService;
@@ -273,5 +280,33 @@ public class DeviceService : IDeviceService
             deviceCommandRequest.Command, deviceCommandRequest.Parameters);
 
         await _messagePublisher.PublishMessage(topic, payload, new(2, false));
+    }
+
+    public async Task AssignLocationToDevice(Guid deviceId, DeviceLocationAssignRequest request)
+    {
+        var locationId = request.LocationId;
+
+        var device = await _deviceRepository.GetById(deviceId) ?? throw new DeviceNotFoundException(deviceId);
+        var _ = await _locationRepository.GetById(locationId) ?? throw new LocationNotFoundException(locationId);
+
+        device.LocationId = locationId;
+        device.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+        await _unitOfWork.Commit();
+    }
+
+    public async Task AssignGatewayToDevice(Guid deviceId, DeviceGatewayAssignRequest request)
+    {
+        var gatewayId = request.GatewayId;
+
+        var device = await _deviceRepository.GetById(deviceId) ?? throw new DeviceNotFoundException(deviceId);
+        var _ = await _gatewayRepository.GetById(gatewayId) ?? throw new GatewayNotFoundException(gatewayId);
+
+        device.GatewayId = gatewayId;
+        device.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+        await _unitOfWork.Commit();
+
+        await _gatewayService.AddDeviceToWhiteList(gatewayId, device.Identifier);
     }
 }

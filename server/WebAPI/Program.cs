@@ -20,6 +20,22 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins(
+                "http://localhost:5173",
+                "http://127.0.0.1:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        }
+    );
+});
+
 builder.Services.AddExceptionHandler<WebApiExceptionHandler>();
 builder.Services.AddProblemDetails();
 builder.Services.AddOpenApi();
@@ -80,6 +96,8 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/openapi/v1.json", "Open API v1");
     });
 }
+
+app.UseCors(MyAllowSpecificOrigins);
 
 var api = app.MapGroup("/api/v1");
 

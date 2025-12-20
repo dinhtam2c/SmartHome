@@ -17,8 +17,6 @@ public interface ILocationService
     Task UpdateLocation(Guid locationId, LocationUpdateRequest request);
 
     Task DeleteLocation(Guid locationId);
-
-    Task AssignDeviceToLocation(Guid locationId, DeviceLocationAssignRequest request);
 }
 
 public class LocationService : ILocationService
@@ -26,16 +24,14 @@ public class LocationService : ILocationService
     private readonly ILogger<LocationService> _logger;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILocationRepository _locationRepository;
-    private readonly IDeviceRepository _deviceRepository;
     private readonly IHomeRepository _homeRepository;
 
     public LocationService(ILogger<LocationService> logger, IUnitOfWork unitOfWork,
-        ILocationRepository locationRepository, IDeviceRepository deviceRepository, IHomeRepository homeRepository)
+        ILocationRepository locationRepository, IHomeRepository homeRepository)
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
         _locationRepository = locationRepository;
-        _deviceRepository = deviceRepository;
         _homeRepository = homeRepository;
     }
 
@@ -78,17 +74,6 @@ public class LocationService : ILocationService
         var location = await _locationRepository.GetById(locationId) ?? throw new LocationNotFoundException(locationId);
 
         await _locationRepository.Delete(location);
-        await _unitOfWork.Commit();
-    }
-
-    public async Task AssignDeviceToLocation(Guid locationId, DeviceLocationAssignRequest request)
-    {
-        var location = await _locationRepository.GetById(locationId) ?? throw new LocationNotFoundException(locationId);
-        var device = await _deviceRepository.GetById(request.DeviceId) ?? throw new DeviceNotFoundException(request.DeviceId);
-
-        device.LocationId = locationId;
-        device.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-
         await _unitOfWork.Commit();
     }
 }

@@ -15,7 +15,6 @@ public static class HomeController
         homeApi.MapPost("/", AddHome);
         homeApi.MapPatch("/{homeId}", UpdateHome);
         homeApi.MapDelete("/{homeId}", DeleteHome);
-        homeApi.MapPost("/{homeId}/gateways", AssignGatewayToHome);
     }
 
     private static async Task<IResult> GetHomeList(IHomeService service)
@@ -46,12 +45,5 @@ public static class HomeController
     {
         await service.DeleteHome(homeId);
         return Results.NoContent();
-    }
-
-    private static async Task<IResult> AssignGatewayToHome(IHomeService service, Guid homeId,
-        GatewayHomeAssignRequest request)
-    {
-        await service.AssignGatewayToHome(homeId, request);
-        return Results.Ok();
     }
 }

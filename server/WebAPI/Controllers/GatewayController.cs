@@ -10,7 +10,7 @@ public static class GatewayController
         var gatewayApi = routes.MapGroup("/gateways");
 
         gatewayApi.MapGet("/", GetAllGateways);
-        gatewayApi.MapPost("/{gatewayId}/devices", AssignDeviceToGateway);
+        gatewayApi.MapPost("/{gatewayId}/home", AssignHomeToGateway);
     }
 
     private static async Task<IResult> GetAllGateways(IGatewayService service)
@@ -19,10 +19,10 @@ public static class GatewayController
         return Results.Ok(response);
     }
 
-    private static async Task<IResult> AssignDeviceToGateway(IGatewayService service, Guid gatewayId,
-        DeviceGatewayAssignRequest request)
+    private static async Task<IResult> AssignHomeToGateway(IGatewayService service, Guid gatewayId,
+        GatewayHomeAssignRequest request)
     {
-        await service.AssignDeviceToGateway(gatewayId, request.DeviceId);
-        return Results.Ok();
+        await service.AssignHomeToGateway(gatewayId, request);
+        return Results.NoContent();
     }
 }

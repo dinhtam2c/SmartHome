@@ -1,4 +1,4 @@
-﻿using Application.Common.Message;
+using Application.Common.Message;
 using Application.DTOs.GatewayDto;
 using Application.DTOs.ProvisionDto;
 using Application.Exceptions;
@@ -21,9 +21,9 @@ public interface IGatewayService
 
     Task HandleGatewayAvailability(Guid gatewayId, GatewayAvailability availability);
 
-    Task AssignDeviceToGateway(Guid gatewayId, Guid deviceId);
-
     Task AddDeviceToWhiteList(Guid gatewayId, string identifier);
+
+    Task AssignHomeToGateway(Guid gatewayId, GatewayHomeAssignRequest request);
 }
 
 public class GatewayService : IGatewayService
@@ -31,19 +31,18 @@ public class GatewayService : IGatewayService
     private readonly ILogger<GatewayService> _logger;
 
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IHomeRepository _homeRepository;
     private readonly IGatewayRepository _gatewayRepository;
-    private readonly IDeviceRepository _deviceRepository;
 
     private readonly IMessagePublisher _messagePublisher;
 
-    public GatewayService(ILogger<GatewayService> logger, IUnitOfWork unitOfWork,
-        IGatewayRepository gatewayRepository, IDeviceRepository deviceRepository,
-        IMessagePublisher messagePublisher)
+    public GatewayService(ILogger<GatewayService> logger, IUnitOfWork unitOfWork, IHomeRepository homeRepository,
+        IGatewayRepository gatewayRepository, IMessagePublisher messagePublisher)
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
+        _homeRepository = homeRepository;
         _gatewayRepository = gatewayRepository;
-        _deviceRepository = deviceRepository;
         _messagePublisher = messagePublisher;
     }
 
@@ -144,21 +143,19 @@ public class GatewayService : IGatewayService
         _logger.LogInformation("Gateway {GatewayId} {Status}", gatewayId, availability.State);
     }
 
-    public async Task AssignDeviceToGateway(Guid gatewayId, Guid deviceId)
-    {
-        var gateway = await _gatewayRepository.GetById(gatewayId) ?? throw new GatewayNotFoundException(gatewayId);
-        var device = await _deviceRepository.GetById(deviceId) ?? throw new DeviceNotFoundException(deviceId);
-
-        device.GatewayId = gatewayId;
-        device.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-
-        await AddDeviceToWhiteList(gatewayId, device.Identifier);
-
-        await _unitOfWork.Commit();
-    }
-
     public async Task AddDeviceToWhiteList(Guid gatewayId, string identifier)
     {
         // TODO: send message to gateway
+    }
+
+    public async Task AssignHomeToGateway(Guid gatewayId, GatewayHomeAssignRequest request)
+    {
+        var gateway = await _gatewayRepository.GetById(gatewayId) ?? throw new GatewayNotFoundException(gatewayId);
+        var home = await _homeRepository.GetById(request.HomeId) ?? throw new HomeNotFoundException(request.HomeId);
+
+        gateway.HomeId = home.Id;
+        gateway.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+        await _unitOfWork.Commit();
     }
 }

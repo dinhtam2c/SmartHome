@@ -14,7 +14,6 @@ public static class LocationController
         locationApi.MapPost("/", AddLocation);
         locationApi.MapPatch("/{locationId}", UpdateLocation);
         locationApi.MapDelete("/{locationId}", DeleteLocation);
-        locationApi.MapPost("/{locationId}/devices", AssignDeviceToLocation);
     }
 
     private static async Task<IResult> GetLocationList(ILocationService service)
@@ -45,13 +44,6 @@ public static class LocationController
     private static async Task<IResult> DeleteLocation(ILocationService service, Guid locationId)
     {
         await service.DeleteLocation(locationId);
-        return Results.NoContent();
-    }
-
-    private static async Task<IResult> AssignDeviceToLocation(ILocationService service, Guid locationId,
-        DeviceLocationAssignRequest request)
-    {
-        await service.AssignDeviceToLocation(locationId, request);
         return Results.NoContent();
     }
 }
