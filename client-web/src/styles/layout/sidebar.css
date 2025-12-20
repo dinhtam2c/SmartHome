@@ -1,0 +1,33 @@
+.sidebar {
+  background-color: var(--bg-panel);
+  padding: 1rem;
+  width: 200px;
+  border-right: 1px solid var(--border);
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar nav li {
+  margin-bottom: 1rem;
+  font-size: large;
+  font-weight: 700;
+}
+
+.sidebar nav a {
+  color: var(--text);
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.sidebar nav a:hover {
+  background-color: #7c7c7c;
+}
+
+.sidebar nav a.active {
+  background-color: #4c6e83;
+}
