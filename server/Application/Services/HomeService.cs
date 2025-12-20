@@ -62,6 +62,8 @@ public class HomeService : IHomeService
         var home = await _homeRepository.GetById(homeId) ?? throw new HomeNotFoundException(homeId);
         home.Name = request.Name ?? home.Name;
         home.Description = request.Description ?? home.Description;
+        home.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
         await _unitOfWork.Commit();
     }
 
