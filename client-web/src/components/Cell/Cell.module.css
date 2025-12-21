@@ -1,0 +1,51 @@
+.cell {
+  border: none;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+  width: 100%;
+  appearance: none;
+
+  background-color: var(--bg-panel);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+  color: inherit;
+  display: block;
+}
+
+.cell:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.cell:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: var(--bg-header);
+}
+
+.cell:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: 0.05s;
+  background-color: #7498a1;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--text);
+  line-height: 1.4;
+  opacity: 0.8;
+}

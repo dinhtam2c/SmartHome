@@ -1,6 +1,12 @@
 import { useState, type FormEvent } from "react";
+
 import type { HomeAddRequest, HomeUpdateRequest } from "../home.types";
-import Button from "../../../components/Button";
+
+import { Button } from "@/components/Button";
+import { Form } from "@/components/Form";
+import { FormActions } from "@/components/FormActions";
+import { FormGroup } from "@/components/FormGroup";
+import { Input } from "@/components/Input";
 
 interface Props {
   initialName?: string;
@@ -11,7 +17,7 @@ interface Props {
   onCancel?: () => void;
 }
 
-export default function HomeForm({
+export function HomeForm({
   initialName = "",
   initialDescription = "",
   submitLabel,
@@ -30,24 +36,27 @@ export default function HomeForm({
   }
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
-      <label htmlFor="name">Name</label>
-      <input
-        id="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Name"
-      />
+    <Form onSubmit={handleSubmit}>
+      <FormGroup label="Name" htmlFor="name">
+        <Input
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Name"
+          required
+        />
+      </FormGroup>
 
-      <label htmlFor="description">Description</label>
-      <input
-        id="description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Description"
-      />
+      <FormGroup label="Description" htmlFor="description">
+        <Input
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Description"
+        />
+      </FormGroup>
 
-      <div className="form__actions">
+      <FormActions>
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "..." : submitLabel}
         </Button>
@@ -61,7 +70,7 @@ export default function HomeForm({
             Cancel
           </Button>
         )}
-      </div>
-    </form>
+      </FormActions>
+    </Form>
   );
 }

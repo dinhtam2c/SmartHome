@@ -1,5 +1,6 @@
 import type { HomeAddRequest } from "../home.types";
-import HomeForm from "./HomeForm";
+
+import { HomeForm } from "./HomeForm";
 
 interface Props {
   onAdd: (request: HomeAddRequest) => void;
@@ -7,7 +8,7 @@ interface Props {
   isSubmitting?: boolean;
 }
 
-export default function AddHomeForm({ onAdd, onCancel, isSubmitting }: Props) {
+export function AddHomeForm({ onAdd, onCancel, isSubmitting }: Props) {
   return (
     <HomeForm
       submitLabel="Add"

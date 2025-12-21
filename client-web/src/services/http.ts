@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "../app/config";
+import { API_BASE_URL } from "@/config";
 
 export async function api<T>(
   path: string, options: RequestInit = {}

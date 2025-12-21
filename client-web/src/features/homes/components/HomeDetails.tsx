@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useHomeDetails } from "../hooks/useHomeDetails";
-import { DetailsView } from "../../../components/DetailsView";
-import { DetailRow } from "../../../components/DetailRow";
-import { timestampToDateTime } from "../../../utils/dateTimeUtils";
-import HomeForm from "./HomeForm";
+
 import type { HomeUpdateRequest } from "../home.types";
-import Button from "../../../components/Button";
+
+import { HomeForm } from "./HomeForm";
+
+import { Button } from "@/components/Button";
+import { DetailsView } from "@/components/DetailsView/DetailsView";
+import { DetailRow } from "@/components/DetailRow/DetailRow";
+import { timestampToDateTime } from "@/utils/dateTimeUtils";
 
 interface Props {
   id: string | null;
@@ -13,7 +16,7 @@ interface Props {
   onDeleteSuccess: () => void;
 }
 
-export default function HomeDetails({
+export function HomeDetails({
   id,
   onUpdateSuccess,
   onDeleteSuccess,

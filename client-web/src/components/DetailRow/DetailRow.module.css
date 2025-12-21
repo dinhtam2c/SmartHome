@@ -1,0 +1,13 @@
+.label {
+  color: #ababab;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.value {
+  font-size: 0.95rem;
+  color: #fff9f9;
+  word-break: break-word;
+}

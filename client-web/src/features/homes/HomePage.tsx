@@ -1,14 +1,19 @@
 import { useMemo, useState } from "react";
 import { useHomes } from "./hooks/useHomes";
+
 import type { HomeAddRequest } from "./home.types";
-import HomeList from "./components/HomeList";
-import AddHomeForm from "./components/AddHomeForm";
-import Modal from "../../components/Modal";
-import HomeDetails from "./components/HomeDetails";
-import Button from "../../components/Button";
+
+import { HomeList } from "./components/HomeList";
+import { AddHomeForm } from "./components/AddHomeForm";
+import { HomeDetails } from "./components/HomeDetails";
+
+import { Modal } from "@/components/Modal/Modal";
+import { Button } from "@/components/Button";
+import { PageHeader } from "@/components/PageHeader";
 
 export default function HomePage() {
-  const { homes, loading, reloading, isAdding, error, addHome, reload } = useHomes();
+  const { homes, loading, reloading, isAdding, error, addHome, reload } =
+    useHomes();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedHomeId, setSelectedHomeId] = useState<string | null>(null);
 
@@ -33,12 +38,14 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="page-header">
-        <h2>Homes {reloading && <small>Reloading...</small>}</h2>
-        <Button variant="primary" onClick={() => setIsAddModalOpen(true)}>
-          Add Home
-        </Button>
-      </div>
+      <PageHeader
+        title={`Homes ${reloading ? "(Reloading...)" : ""}`}
+        action={
+          <Button variant="primary" onClick={() => setIsAddModalOpen(true)}>
+            Add Home
+          </Button>
+        }
+      />
 
       <HomeList homes={homes} onClick={setSelectedHomeId} />
 
