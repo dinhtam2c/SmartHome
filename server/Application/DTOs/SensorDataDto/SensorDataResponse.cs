@@ -8,7 +8,7 @@ public record SensorDataResponse(
     SensorType Type,
     string Unit,
     float Value,
-    DateTime Timestamp
+    long Timestamp
 )
 {
     public static SensorDataResponse FromSensorData(SensorData e)
@@ -19,7 +19,7 @@ public record SensorDataResponse(
             e.Sensor!.Type,
             e.Sensor!.Unit,
             e.Value,
-            DateTimeOffset.FromUnixTimeSeconds(e.Timestamp).LocalDateTime
+            e.Timestamp
         );
     }
 }
