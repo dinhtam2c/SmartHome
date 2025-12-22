@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHomeDetails } from "../hooks/useHomeDetails";
 
-import type { HomeUpdateRequest } from "../home.types";
+import type { HomeUpdateRequest } from "../homes.types";
 
 import { HomeForm } from "./HomeForm";
 

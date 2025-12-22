@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
-import HomePage from "@/features/homes/HomePage";
+import { HomePage } from "@/features/homes";
 import GatewayList from "@/features/gateways/GatewayList";
 import DeviceList from "@/features/devices/DeviceList";
 import Environment from "@/features/environment/Environment";

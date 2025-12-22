@@ -5,7 +5,7 @@ import type {
   HomeAddRequest,
   HomeAddResponse,
   HomeUpdateRequest
-} from "./home.types";
+} from "./homes.types";
 
 const basePath = "/homes";
 

@@ -1,4 +1,4 @@
-import type { HomeListElement } from "../home.types";
+import type { HomeListElement } from "../homes.types";
 
 import { Cell } from "../../../components/Cell";
 import { CellGrid } from "../../../components/CellGrid";

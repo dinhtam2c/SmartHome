@@ -1,4 +1,4 @@
-import type { HomeAddRequest } from "../home.types";
+import type { HomeAddRequest } from "../homes.types";
 
 import { HomeForm } from "./HomeForm";
 

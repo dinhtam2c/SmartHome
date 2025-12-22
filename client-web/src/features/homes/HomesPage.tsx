@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useHomes } from "./hooks/useHomes";
 
-import type { HomeAddRequest } from "./home.types";
+import type { HomeAddRequest } from "./homes.types";
 
 import { HomeList } from "./components/HomeList";
 import { AddHomeForm } from "./components/AddHomeForm";
@@ -11,7 +11,7 @@ import { Modal } from "@/components/Modal/Modal";
 import { Button } from "@/components/Button";
 import { PageHeader } from "@/components/PageHeader";
 
-export default function HomePage() {
+export function HomePages() {
   const { homes, loading, reloading, isAdding, error, addHome, reload } =
     useHomes();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);

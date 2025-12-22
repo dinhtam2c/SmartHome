@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 
-import type { HomeAddRequest, HomeUpdateRequest } from "../home.types";
+import type { HomeAddRequest, HomeUpdateRequest } from "../homes.types";
 
 import { Button } from "@/components/Button";
 import { Form } from "@/components/Form";

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import type { HomeDetails, HomeUpdateRequest } from "../home.types";
+import type { HomeDetails, HomeUpdateRequest } from "../homes.types";
 import {
   getHomeDetails,
   updateHome as apiUpdateHome,
   deleteHome as apiDeleteHome,
-} from "../home.api";
+} from "../homes.api";
 
 export function useHomeDetails(id: string | null) {
   const [home, setHome] = useState<HomeDetails | null>(null);

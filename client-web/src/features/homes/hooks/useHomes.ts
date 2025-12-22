@@ -1,10 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
-import type { HomeListElement, HomeAddRequest } from "../home.types";
+import type { HomeListElement, HomeAddRequest } from "../homes.types";
 import {
   addHome as apiAddHome,
   deleteHome as apiDeleteHome,
   getHomes,
-} from "../home.api";
+} from "../homes.api";
 
 export function useHomes() {
   const [homes, setHomes] = useState<HomeListElement[]>([]);
