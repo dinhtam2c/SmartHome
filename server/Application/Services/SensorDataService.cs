@@ -59,7 +59,6 @@ public class SensorDataService : ISensorDataService
                 continue;
             }
 
-            string? location = device.Location?.Name ?? "Unknown";
             long timestamp = deviceData.Timestamp;
 
             var sensorMap = device.Sensors.ToDictionary(s => s.Id);
@@ -70,7 +69,7 @@ public class SensorDataService : ISensorDataService
                     if (!sensorMap.TryGetValue(e.SensorId, out var sensor))
                         return null;
 
-                    return e.ToSensorData(location, sensor.Type, sensor.Unit, timestamp);
+                    return e.ToSensorData(device.LocationId, timestamp);
                 })
                 .Where(sd => sd is not null)
                 .Cast<SensorData>();

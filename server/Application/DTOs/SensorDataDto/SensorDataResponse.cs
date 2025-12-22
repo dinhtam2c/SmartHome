@@ -4,7 +4,7 @@ namespace Application.DTOs.SensorDataDto;
 
 public record SensorDataResponse(
     Guid Id,
-    string Location,
+    Guid? LocationId,
     SensorType Type,
     string Unit,
     float Value,
@@ -15,7 +15,7 @@ public record SensorDataResponse(
     {
         return new(
             e.Id,
-            e.Location,
+            e.LocationId,
             e.Sensor!.Type,
             e.Sensor!.Unit,
             e.Value,

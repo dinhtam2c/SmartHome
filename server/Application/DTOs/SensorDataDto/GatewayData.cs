@@ -19,14 +19,12 @@ public record DeviceSensorData(
     float Value
 )
 {
-    public SensorData ToSensorData(string location, SensorType type, string unit, long timestamp)
+    public SensorData ToSensorData(Guid? locationId, long timestamp)
     {
         return new(
             id: Guid.NewGuid(),
             sensorId: SensorId,
-            location: location,
-            type: type,
-            unit: unit,
+            locationId: locationId,
             value: Value,
             timestamp: timestamp
         );

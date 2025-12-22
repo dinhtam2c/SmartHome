@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251217085500_InitialCreate")]
+    [Migration("20251222102606_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -333,9 +333,7 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasMaxLength(50)
+                    b.Property<Guid?>("LocationId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("SensorId")
@@ -344,19 +342,13 @@ namespace Infrastructure.Migrations
                     b.Property<long>("Timestamp")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Unit")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("TEXT");
-
                     b.Property<float>("Value")
                         .HasPrecision(6, 1)
                         .HasColumnType("REAL");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
 
                     b.HasIndex("SensorId");
 
@@ -491,10 +483,17 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.SensorData", b =>
                 {
+                    b.HasOne("Core.Entities.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("Core.Entities.Sensor", "Sensor")
                         .WithMany()
                         .HasForeignKey("SensorId")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Location");
 
                     b.Navigation("Sensor");
                 });

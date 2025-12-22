@@ -13,16 +13,17 @@ class SensorDataConfiguration : IEntityTypeConfiguration<SensorData>
         builder.Property(sd => sd.Id)
             .ValueGeneratedNever();
 
-        builder.Property(sd => sd.Location)
-            .HasMaxLength(50);
-        builder.Property(sd => sd.Unit)
-            .HasMaxLength(10);
         builder.Property(sd => sd.Value)
             .HasPrecision(6, 1);
 
         builder.HasOne(sd => sd.Sensor)
             .WithMany()
             .HasForeignKey(sd => sd.SensorId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        builder.HasOne(sd => sd.Location)
+            .WithMany()
+            .HasForeignKey(sd => sd.LocationId)
             .OnDelete(DeleteBehavior.SetNull);
     }
 }

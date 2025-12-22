@@ -224,15 +224,19 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     SensorId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    Location = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    Type = table.Column<int>(type: "INTEGER", nullable: false),
-                    Unit = table.Column<string>(type: "TEXT", maxLength: 10, nullable: false),
+                    LocationId = table.Column<Guid>(type: "TEXT", nullable: true),
                     Value = table.Column<float>(type: "REAL", precision: 6, scale: 1, nullable: false),
                     Timestamp = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SensorData", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SensorData_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Locations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_SensorData_Sensors_SensorId",
                         column: x => x.SensorId,
@@ -282,6 +286,11 @@ namespace Infrastructure.Migrations
                 name: "IX_Locations_HomeId",
                 table: "Locations",
                 column: "HomeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SensorData_LocationId",
+                table: "SensorData",
+                column: "LocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SensorData_SensorId",
