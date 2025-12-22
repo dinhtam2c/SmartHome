@@ -3,7 +3,6 @@ using Application.DTOs.DeviceDto;
 using Application.DTOs.GatewayDto;
 using Application.DTOs.HomeDto;
 using Application.DTOs.LocationDto;
-using Application.DTOs.SensorDataDto;
 
 namespace WebAPI;
 
@@ -32,9 +31,6 @@ namespace WebAPI;
 [JsonSerializable(typeof(DeviceAddRequest))]
 [JsonSerializable(typeof(DeviceAddResponse))]
 [JsonSerializable(typeof(DeviceCommandRequest))]
-
-
-[JsonSerializable(typeof(IEnumerable<SensorDataResponse>))]
 
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {

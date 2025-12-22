@@ -9,8 +9,6 @@ namespace Application.Services;
 public interface ISensorDataService
 {
     Task StoreSensorData(Guid gatewayId, GatewayData gatewayData);
-
-    Task<IEnumerable<SensorDataResponse>> GetAllSensorData();
 }
 
 public class SensorDataService : ISensorDataService
@@ -82,10 +80,5 @@ public class SensorDataService : ISensorDataService
             await _sensorDataRepository.AddRange(sensorDataToInsert);
             await _unitOfWork.Commit();
         }
-    }
-
-    public async Task<IEnumerable<SensorDataResponse>> GetAllSensorData()
-    {
-        return (await _sensorDataRepository.GetAllWithSensor()).Select(SensorDataResponse.FromSensorData);
     }
 }

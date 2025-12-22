@@ -105,6 +105,5 @@ HomeController.MapEndpoints(api);
 GatewayController.MapEndpoints(api);
 DeviceController.MapEndpoints(api);
 LocationController.MapEndpoints(api);
-SensorDataController.MapEndpoints(api);
 
 app.Run();
