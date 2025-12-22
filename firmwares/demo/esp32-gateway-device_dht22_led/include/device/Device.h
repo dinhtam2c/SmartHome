@@ -60,7 +60,7 @@ private:
 
     std::string _identifier;
     std::string _deviceId;
-    long _lastMsgTime;
+    unsigned long _lastMsgTime;
     int _dataInterval;
     int _stateInterval;
     DHT _dht22;

@@ -70,9 +70,9 @@ void Device::begin() {
 }
 
 void Device::loop() {
-    time_t now = time(NULL);
+    unsigned long now = millis();
 
-    if (now - _lastMsgTime < _dataInterval)
+    if (now - _lastMsgTime < _dataInterval * 1000)
         return;
 
     _lastMsgTime = now;
