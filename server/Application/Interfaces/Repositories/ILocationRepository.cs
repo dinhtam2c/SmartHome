@@ -10,5 +10,7 @@ public interface ILocationRepository
 
     Task<Location?> GetById(Guid id);
 
+    Task<Location?> GetByIdWithDevicesWithSensorsAndActuators(Guid id);
+
     Task Delete(Location location);
 }

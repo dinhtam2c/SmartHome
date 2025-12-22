@@ -1,10 +1,17 @@
 ﻿using System.Text.Json.Serialization;
+using Application.DTOs.DashboardDto;
 using Application.DTOs.DeviceDto;
 using Application.DTOs.GatewayDto;
 using Application.DTOs.HomeDto;
 using Application.DTOs.LocationDto;
 
 namespace WebAPI;
+
+[JsonSerializable(typeof(IEnumerable<HomeDashboardElementDto>))]
+[JsonSerializable(typeof(HomeDashboardDto))]
+[JsonSerializable(typeof(LocationDashboardDto))]
+[JsonSerializable(typeof(DeviceDashboardDto))]
+
 
 [JsonSerializable(typeof(IEnumerable<HomeListElement>))]
 [JsonSerializable(typeof(HomeDetails))]

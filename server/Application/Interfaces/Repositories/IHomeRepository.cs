@@ -10,5 +10,7 @@ public interface IHomeRepository
 
     Task<Home?> GetById(Guid id);
 
+    Task<Home?> GetByIdWithLocations(Guid id);
+
     Task Delete(Home home);
 }

@@ -30,6 +30,13 @@ public class HomeRepository : IHomeRepository
         return await _context.Homes.FindAsync(id);
     }
 
+    public async Task<Home?> GetByIdWithLocations(Guid id)
+    {
+        return await _context.Homes
+            .Include(h => h.Locations)
+            .FirstOrDefaultAsync(h => h.Id == id);
+    }
+
     public Task Delete(Home home)
     {
         _context.Homes.Remove(home);

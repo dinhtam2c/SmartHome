@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.DTOs.DeviceDto;
+using Application.Interfaces.Repositories;
 using Core.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -62,6 +63,16 @@ public class DeviceRepository : IDeviceRepository
             .FirstOrDefaultAsync(d => d.Id == id);
     }
 
+    public async Task<Device?> GetByIdWithSensorsAndActuators(Guid id)
+    {
+        return await _context.Devices
+            .AsSplitQuery()
+            .Include(d => d.Sensors)
+            .Include(d => d.Actuators)
+            .FirstOrDefaultAsync(d => d.Id == id);
+    }
+
+
     public async Task<Device?> GetByIdentifierWithCapabilities(string identifier)
     {
         return await _context.Devices
@@ -69,5 +80,20 @@ public class DeviceRepository : IDeviceRepository
             .Include(d => d.Sensors)
             .Include(d => d.Actuators)
             .FirstOrDefaultAsync(d => d.Identifier == identifier);
+    }
+
+    public async Task<Dictionary<Guid, LocationDeviceCount>> CountByLocationForHome(Guid homeId)
+    {
+        return await _context.Devices
+            .Include(d => d.Location)
+            .Where(d => d.Location != null && d.Location.HomeId == homeId)
+            .GroupBy(d => d.LocationId!.Value)
+            .Select(g => new LocationDeviceCount
+            (
+                LocationId: g.Key,
+                Total: g.Count(),
+                Online: g.Count(d => d.IsOnline)
+            ))
+            .ToDictionaryAsync(g => g.LocationId, g => g);
     }
 }

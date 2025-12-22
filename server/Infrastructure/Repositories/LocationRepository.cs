@@ -30,6 +30,17 @@ public class LocationRepository : ILocationRepository
         return await _context.Locations.FindAsync(id);
     }
 
+    public async Task<Location?> GetByIdWithDevicesWithSensorsAndActuators(Guid id)
+    {
+        return await _context.Locations
+            .AsSplitQuery()
+            .Include(l => l.Devices)
+                .ThenInclude(d => d.Sensors)
+            .Include(l => l.Devices)
+                .ThenInclude(d => d.Actuators)
+            .FirstOrDefaultAsync(l => l.Id == id);
+    }
+
     public Task Delete(Location location)
     {
         _context.Locations.Remove(location);

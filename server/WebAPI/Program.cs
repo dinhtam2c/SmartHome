@@ -58,6 +58,7 @@ builder.Services.AddSingleton<DeviceActuatorsStatesHandler>();
 builder.Services.AddSingleton<IMessageHandler, GatewayDataHandler>();
 builder.Services.AddSingleton<GatewayDataHandler>();
 
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 builder.Services.AddScoped<IHomeRepository, HomeRepository>();
 builder.Services.AddScoped<IHomeService, HomeService>();
@@ -101,6 +102,7 @@ app.UseCors(MyAllowSpecificOrigins);
 
 var api = app.MapGroup("/api/v1");
 
+DashboardController.MapEndpoints(api);
 HomeController.MapEndpoints(api);
 GatewayController.MapEndpoints(api);
 DeviceController.MapEndpoints(api);
