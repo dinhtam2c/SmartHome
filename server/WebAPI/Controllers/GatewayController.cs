@@ -10,12 +10,19 @@ public static class GatewayController
         var gatewayApi = routes.MapGroup("/gateways");
 
         gatewayApi.MapGet("/", GetAllGateways);
+        gatewayApi.MapGet("/{gatewayId:guid}", GetGatewayDetails);
         gatewayApi.MapPost("/{gatewayId}/home", AssignHomeToGateway);
     }
 
     private static async Task<IResult> GetAllGateways(IGatewayService service)
     {
         var response = await service.GetAllGateways();
+        return Results.Ok(response);
+    }
+
+    private static async Task<IResult> GetGatewayDetails(IGatewayService service, Guid gatewayId)
+    {
+        var response = await service.GetGatewayDetails(gatewayId);
         return Results.Ok(response);
     }
 

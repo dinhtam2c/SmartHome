@@ -32,6 +32,13 @@ public class GatewayRepository : IGatewayRepository
         return await _context.Gateways.FindAsync(id);
     }
 
+    public async Task<Gateway?> GetByIdWithHome(Guid id)
+    {
+        return await _context.Gateways
+            .Include(g => g.Home)
+            .FirstOrDefaultAsync(g => g.Id == id);
+    }
+
     public async Task<Gateway?> GetByIdWithDevices(Guid id)
     {
         return await _context.Gateways

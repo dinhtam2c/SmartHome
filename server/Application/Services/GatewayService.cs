@@ -13,6 +13,8 @@ public interface IGatewayService
 {
     Task<IEnumerable<GatewayListElement>> GetAllGateways();
 
+    Task<GatewayDetails> GetGatewayDetails(Guid gatewayId);
+
     Task SendReprovision(Guid gatewayId);
 
     Task EnsureGatewayExistOrReprovision(Guid gatewayId);
@@ -50,6 +52,13 @@ public class GatewayService : IGatewayService
     {
         var gateways = await _gatewayRepository.GetAllWithHome();
         return gateways.Select(GatewayListElement.FromGateway);
+    }
+
+    public async Task<GatewayDetails> GetGatewayDetails(Guid gatewayId)
+    {
+        var gateway = await _gatewayRepository.GetByIdWithHome(gatewayId)
+            ?? throw new GatewayNotFoundException(gatewayId);
+        return GatewayDetails.FromGateway(gateway);
     }
 
     public async Task SendReprovision(Guid gatewayId)

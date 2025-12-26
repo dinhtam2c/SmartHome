@@ -10,6 +10,8 @@ public interface IGatewayRepository
 
     Task<Gateway?> GetById(Guid id);
 
+    Task<Gateway?> GetByIdWithHome(Guid id);
+
     Task<Gateway?> GetByIdWithDevices(Guid id);
 
     Task<Gateway?> GetByMac(string mac);
