@@ -30,6 +30,7 @@ export function DeviceModal({ deviceId, onClose }: Props) {
         command,
         parameters: null,
       });
+      await new Promise((resolve) => setTimeout(resolve, 100));
       await refetch();
     } catch (err) {
       setCommandError((err as Error).message);
