@@ -22,4 +22,6 @@ public interface IDeviceRepository
     Task<Device?> GetByIdentifierWithCapabilities(string deviceIdentifier);
 
     Task<Dictionary<Guid, LocationDeviceCount>> CountByLocationForHome(Guid homeId);
+
+    Task Delete(Device device);
 }

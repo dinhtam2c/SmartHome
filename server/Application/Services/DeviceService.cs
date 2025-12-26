@@ -32,6 +32,10 @@ public interface IDeviceService
     Task AssignLocationToDevice(Guid deviceId, DeviceLocationAssignRequest request);
 
     Task AssignGatewayToDevice(Guid deviceId, DeviceGatewayAssignRequest request);
+
+    Task UpdateDevice(Guid deviceId, DeviceUpdateRequest request);
+
+    Task DeleteDevice(Guid deviceId);
 }
 
 public class DeviceService : IDeviceService
@@ -308,5 +312,20 @@ public class DeviceService : IDeviceService
         await _unitOfWork.Commit();
 
         await _gatewayService.AddDeviceToWhiteList(gatewayId, device.Identifier);
+    }
+
+    public async Task UpdateDevice(Guid deviceId, DeviceUpdateRequest request)
+    {
+        var device = await _deviceRepository.GetById(deviceId) ?? throw new DeviceNotFoundException(deviceId);
+        device.Name = request.Name;
+        device.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        await _unitOfWork.Commit();
+    }
+
+    public async Task DeleteDevice(Guid deviceId)
+    {
+        var device = await _deviceRepository.GetById(deviceId) ?? throw new DeviceNotFoundException(deviceId);
+        await _deviceRepository.Delete(device);
+        await _unitOfWork.Commit();
     }
 }

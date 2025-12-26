@@ -96,4 +96,10 @@ public class DeviceRepository : IDeviceRepository
             ))
             .ToDictionaryAsync(g => g.LocationId, g => g);
     }
+
+    public Task Delete(Device device)
+    {
+        _context.Devices.Remove(device);
+        return Task.CompletedTask;
+    }
 }
