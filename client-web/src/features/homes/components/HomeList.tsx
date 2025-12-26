@@ -11,7 +11,7 @@ interface Props {
 export function HomeList({ homes, onClick }: Props) {
   return (
     <CellGrid>
-      {homes.map(h => (
+      {homes.map((h) => (
         <Cell
           key={h.id}
           id={h.id}

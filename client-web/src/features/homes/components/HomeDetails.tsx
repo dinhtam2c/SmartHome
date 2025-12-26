@@ -16,13 +16,16 @@ interface Props {
   onDeleteSuccess: () => void;
 }
 
-export function HomeDetails({
-  id,
-  onUpdateSuccess,
-  onDeleteSuccess,
-}: Props) {
-  const { home, loading, error, isUpdating, isDeleting, updateHome, deleteHome } =
-    useHomeDetails(id);
+export function HomeDetails({ id, onUpdateSuccess, onDeleteSuccess }: Props) {
+  const {
+    home,
+    loading,
+    error,
+    isUpdating,
+    isDeleting,
+    updateHome,
+    deleteHome,
+  } = useHomeDetails(id);
   const [isEditing, setIsEditing] = useState(false);
 
   async function handleDelete() {
@@ -57,8 +60,18 @@ export function HomeDetails({
         <DetailsView
           actions={
             <>
-              <Button variant="secondary" onClick={handleEdit} disabled={isDeleting}>Edit</Button>
-              <Button variant="danger" onClick={handleDelete} disabled={isDeleting}>
+              <Button
+                variant="secondary"
+                onClick={handleEdit}
+                disabled={isDeleting}
+              >
+                Edit
+              </Button>
+              <Button
+                variant="danger"
+                onClick={handleDelete}
+                disabled={isDeleting}
+              >
                 {isDeleting ? "Deleting..." : "Delete"}
               </Button>
             </>
@@ -73,7 +86,7 @@ export function HomeDetails({
             {timestampToDateTime(home.updatedAt)}
           </DetailRow>
         </DetailsView>
-      </div >
+      </div>
     );
   } else {
     return (

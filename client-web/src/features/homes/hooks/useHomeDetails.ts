@@ -13,7 +13,6 @@ export function useHomeDetails(id: string | null) {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-
   useEffect(() => {
     loadHome();
   }, [id]);
@@ -57,5 +56,14 @@ export function useHomeDetails(id: string | null) {
     }
   }
 
-  return { home, loading, error, isUpdating, isDeleting, updateHome, deleteHome, reload: loadHome };
+  return {
+    home,
+    loading,
+    error,
+    isUpdating,
+    isDeleting,
+    updateHome,
+    deleteHome,
+    reload: loadHome,
+  };
 }

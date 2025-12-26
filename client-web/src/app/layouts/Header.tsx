@@ -3,8 +3,10 @@ import styles from "./Header.module.css";
 
 export default function Header() {
   return (
-    <header className={styles["header"]}>
-      <Link className={styles["title"]} to="/">SMART HOME</Link>
+    <header className={styles.header}>
+      <Link className={styles.title} to="/">
+        SMART HOME
+      </Link>
     </header>
   );
 }

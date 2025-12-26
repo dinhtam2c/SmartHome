@@ -13,4 +13,4 @@ export function PageHeader({ title, action }: Props) {
       {action && <div className={styles.action}>{action}</div>}
     </div>
   );
-};
+}

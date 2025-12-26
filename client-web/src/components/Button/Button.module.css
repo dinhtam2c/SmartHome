@@ -29,7 +29,6 @@
   transform: none;
 }
 
-/* Primary */
 .btn.btn,
 .btn--primary {
   background-color: var(--color-primary);
@@ -48,7 +47,6 @@
   transform: translateY(0);
 }
 
-/* Secondary */
 .btn--secondary {
   background-color: var(--bg-panel);
   color: var(--color-text-primary);
@@ -57,17 +55,17 @@
 
 .btn--secondary:hover {
   background-color: #f8f8f8;
+  color: var(--color-text-primary);
   border-color: #d0d0d0;
   transform: translateY(-2px);
 }
 
 .btn--secondary:active {
   background-color: #f0f0f0;
+  color: var(--color-text-primary);
   transform: translateY(0);
 }
 
-
-/* Danger */
 .btn--danger {
   background-color: var(--color-danger);
   color: #ffffff;

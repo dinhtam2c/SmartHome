@@ -1,14 +1,15 @@
 import { API_BASE_URL } from "@/config";
 
 export async function api<T>(
-  path: string, options: RequestInit = {}
+  path: string,
+  options: RequestInit = {}
 ): Promise<T> {
   const res = await fetch(`${API_BASE_URL}${path}`, {
     headers: {
       "Content-type": "application/json",
-      ...options.headers
+      ...options.headers,
     },
-    ...options
+    ...options,
   });
 
   //await new Promise(resolve => setTimeout(resolve, 1000));

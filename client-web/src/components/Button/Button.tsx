@@ -1,8 +1,7 @@
 import React from "react";
 import styles from "./Button.module.css";
 
-interface Props
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "danger";
   size?: "sm" | "md" | "lg";
 }
@@ -19,7 +18,9 @@ export function Button({
     variant !== "primary" && styles[`btn--${variant}`],
     size !== "md" && styles[`btn--${size}`],
     className,
-  ].filter(Boolean).join(" ");
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <button className={classes} {...props}>

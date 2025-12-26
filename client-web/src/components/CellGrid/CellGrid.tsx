@@ -6,9 +6,5 @@ interface Props {
 }
 
 export function CellGrid({ children }: Props) {
-  return (
-    <div className={styles.grid}>
-      {children}
-    </div>
-  );
+  return <div className={styles.grid}>{children}</div>;
 }

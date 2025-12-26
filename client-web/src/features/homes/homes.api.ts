@@ -1,10 +1,10 @@
-import { api } from "../../services/http";
+import { api } from "@/services/http";
 import type {
   HomeListElement,
   HomeDetails,
   HomeAddRequest,
   HomeAddResponse,
-  HomeUpdateRequest
+  HomeUpdateRequest,
 } from "./homes.types";
 
 const basePath = "/homes";
@@ -20,19 +20,19 @@ export function getHomeDetails(homeId: string) {
 export function addHome(request: HomeAddRequest) {
   return api<HomeAddResponse>(`${basePath}`, {
     method: "POST",
-    body: JSON.stringify(request)
+    body: JSON.stringify(request),
   });
 }
 
 export function updateHome(homeId: string, request: HomeUpdateRequest) {
   return api(`${basePath}/${homeId}`, {
     method: "PATCH",
-    body: JSON.stringify(request)
+    body: JSON.stringify(request),
   });
 }
 
 export function deleteHome(id: string) {
   return api(`${basePath}/${id}`, {
-    method: "DELETE"
+    method: "DELETE",
   });
 }

@@ -11,7 +11,7 @@ import { Modal } from "@/components/Modal/Modal";
 import { Button } from "@/components/Button";
 import { PageHeader } from "@/components/PageHeader";
 
-export function HomePages() {
+export function HomesPage() {
   const { homes, loading, reloading, isAdding, error, addHome, reload } =
     useHomes();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);

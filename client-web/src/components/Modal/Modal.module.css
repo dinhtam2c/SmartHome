@@ -34,14 +34,14 @@
 }
 
 .close {
-  background-color: #e0e0e0;
+  background-color: var(--color-border);
   border-radius: 50%;
   width: 24px;
   height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #888;
+  color: var(--color-text-secondary);
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
@@ -51,7 +51,7 @@
 
 .close:hover {
   background-color: #d0d0d0;
-  color: #333;
+  color: var(--color-text-primary);
 }
 
 .body {

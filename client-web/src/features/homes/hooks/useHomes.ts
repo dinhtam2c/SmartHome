@@ -52,5 +52,14 @@ export function useHomes() {
     }
   }
 
-  return { homes, loading, reloading, isAdding, error, addHome, deleteHome, reload };
+  return {
+    homes,
+    loading,
+    reloading,
+    isAdding,
+    error,
+    addHome,
+    deleteHome,
+    reload,
+  };
 }

@@ -9,15 +9,9 @@ interface Props {
 export function DetailsView({ children, actions }: Props) {
   return (
     <div className={styles.container}>
-      <div className={styles.grid}>
-        {children}
-      </div>
+      <div className={styles.grid}>{children}</div>
 
-      {actions && (
-        <div className={styles.actions}>
-          {actions}
-        </div>
-      )}
+      {actions && <div className={styles.actions}>{actions}</div>}
     </div>
   );
 }

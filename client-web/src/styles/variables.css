@@ -1,9 +1,10 @@
 :root {
-  --font-family-sans: "SF Pro Display", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", sans-serif;
-  --font-family-mono: "SF Mono", "Monaco", "Consolas", "Liberation Mono",
-    "Courier New", monospace;
+  --font-family-sans:
+    "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  --font-family-mono:
+    "SF Mono", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
 
   --bg-main: #f0f2f5;
   --bg-panel: #ffffff;
