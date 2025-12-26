@@ -7,11 +7,7 @@ public record DeviceListElement(
     string Identifier,
     string Name,
     string? GatewayName,
-    string? Home,
-    string? Location,
-    bool IsOnline,
-    long LastSeenAt,
-    long UpTime
+    string? Home
 )
 {
     public static DeviceListElement FromDevice(Device device)
@@ -21,11 +17,7 @@ public record DeviceListElement(
             Identifier: device.Identifier,
             Name: device.Name,
             GatewayName: device.Gateway?.Name,
-            Home: device.Gateway?.Home?.Name,
-            Location: device.Location?.Name,
-            IsOnline: device.IsOnline,
-            LastSeenAt: device.LastSeenAt,
-            UpTime: device.UpTime
+            Home: device.Gateway?.Home?.Name
         );
     }
 }

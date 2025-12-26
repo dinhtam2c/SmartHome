@@ -13,9 +13,6 @@ public record DeviceDetails(
     string? Manufacturer,
     string? Model,
     string? FirmwareVersion,
-    bool IsOnline,
-    long LastSeenAt,
-    long UpTime,
     long CreatedAt,
     long UpdatedAt,
     IEnumerable<SensorDetail>? Sensors,
@@ -35,13 +32,10 @@ public record DeviceDetails(
             Manufacturer: device.Manufacturer,
             Model: device.Model,
             FirmwareVersion: device.FirmwareVersion,
-            IsOnline: device.IsOnline,
-            LastSeenAt: device.LastSeenAt,
-            UpTime: device.UpTime,
             CreatedAt: device.CreatedAt,
             UpdatedAt: device.UpdatedAt,
             Sensors: device.Sensors?.Select(SensorDetail.FromSensor),
-            Actuators: device.Actuators.Select(a => ActuatorDetail.FromActuator(a, device.IsOnline))
+            Actuators: device.Actuators.Select(a => ActuatorDetail.FromActuator(a))
         );
     }
 }
@@ -74,17 +68,17 @@ public record ActuatorDetail(
     Guid Id,
     string Name,
     ActuatorType Type,
-    Dictionary<ActuatorState, object?>? States,
+    IEnumerable<ActuatorState>? SupportedStates,
     IEnumerable<ActuatorCommand>? SupportedCommands
 )
 {
-    public static ActuatorDetail FromActuator(Actuator actuator, bool isOnline)
+    public static ActuatorDetail FromActuator(Actuator actuator)
     {
         return new(
             Id: actuator.Id,
             Name: actuator.Name,
             Type: actuator.Type,
-            States: isOnline ? actuator.States : null,
+            SupportedStates: actuator.SupportedStates,
             SupportedCommands: actuator.SupportedCommands
         );
     }
