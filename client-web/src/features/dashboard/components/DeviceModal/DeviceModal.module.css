@@ -1,0 +1,106 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.error {
+  color: var(--color-danger);
+  font-size: 0.875rem;
+}
+
+.sensorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.sensorCard {
+  background-color: var(--bg-main);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+.sensorName {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.sensorValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.sensorTime {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+/* Actuator Grid */
+.actuatorGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.actuatorCard {
+  background-color: var(--bg-main);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+.actuatorName {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.actuatorStates {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.stateItem {
+  font-size: 0.875rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stateKey {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.stateValue {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.actuatorButtons {
+  display: flex;
+  gap: 0.5rem;
+}

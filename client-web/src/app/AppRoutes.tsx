@@ -1,18 +1,32 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
-import { HomePage } from "@/features/homes";
+import {
+  DashboardHomeListPage,
+  DashboardHomePage,
+  DashboardLocationPage,
+} from "@/features/dashboard";
+import { HomesPage } from "@/features/homes";
 import GatewayList from "@/features/gateways/GatewayList";
 import DeviceList from "@/features/devices/DeviceList";
-import Environment from "@/features/environment/Environment";
 
 export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
-        <Route path="homes" element={<HomePage />} />
+        <Route index element={<Navigate to="dashboard" replace />} />
+
+        <Route path="dashboard">
+          <Route index element={<DashboardHomeListPage />} />
+          <Route path="home/:homeId" element={<DashboardHomePage />} />
+          <Route
+            path="location/:locationId"
+            element={<DashboardLocationPage />}
+          />
+        </Route>
+
+        <Route path="homes" element={<HomesPage />} />
         <Route path="gateways" element={<GatewayList />} />
         <Route path="devices" element={<DeviceList />} />
-        <Route path="environment" element={<Environment />} />
       </Route>
     </Routes>
   );

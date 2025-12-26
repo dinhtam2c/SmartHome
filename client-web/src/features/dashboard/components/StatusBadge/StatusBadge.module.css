@@ -1,0 +1,9 @@
+.online {
+  color: #34c759;
+  font-weight: 600;
+}
+
+.offline {
+  color: #ff3b30;
+  font-weight: 600;
+}

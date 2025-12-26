@@ -1,0 +1,27 @@
+.subtitle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.status {
+  font-size: 0.875rem;
+}
+
+.sensorData {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.sensorItem {
+  margin-bottom: 0.25rem;
+}
+
+.actuatorStates {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.actuatorItem {
+  margin-bottom: 0.25rem;
+}
