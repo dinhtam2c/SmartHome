@@ -60,13 +60,17 @@ public class DashboardService : IDashboardService
 
         var summary = new HomeDashboardSummary(homeDeviceCount, homeOnlineDeviceCount);
 
-        var locations = home.Locations.Select(l => new LocationElement(
-            l.Id,
-            l.Name,
-            l.Description,
-            locationDeviceCounts[l.Id].Total,
-            locationDeviceCounts[l.Id].Online
-        ));
+        var locations = home.Locations.Select(l =>
+        {
+            var hasCount = locationDeviceCounts.TryGetValue(l.Id, out var count);
+            return new LocationElement(
+                l.Id,
+                l.Name,
+                l.Description,
+                hasCount ? count!.Total : 0,
+                hasCount ? count!.Online : 0
+            );
+        });
 
         return new(home, summary, locations);
     }
