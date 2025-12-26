@@ -1,52 +1,59 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-
   z-index: 1000;
+  backdrop-filter: blur(2px);
 }
 
 .modal {
-  background-color: #2b2f32;
-  color: #ffffff;
-
-  border-radius: 6px;
+  background-color: var(--bg-panel);
+  border-radius: 12px;
   width: 100%;
-  max-width: 420px;
-
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  max-width: 500px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
 
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #444;
-  font-size: large;
+.header strong {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
 }
 
 .close {
-  background: none;
-  border: none;
-
-  color: #ccc;
-  font-size: 1.25rem;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 1rem;
   font-weight: bold;
-
   cursor: pointer;
   line-height: 1;
+  transition: all 0.2s ease;
 }
 
 .close:hover {
-  color: #fff;
+  background-color: #d0d0d0;
+  color: #333;
 }
 
 .body {
-  padding: 1rem;
+  padding: 1.5rem;
 }

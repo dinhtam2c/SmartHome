@@ -10,7 +10,7 @@ interface Props {
 
 export function Cell({ id, title, subtitle, onClick, disabled = false }: Props) {
   return (
-    <button className={styles.cell} disabled={disabled} onClick={() => onClick(id)}>
+    <button key={id} className={styles.cell} disabled={disabled} onClick={() => onClick(id)}>
       <div className={styles.title}>{title}</div>
       {subtitle && <div className={styles.description}>{subtitle}</div>}
     </button>

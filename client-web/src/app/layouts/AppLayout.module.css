@@ -3,21 +3,19 @@
   flex-direction: column;
   min-height: 100vh;
   background-color: var(--bg-main);
-  color: var(--text);
-  font-family: monospace;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-sans);
 }
 
 .content-area {
   display: flex;
   flex: 1;
-  background-color: var(--bg-main);
 }
 
 .main-content {
   flex: 1;
-  padding: 2rem;
-  font-weight: 500;
-  max-width: 1200px;
+  padding: 2rem 3rem;
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
 }

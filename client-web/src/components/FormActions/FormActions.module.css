@@ -1,10 +1,6 @@
 .formActions {
   display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.formActions .btn {
-  min-width: 90px;
-  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  justify-content: flex-end;
 }
