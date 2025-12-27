@@ -25,6 +25,13 @@ public class LocationRepository : ILocationRepository
         return await _context.Locations.ToListAsync();
     }
 
+    public async Task<IEnumerable<Location>> GetByHomeId(Guid homeId)
+    {
+        return await _context.Locations
+            .Where(l => l.HomeId == homeId)
+            .ToListAsync();
+    }
+
     public async Task<Location?> GetById(Guid id)
     {
         return await _context.Locations.FindAsync(id);

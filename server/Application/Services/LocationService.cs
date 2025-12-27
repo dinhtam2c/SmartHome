@@ -8,7 +8,7 @@ namespace Application.Services;
 
 public interface ILocationService
 {
-    Task<IEnumerable<LocationListElement>> GetLocationList();
+    Task<IEnumerable<LocationListElement>> GetLocationList(Guid? homeId = null);
 
     Task<LocationDetails> GetLocationDetails(Guid locationId);
 
@@ -35,9 +35,11 @@ public class LocationService : ILocationService
         _homeRepository = homeRepository;
     }
 
-    public async Task<IEnumerable<LocationListElement>> GetLocationList()
+    public async Task<IEnumerable<LocationListElement>> GetLocationList(Guid? homeId = null)
     {
-        var locations = await _locationRepository.GetAll();
+        var locations = homeId.HasValue
+            ? await _locationRepository.GetByHomeId(homeId.Value)
+            : await _locationRepository.GetAll();
         return locations.Select(LocationListElement.FromLocation);
     }
 

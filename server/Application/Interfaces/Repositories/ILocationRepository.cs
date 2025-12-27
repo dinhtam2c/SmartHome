@@ -8,6 +8,8 @@ public interface ILocationRepository
 
     Task<IEnumerable<Location>> GetAll();
 
+    Task<IEnumerable<Location>> GetByHomeId(Guid homeId);
+
     Task<Location?> GetById(Guid id);
 
     Task<Location?> GetByIdWithDevicesWithSensorsAndActuators(Guid id);

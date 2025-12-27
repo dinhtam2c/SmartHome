@@ -21,6 +21,7 @@ public class WebApiExceptionHandler : IExceptionHandler
         var (statusCode, title, detail) = ex switch
         {
             NotFoundException => (StatusCodes.Status404NotFound, "Resource not found", ex.Message),
+            BadRequestException => (StatusCodes.Status400BadRequest, "Bad request", ex.Message),
             _ => (StatusCodes.Status500InternalServerError, "Internal server error", "An internal error occured.")
         };
 

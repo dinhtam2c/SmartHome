@@ -16,9 +16,9 @@ public static class LocationController
         locationApi.MapDelete("/{locationId}", DeleteLocation);
     }
 
-    private static async Task<IResult> GetLocationList(ILocationService service)
+    private static async Task<IResult> GetLocationList(ILocationService service, Guid? homeId = null)
     {
-        var response = await service.GetLocationList();
+        var response = await service.GetLocationList(homeId);
         return Results.Ok(response);
     }
 

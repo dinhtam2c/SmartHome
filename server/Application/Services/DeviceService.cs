@@ -291,7 +291,21 @@ public class DeviceService : IDeviceService
         var locationId = request.LocationId;
 
         var device = await _deviceRepository.GetById(deviceId) ?? throw new DeviceNotFoundException(deviceId);
-        var _ = await _locationRepository.GetById(locationId) ?? throw new LocationNotFoundException(locationId);
+
+        // Validate device has a gateway assigned
+        if (!device.GatewayId.HasValue)
+            throw new DeviceGatewayRequiredException(deviceId);
+
+        var location = await _locationRepository.GetById(locationId) ?? throw new LocationNotFoundException(locationId);
+        var gateway = await _gatewayRepository.GetById(device.GatewayId.Value) ?? throw new GatewayNotFoundException(device.GatewayId.Value);
+
+        // Validate gateway has a home assigned
+        if (!gateway.HomeId.HasValue)
+            throw new GatewayHomeRequiredException(gateway.Id);
+
+        // Validate location belongs to the same home as gateway
+        if (location.HomeId != gateway.HomeId.Value)
+            throw new LocationHomeMismatchException(locationId, location.HomeId, gateway.HomeId.Value);
 
         device.LocationId = locationId;
         device.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
@@ -304,7 +318,19 @@ public class DeviceService : IDeviceService
         var gatewayId = request.GatewayId;
 
         var device = await _deviceRepository.GetById(deviceId) ?? throw new DeviceNotFoundException(deviceId);
-        var _ = await _gatewayRepository.GetById(gatewayId) ?? throw new GatewayNotFoundException(gatewayId);
+        var newGateway = await _gatewayRepository.GetById(gatewayId) ?? throw new GatewayNotFoundException(gatewayId);
+
+        // Clear location if gateway is changing and the homes are different
+        if (device.GatewayId.HasValue && device.GatewayId != gatewayId && device.LocationId.HasValue)
+        {
+            var oldGateway = await _gatewayRepository.GetById(device.GatewayId.Value);
+            
+            // Only clear location if homes are different (or if old/new gateway has no home assigned)
+            if (oldGateway?.HomeId != newGateway.HomeId)
+            {
+                device.LocationId = null;
+            }
+        }
 
         device.GatewayId = gatewayId;
         device.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
