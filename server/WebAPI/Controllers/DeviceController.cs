@@ -1,4 +1,5 @@
-using Application.DTOs.DeviceDto;
+using Application.DTOs.Api.Devices;
+using Application.DTOs.Messages.Devices;
 using Application.Services;
 
 namespace WebAPI.Controllers;

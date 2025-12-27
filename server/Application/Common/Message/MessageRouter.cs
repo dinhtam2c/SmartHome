@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using Application.DTOs;
+using Application.DTOs.Messages;
 using Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -36,7 +36,7 @@ public class MessageRouter
         {
             Converters = { new JsonStringEnumConverter() },
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            TypeInfoResolver = DtoJsonContext.Default
+            TypeInfoResolver = MessageDtoJsonContext.Default
         };
     }
 

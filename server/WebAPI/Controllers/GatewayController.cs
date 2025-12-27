@@ -1,4 +1,4 @@
-using Application.DTOs.GatewayDto;
+using Application.DTOs.Api.Gateways;
 using Application.Services;
 
 namespace WebAPI.Controllers;

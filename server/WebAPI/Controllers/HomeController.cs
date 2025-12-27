@@ -1,4 +1,4 @@
-using Application.DTOs.HomeDto;
+using Application.DTOs.Api.Homes;
 using Application.Services;
 using Core.Entities;
 

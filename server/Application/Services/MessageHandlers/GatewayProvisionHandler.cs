@@ -1,5 +1,5 @@
 ﻿using Application.Common.Message;
-using Application.DTOs.ProvisionDto;
+using Application.DTOs.Messages.Provision;
 using Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 

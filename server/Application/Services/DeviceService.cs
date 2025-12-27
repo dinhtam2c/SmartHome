@@ -1,7 +1,8 @@
 ﻿using System.Text.Json;
 using Application.Common.Message;
-using Application.DTOs.DeviceDto;
-using Application.DTOs.ProvisionDto;
+using Application.DTOs.Api.Devices;
+using Application.DTOs.Messages.Devices;
+using Application.DTOs.Messages.Provision;
 using Application.Exceptions;
 using Application.Interfaces;
 using Application.Interfaces.Repositories;

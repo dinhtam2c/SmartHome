@@ -1,4 +1,4 @@
-using Application.DTOs.HomeDto;
+using Application.DTOs.Api.Homes;
 using Application.Exceptions;
 using Application.Interfaces;
 using Application.Interfaces.Repositories;

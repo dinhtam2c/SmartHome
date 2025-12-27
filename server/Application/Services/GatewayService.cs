@@ -1,6 +1,7 @@
 using Application.Common.Message;
-using Application.DTOs.GatewayDto;
-using Application.DTOs.ProvisionDto;
+using Application.DTOs.Api.Gateways;
+using Application.DTOs.Messages.Gateways;
+using Application.DTOs.Messages.Provision;
 using Application.Exceptions;
 using Application.Interfaces;
 using Application.Interfaces.Repositories;

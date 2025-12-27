@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Application.Common.Message;
-using Application.DTOs;
+using Application.DTOs.Messages;
 using Application.Interfaces;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -71,7 +71,7 @@ public class MqttService : IHostedService, IMessagePublisher
 
         _jsonOptions = new JsonSerializerOptions
         {
-            TypeInfoResolver = DtoJsonContext.Default,
+            TypeInfoResolver = MessageDtoJsonContext.Default,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             Converters = { new JsonStringEnumConverter() }
         };

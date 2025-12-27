@@ -1,4 +1,4 @@
-using Application.DTOs.DashboardDto;
+using Application.DTOs.Api.Dashboard;
 using Application.Exceptions;
 using Application.Interfaces.Repositories;
 using Microsoft.Extensions.Logging;

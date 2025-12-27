@@ -1,4 +1,4 @@
-using Application.DTOs.LocationDto;
+using Application.DTOs.Api.Locations;
 using Application.Services;
 
 namespace WebAPI.Controllers;

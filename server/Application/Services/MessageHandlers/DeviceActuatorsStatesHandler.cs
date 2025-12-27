@@ -1,5 +1,5 @@
 using Application.Common.Message;
-using Application.DTOs.DeviceDto;
+using Application.DTOs.Messages.Devices;
 using Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 

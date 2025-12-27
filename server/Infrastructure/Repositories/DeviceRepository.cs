@@ -1,4 +1,4 @@
-﻿using Application.DTOs.DeviceDto;
+﻿using Application.DTOs.Api.Devices;
 using Application.Interfaces.Repositories;
 using Core.Entities;
 using Infrastructure.Persistence;

@@ -1,5 +1,5 @@
 ﻿using Application.Common.Message;
-using Application.DTOs.SensorDataDto;
+using Application.DTOs.Messages.Gateways;
 using Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 

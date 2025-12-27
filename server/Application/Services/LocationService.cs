@@ -1,4 +1,4 @@
-using Application.DTOs.LocationDto;
+using Application.DTOs.Api.Locations;
 using Application.Exceptions;
 using Application.Interfaces;
 using Application.Interfaces.Repositories;

@@ -1,9 +1,9 @@
 ﻿using System.Text.Json.Serialization;
-using Application.DTOs.DashboardDto;
-using Application.DTOs.DeviceDto;
-using Application.DTOs.GatewayDto;
-using Application.DTOs.HomeDto;
-using Application.DTOs.LocationDto;
+using Application.DTOs.Api.Dashboard;
+using Application.DTOs.Api.Devices;
+using Application.DTOs.Api.Gateways;
+using Application.DTOs.Api.Homes;
+using Application.DTOs.Api.Locations;
 
 namespace WebAPI;
 
