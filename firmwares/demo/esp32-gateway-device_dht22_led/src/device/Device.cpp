@@ -50,7 +50,9 @@ void Device::initCapabilities() {
 }
 
 void Device::begin() {
+    _bootTime = millis();
     _dataInterval = DATA_INTERVAL;
+    _stateInterval = STATE_INTERVAL;
 
     initCapabilities();
 
@@ -72,15 +74,18 @@ void Device::begin() {
 void Device::loop() {
     unsigned long now = millis();
 
-    if (now - _lastMsgTime < _dataInterval * 1000)
-        return;
+    if (now - _lastMsgTime >= _dataInterval * 1000) {
+        _lastMsgTime = now;
 
-    _lastMsgTime = now;
-
-    float temp, hum;
-    readSensors(&temp, &hum);
-
-    buildAndSendData(temp, hum);
+        float temp, hum;
+        readSensors(&temp, &hum);
+        buildAndSendData(temp, hum);
+    }
+    
+    if (now - _lastStateSendTime >= _stateInterval * 1000) {
+        _lastStateSendTime = now;
+        sendSystemState();
+    }
 }
 
 const std::string& Device::getDeviceId() {

@@ -15,6 +15,9 @@ public:
     bool routeProvisionResponse(const std::string& deviceId, const std::string& payload);
 
     bool routeCommand(const std::string& deviceId, const std::string& payload);
+    
+    int getConnectedDeviceCount() const;
+    std::vector<std::string> getConnectedDeviceIds() const;
 
 private:
     Gateway* _gateway;

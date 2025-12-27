@@ -20,7 +20,7 @@ public:
     void begin();
     void loop();
 
-    void handleDeviceConnect(const std::string& deviceId);
+    void sendDeviceAvailability(const std::string& deviceId);
     void handleDeviceMessage(const TransportMessage& message);
 
 private:
@@ -34,6 +34,11 @@ private:
     std::string _gatewayId;
 
     std::string _topicPrefix;
+    
+    unsigned long _bootTime = 0;
+    unsigned long _lastAvailabilitySendTime = 0;
+    unsigned long _lastStateSendTime = 0;
+    unsigned long _lastDeviceAvailabilitySendTime = 0;
 
     void onWiFiConnected();
     void onWiFiDisconnected();
@@ -46,9 +51,13 @@ private:
 
     void handleDeviceData(const std::string& deviceId, const std::string& message);
     void handleDeviceActuatorsStates(const std::string& deviceId, const std::string& payload);
+    void handleDeviceSystemState(const std::string& deviceId, const std::string& payload);
 
     void handleMqttConnect();
     void handleMqttMessage(const std::string& topic, const std::string& payload);
 
     void setupSubscriptions();
+    void sendGatewayState();
+    void sendAvailability();
+    void sendAllDeviceAvailability();
 };

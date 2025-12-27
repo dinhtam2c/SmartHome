@@ -52,7 +52,7 @@ export function DeviceModal({ deviceId, onClose }: Props) {
             <DetailRow label="Status">
               <StatusBadge isOnline={device.isOnline} />
             </DetailRow>
-            <DetailRow label="Uptime">{device.upTime}s</DetailRow>
+            <DetailRow label="Uptime">{device.uptime}s</DetailRow>
             <DetailRow label="Last Seen">
               {timestampToDateTime(device.lastSeenAt)}
             </DetailRow>

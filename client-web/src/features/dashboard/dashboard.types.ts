@@ -67,7 +67,7 @@ export interface DashboardDeviceDto {
   id: string;
   name: string;
   isOnline: boolean;
-  upTime: number;
+  uptime: number;
   lastSeenAt: number;
   latestSensorData: DashboardSensorDataDto[];
   actuatorStates: DashboardActuatorStateDto[];

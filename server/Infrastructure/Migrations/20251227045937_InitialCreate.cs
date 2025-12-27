@@ -78,7 +78,7 @@ namespace Infrastructure.Migrations
                     Mac = table.Column<string>(type: "TEXT", maxLength: 17, nullable: false),
                     IsOnline = table.Column<bool>(type: "INTEGER", nullable: false),
                     LastSeenAt = table.Column<long>(type: "INTEGER", nullable: false),
-                    UpTime = table.Column<long>(type: "INTEGER", nullable: false),
+                    Uptime = table.Column<long>(type: "INTEGER", nullable: false),
                     DeviceCount = table.Column<int>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<long>(type: "INTEGER", nullable: false),
                     UpdatedAt = table.Column<long>(type: "INTEGER", nullable: false)
@@ -150,7 +150,7 @@ namespace Infrastructure.Migrations
                     FirmwareVersion = table.Column<string>(type: "TEXT", maxLength: 10, nullable: true),
                     IsOnline = table.Column<bool>(type: "INTEGER", nullable: false),
                     LastSeenAt = table.Column<long>(type: "INTEGER", nullable: false),
-                    UpTime = table.Column<long>(type: "INTEGER", nullable: false),
+                    Uptime = table.Column<long>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<long>(type: "INTEGER", nullable: false),
                     UpdatedAt = table.Column<long>(type: "INTEGER", nullable: false)
                 },

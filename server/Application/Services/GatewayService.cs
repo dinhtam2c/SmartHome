@@ -23,6 +23,8 @@ public interface IGatewayService
 
     Task HandleGatewayAvailability(Guid gatewayId, GatewayAvailability availability);
 
+    Task HandleGatewayState(Guid gatewayId, GatewayState state);
+
     Task AddDeviceToWhiteList(Guid gatewayId, string identifier);
 
     Task AssignHomeToGateway(Guid gatewayId, GatewayHomeAssignRequest request);
@@ -135,7 +137,7 @@ public class GatewayService : IGatewayService
         else if (availability.State == "Offline")
         {
             gateway.IsOnline = false;
-            gateway.UpTime = 0;
+            gateway.Uptime = 0;
             gateway.DeviceCount = 0;
             foreach (var device in gateway.Devices)
             {
@@ -150,6 +152,30 @@ public class GatewayService : IGatewayService
 
         await _unitOfWork.Commit();
         _logger.LogInformation("Gateway {GatewayId} {Status}", gatewayId, availability.State);
+    }
+
+    public async Task HandleGatewayState(Guid gatewayId, GatewayState state)
+    {
+        var gateway = await _gatewayRepository.GetById(gatewayId);
+        if (gateway is null)
+        {
+            await SendReprovision(gatewayId);
+            throw new GatewayNotFoundException(gatewayId);
+        }
+
+        if (!gateway.IsOnline)
+        {
+            _logger.LogWarning("Gateway {GatewayId} is offline, ignoring state update", gatewayId);
+            return;
+        }
+
+        gateway.Uptime = state.Uptime;
+        gateway.DeviceCount = state.DeviceCount;
+        gateway.LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+        await _unitOfWork.Commit();
+        _logger.LogInformation("Gateway {GatewayId} state updated: Uptime={Uptime}, DeviceCount={DeviceCount}",
+            gatewayId, state.Uptime, state.DeviceCount);
     }
 
     public async Task AddDeviceToWhiteList(Guid gatewayId, string identifier)

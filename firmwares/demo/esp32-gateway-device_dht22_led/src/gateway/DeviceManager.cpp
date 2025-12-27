@@ -73,13 +73,26 @@ void DeviceManager::handleDiscovery(IDeviceTransport* transporter, const DeviceI
         Serial.printf("Device connected: %s\r\n", info.identifier.c_str());
         _connectedDevices.push_back(info);
 
-        /* Notify server */
         if (info.deviceId.length() > 0) {
-            _gateway->handleDeviceConnect(info.deviceId);
+            _gateway->sendDeviceAvailability(info.deviceId);
         }
     }
 }
 
 void DeviceManager::handleDisconnect(const std::string&) {
     // TODO: notify server
+}
+
+int DeviceManager::getConnectedDeviceCount() const {
+    return _connectedDevices.size();
+}
+
+std::vector<std::string> DeviceManager::getConnectedDeviceIds() const {
+    std::vector<std::string> deviceIds;
+    for (const auto& device : _connectedDevices) {
+        if (device.deviceId.length() > 0) {
+            deviceIds.push_back(device.deviceId);
+        }
+    }
+    return deviceIds;
 }

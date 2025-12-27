@@ -46,3 +46,22 @@ void Device::sendActuatorStates() {
     TransportMessage message = { _deviceId, DEVICE_ACTUATORS_STATES, payload };
     _transport->send(message);
 }
+
+void Device::sendSystemState() {
+    if (_deviceId.length() == 0) {
+        return;
+    }
+
+    Serial.println("Sending system state");
+
+    unsigned long uptime = (millis() - _bootTime) / 1000; // Convert to seconds
+
+    JsonDocument doc;
+    doc["uptime"] = uptime;
+
+    std::string payload;
+    serializeJson(doc, payload);
+
+    TransportMessage message = { _deviceId, DEVICE_SYSTEM_STATE, payload };
+    _transport->send(message);
+}

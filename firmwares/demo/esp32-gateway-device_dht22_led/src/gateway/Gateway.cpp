@@ -10,6 +10,8 @@ void Gateway::begin() {
     String mac = WiFi.macAddress();
     _mac = mac.c_str();
 
+    _bootTime = millis();
+
     _prefs.begin(PREFS_NAMESPACE);
     String gatewayId = _prefs.getString(PREFS_GATEWAY_ID, "");
     _gatewayId = gatewayId.c_str();
@@ -39,6 +41,25 @@ void Gateway::begin() {
 }
 
 void Gateway::loop() {
+    unsigned long currentTime = millis();
+
+    // Send availability
+    if (currentTime - _lastAvailabilitySendTime >= AVAILABILITY_SEND_INTERVAL * 1000) {
+        sendAvailability();
+        _lastAvailabilitySendTime = currentTime;
+    }
+
+    // Send full state
+    if (currentTime - _lastStateSendTime >= STATE_SEND_INTERVAL * 1000) {
+        sendGatewayState();
+        _lastStateSendTime = currentTime;
+    }
+
+    // Send device availability
+    if (currentTime - _lastDeviceAvailabilitySendTime >= DEVICE_AVAILABILITY_SEND_INTERVAL * 1000) {
+        sendAllDeviceAvailability();
+        _lastDeviceAvailabilitySendTime = currentTime;
+    }
 }
 
 void Gateway::setupSubscriptions() {
@@ -49,8 +70,14 @@ void Gateway::setupSubscriptions() {
 }
 
 void Gateway::handleMqttConnect() {
-    std::string availTopic = _topicPrefix + "/availability";
-    _mqtt.publish(availTopic, "{\"state\":\"Online\"}", 1, true);
+    sendAvailability();
+    sendGatewayState();
+    _lastAvailabilitySendTime = millis();
+    _lastStateSendTime = millis();
+
+    // Send availability for all connected devices
+    sendAllDeviceAvailability();
+    _lastDeviceAvailabilitySendTime = millis();
 }
 
 void Gateway::handleMqttMessage(const std::string& topic, const std::string& payload) {
@@ -106,6 +133,9 @@ void Gateway::handleDeviceMessage(const TransportMessage& message) {
     case DEVICE_DATA:
         handleDeviceData(deviceId, payload);
         break;
+    case DEVICE_SYSTEM_STATE:
+        handleDeviceSystemState(deviceId, payload);
+        break;
     case DEVICE_ACTUATORS_STATES:
         handleDeviceActuatorsStates(deviceId, payload);
         break;
@@ -121,9 +151,51 @@ void Gateway::handleDeviceActuatorsStates(const std::string& deviceId, const std
     _mqtt.publish(topic, payload, 1, true);
 }
 
-void Gateway::handleDeviceConnect(const std::string& deviceId) {
-    // Send online message
-    // TODO: send periodically + timeout on server
+void Gateway::handleDeviceSystemState(const std::string& deviceId, const std::string& payload) {
+    std::string topic = _topicPrefix + "/devices/" + deviceId + "/states/system";
+    _mqtt.publish(topic, payload, 1, false);
+}
+
+void Gateway::sendDeviceAvailability(const std::string& deviceId) {
     std::string topic = _topicPrefix + "/devices/" + deviceId + "/availability";
     _mqtt.publish(topic, "{\"state\":\"Online\"}", 1, true);
+}
+
+void Gateway::sendGatewayState() {
+    if (!_mqtt.isConnected() || _gatewayId.length() == 0) {
+        return;
+    }
+
+    unsigned long uptime = (millis() - _bootTime) / 1000; // Convert to seconds
+    int deviceCount = _deviceManager.getConnectedDeviceCount();
+
+    JsonDocument doc;
+    doc["uptime"] = uptime;
+    doc["deviceCount"] = deviceCount;
+
+    std::string payload;
+    serializeJson(doc, payload);
+
+    std::string stateTopic = _topicPrefix + "/state";
+    _mqtt.publish(stateTopic, payload, 1, false);
+}
+
+void Gateway::sendAvailability() {
+    if (!_mqtt.isConnected() || _gatewayId.length() == 0) {
+        return;
+    }
+
+    std::string availTopic = _topicPrefix + "/availability";
+    _mqtt.publish(availTopic, "{\"state\":\"Online\"}", 1, true);
+}
+
+void Gateway::sendAllDeviceAvailability() {
+    if (!_mqtt.isConnected() || _gatewayId.length() == 0) {
+        return;
+    }
+
+    auto deviceIds = _deviceManager.getConnectedDeviceIds();
+    for (const auto& deviceId : deviceIds) {
+        sendDeviceAvailability(deviceId);
+    }
 }

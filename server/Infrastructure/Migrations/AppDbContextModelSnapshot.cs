@@ -114,10 +114,10 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("UpTime")
+                    b.Property<long>("UpdatedAt")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("UpdatedAt")
+                    b.Property<long>("Uptime")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -175,10 +175,10 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("UpTime")
+                    b.Property<long>("UpdatedAt")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("UpdatedAt")
+                    b.Property<long>("Uptime")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

@@ -5,7 +5,9 @@ public static class MessageTopics
     public const string GatewayProvision = "home/gateways/+/provision/request";
     public const string DeviceProvision = "home/gateways/+/devices/+/provision/request";
     public const string GatewayAvailability = "home/gateways/+/availability";
+    public const string GatewayState = "home/gateways/+/state";
     public const string DeviceAvailability = "home/gateways/+/devices/+/availability";
+    public const string DeviceSystemState = "home/gateways/+/devices/+/states/system";
     public const string DeviceActuatorsStates = "home/gateways/+/devices/+/states/actuators";
     public const string DeviceData = "home/gateways/+/data";
 

@@ -7,7 +7,7 @@ public record DeviceDashboardDto
     public Guid Id { get; }
     public string Name { get; }
     public bool IsOnline { get; }
-    public long UpTime { get; }
+    public long Uptime { get; }
     public long LastSeenAt { get; }
     public IEnumerable<SensorDataDto> LatestSensorData { get; }
     public IEnumerable<ActuatorStateDto> ActuatorStates { get; }
@@ -17,7 +17,7 @@ public record DeviceDashboardDto
         Id = device.Id;
         Name = device.Name;
         IsOnline = device.IsOnline;
-        UpTime = device.UpTime;
+        Uptime = device.Uptime;
         LastSeenAt = device.LastSeenAt;
         LatestSensorData = latestSensorData;
         ActuatorStates = device.Actuators.Select(a =>

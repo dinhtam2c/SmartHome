@@ -11,7 +11,7 @@ public class Gateway
     public string Mac { get; set; }
     public bool IsOnline { get; set; }
     public long LastSeenAt { get; set; }
-    public long UpTime { get; set; }
+    public long Uptime { get; set; }
     public int DeviceCount { get; set; }
     public long CreatedAt { get; set; }
     public long UpdatedAt { get; set; }

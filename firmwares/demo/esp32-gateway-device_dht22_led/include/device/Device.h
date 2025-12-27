@@ -60,7 +60,9 @@ private:
 
     std::string _identifier;
     std::string _deviceId;
+    unsigned long _bootTime;
     unsigned long _lastMsgTime;
+    unsigned long _lastStateSendTime;
     int _dataInterval;
     int _stateInterval;
     DHT _dht22;
@@ -82,4 +84,5 @@ private:
     void buildAndSendData(float temp, float hum);
 
     void sendActuatorStates();
+    void sendSystemState();
 };

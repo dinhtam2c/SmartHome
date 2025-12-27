@@ -24,14 +24,14 @@
 ## 3. Gateway availability (gateway to server)
 ```json
 {
-    "state": "online"
+    "state": "Online"
 }
 ```
 
-## 4. Gateway state
+## 4. Gateway state (gateway to server)
 ```json
 {
-    "uptime": "120",    // seconds
+    "uptime": 120,    // seconds
     "deviceCount": 1    // connected
 }
 ```
@@ -98,11 +98,18 @@
 ## 7. Device availability (gateway to server)
 ```json
 {
-    "state": "offline"
+    "state": "Online"
 }
 ```
 
-## 8. Device data (device to gateway)
+## 8. Device system state (device to gateway to server)
+```json
+{
+    "uptime": 120    // seconds
+}
+```
+
+## 9. Device data (device to gateway)
 ```json
 {
     "deviceId": "D1",
@@ -117,16 +124,11 @@
             "sensorId": "S2",
             "value": 60.5
         }
-    ],
-
-    // "status": {
-    //     "battery": 95,
-    //     "uptime": 1234,
-    //     "error": null
+    ]
 }
 ```
 
-## 9. Gateway data (gateway to server)
+## 10. Gateway data (gateway to server)
 ```json
 {
     "timestamp": 1762621086,
@@ -136,18 +138,21 @@
 }
 ```
 
-## 10. Device state (device to gateway to server)
+## 10. Gateway data (gateway to server)
 ```json
 {
-
+    "timestamp": 1762621086,
+    "data": [
+        // See Device data
+    ]
 }
 ```
 
-## 11. Device actuator states
+## 11. Device actuator states (device to gateway to server)
 ```json
 [
     {
-        "id": "A1",
+        "actuatorId": "A1",
         "states": {
             "Power": "On",
             "Speed": "50"

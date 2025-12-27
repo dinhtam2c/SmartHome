@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251222102606_InitialCreate")]
+    [Migration("20251227045937_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -117,10 +117,10 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("UpTime")
+                    b.Property<long>("UpdatedAt")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("UpdatedAt")
+                    b.Property<long>("Uptime")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -178,10 +178,10 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("UpTime")
+                    b.Property<long>("UpdatedAt")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("UpdatedAt")
+                    b.Property<long>("Uptime")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

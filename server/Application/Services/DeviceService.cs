@@ -25,6 +25,8 @@ public interface IDeviceService
 
     Task HandleDeviceAvailability(Guid gatewayId, Guid deviceId, DeviceAvailability availability);
 
+    Task HandleDeviceSystemState(Guid gatewayId, Guid deviceId, DeviceSystemState state);
+
     Task HandleDeviceActuatorsStates(Guid gatewayId, Guid deviceId, IEnumerable<DeviceActuatorStates> states);
 
     Task SendDeviceCommand(Guid deviceId, DeviceCommandRequest deviceCommandRequest);
@@ -193,7 +195,7 @@ public class DeviceService : IDeviceService
         else if (availability.State == "Offline")
         {
             device.IsOnline = false;
-            device.UpTime = 0;
+            device.Uptime = 0;
         }
         else
         {
@@ -203,6 +205,30 @@ public class DeviceService : IDeviceService
 
         await _unitOfWork.Commit();
         _logger.LogInformation("Device {DeviceId} {Status}", deviceId, availability.State);
+    }
+
+    public async Task HandleDeviceSystemState(Guid gatewayId, Guid deviceId, DeviceSystemState state)
+    {
+        await _gatewayService.EnsureGatewayExistOrReprovision(gatewayId);
+
+        var device = await _deviceRepository.GetById(deviceId);
+        if (device is null)
+        {
+            await SendReprovision(gatewayId, deviceId);
+            throw new DeviceNotFoundException(deviceId);
+        }
+
+        if (!device.IsOnline)
+        {
+            _logger.LogWarning("Device {DeviceId} is offline, ignoring state update", deviceId);
+            return;
+        }
+
+        device.Uptime = state.Uptime;
+        device.LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+        await _unitOfWork.Commit();
+        _logger.LogInformation("Device {DeviceId} system state updated: Uptime={Uptime}", deviceId, state.Uptime);
     }
 
     public async Task HandleDeviceActuatorsStates(Guid gatewayId, Guid deviceId,
@@ -324,7 +350,7 @@ public class DeviceService : IDeviceService
         if (device.GatewayId.HasValue && device.GatewayId != gatewayId && device.LocationId.HasValue)
         {
             var oldGateway = await _gatewayRepository.GetById(device.GatewayId.Value);
-            
+
             // Only clear location if homes are different (or if old/new gateway has no home assigned)
             if (oldGateway?.HomeId != newGateway.HomeId)
             {
