@@ -105,12 +105,7 @@ public class GatewayService : IGatewayService
         else
         {
             _logger.LogInformation("Updating existing gateway with MAC {Mac}", request.Mac);
-            gateway.Manufacturer = request.Manufacturer;
-            gateway.Model = request.Model;
-            gateway.FirmwareVersion = request.FirmwareVersion;
-            var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            gateway.LastSeenAt = now;
-            gateway.UpdatedAt = now;
+            gateway.UpdateFromProvision(request.Manufacturer, request.Model, request.FirmwareVersion);
         }
 
         await _unitOfWork.Commit();
@@ -132,17 +127,14 @@ public class GatewayService : IGatewayService
 
         if (availability.State == "Online")
         {
-            gateway.IsOnline = true;
-            gateway.LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            gateway.MarkOnline();
         }
         else if (availability.State == "Offline")
         {
-            gateway.IsOnline = false;
-            gateway.Uptime = 0;
-            gateway.DeviceCount = 0;
+            gateway.MarkOffline();
             foreach (var device in gateway.Devices)
             {
-                device.IsOnline = false;
+                device.MarkOffline();
             }
         }
         else
@@ -170,9 +162,7 @@ public class GatewayService : IGatewayService
             return;
         }
 
-        gateway.Uptime = state.Uptime;
-        gateway.DeviceCount = state.DeviceCount;
-        gateway.LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        gateway.UpdateState(state.Uptime, state.DeviceCount);
 
         await _unitOfWork.Commit();
         _logger.LogInformation("Gateway {GatewayId} state updated: Uptime={Uptime}, DeviceCount={DeviceCount}",
@@ -189,8 +179,7 @@ public class GatewayService : IGatewayService
         var gateway = await _gatewayRepository.GetById(gatewayId) ?? throw new GatewayNotFoundException(gatewayId);
         var home = await _homeRepository.GetById(request.HomeId) ?? throw new HomeNotFoundException(request.HomeId);
 
-        gateway.HomeId = home.Id;
-        gateway.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        gateway.AssignHome(home.Id);
 
         await _unitOfWork.Commit();
     }

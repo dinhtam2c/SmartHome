@@ -17,20 +17,18 @@ public class SensorDataService : ISensorDataService
 
     private readonly IUnitOfWork _unitOfWork;
     private readonly ISensorDataRepository _sensorDataRepository;
-    private readonly ISensorRepository _sensorRepository;
     private readonly IDeviceRepository _deviceRepository;
 
     private readonly IGatewayService _gatewayService;
     private readonly IDeviceService _deviceService;
 
     public SensorDataService(ILogger<SensorDataService> logger, IUnitOfWork unitOfWork,
-        ISensorDataRepository sensorDataRepository, ISensorRepository sensorRepository,
-        IDeviceRepository deviceRepository, IGatewayService gatewayService, IDeviceService deviceService)
+        ISensorDataRepository sensorDataRepository, IDeviceRepository deviceRepository,
+        IGatewayService gatewayService, IDeviceService deviceService)
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
         _sensorDataRepository = sensorDataRepository;
-        _sensorRepository = sensorRepository;
         _deviceRepository = deviceRepository;
         _gatewayService = gatewayService;
         _deviceService = deviceService;

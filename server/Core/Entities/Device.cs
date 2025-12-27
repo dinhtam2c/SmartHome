@@ -33,4 +33,54 @@ public class Device
         Sensors = [];
         Actuators = [];
     }
+
+    public void MarkOnline()
+    {
+        IsOnline = true;
+        LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    }
+
+    public void MarkOffline()
+    {
+        IsOnline = false;
+        Uptime = 0;
+    }
+
+    public void UpdateSystemState(int uptime)
+    {
+        Uptime = uptime;
+        LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    }
+
+    public void UpdateFromProvision(string? name, string? manufacturer, string? model, string? firmwareVersion,
+        ICollection<Sensor> sensors, ICollection<Actuator> actuators)
+    {
+        if (string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(name))
+            Name = name;
+        Manufacturer = manufacturer;
+        Model = model;
+        FirmwareVersion = firmwareVersion;
+        LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        Sensors = sensors;
+        Actuators = actuators;
+        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    }
+
+    public void AssignLocation(Guid? locationId)
+    {
+        LocationId = locationId;
+        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    }
+
+    public void AssignGateway(Guid? gatewayId)
+    {
+        GatewayId = gatewayId;
+        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    }
+
+    public void UpdateName(string name)
+    {
+        Name = name;
+        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    }
 }

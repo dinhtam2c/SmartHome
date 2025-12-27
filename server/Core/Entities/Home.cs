@@ -22,4 +22,13 @@ public class Home
         Locations = [];
         Gateways = [];
     }
+
+    public void Update(string? name, string? description)
+    {
+        if (name is not null)
+            Name = name;
+        if (description is not null)
+            Description = description;
+        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    }
 }

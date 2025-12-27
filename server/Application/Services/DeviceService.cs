@@ -144,19 +144,10 @@ public class DeviceService : IDeviceService
 
         _logger.LogInformation("Provisioning device {DeviceId} for gateway {GatewayId}", device.Id, gatewayId);
 
-        /* Metadata */
-        if (string.IsNullOrEmpty(device.Name) && !string.IsNullOrEmpty(request.Name))
-            device.Name = request.Name;
-        device.Manufacturer = request.Manufacturer;
-        device.Model = request.Model;
-        device.FirmwareVersion = request.FirmwareVersion;
-        device.LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-
-        /* Capabilities */
-        device.Sensors = request.Sensors?.Select(s => s.ToSensor(device.Id)).ToList() ?? [];
-        device.Actuators = request.Actuators?.Select(a => a.ToActuator(device.Id)).ToList() ?? [];
-
-        device.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        /* Metadata and Capabilities */
+        var sensors = request.Sensors?.Select(s => s.ToSensor(device.Id)).ToList() ?? [];
+        var actuators = request.Actuators?.Select(a => a.ToActuator(device.Id)).ToList() ?? [];
+        device.UpdateFromProvision(request.Name, request.Manufacturer, request.Model, request.FirmwareVersion, sensors, actuators);
         await _unitOfWork.Commit();
 
         var sensorIds = device.Sensors.Count != 0 ? device.Sensors.Select(s => s.Id) : null;
@@ -190,13 +181,11 @@ public class DeviceService : IDeviceService
 
         if (availability.State == "Online")
         {
-            device.IsOnline = true;
-            device.LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            device.MarkOnline();
         }
         else if (availability.State == "Offline")
         {
-            device.IsOnline = false;
-            device.Uptime = 0;
+            device.MarkOffline();
         }
         else
         {
@@ -225,8 +214,7 @@ public class DeviceService : IDeviceService
             return;
         }
 
-        device.Uptime = state.Uptime;
-        device.LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        device.UpdateSystemState(state.Uptime);
 
         await _unitOfWork.Commit();
         _logger.LogInformation("Device {DeviceId} system state updated: Uptime={Uptime}", deviceId, state.Uptime);
@@ -270,14 +258,12 @@ public class DeviceService : IDeviceService
 
             foreach (var state in actuatorStates.States)
             {
-                if (!actuator.States.ContainsKey(state.Key))
+                var stateValue = ((JsonElement)state.Value).GetString();
+                if (!actuator.TryUpdateState(state.Key, stateValue))
                 {
-                    _logger.LogWarning("Actuator {ActuatorId} does not have state {state}",
-                        actuator.Id, nameof(state.Key));
-                    continue;
+                    _logger.LogWarning("Actuator {ActuatorId} does not have state {State}",
+                        actuator.Id, state.Key);
                 }
-
-                actuator.States[state.Key] = ((JsonElement)state.Value).GetString();
             }
         }
 
@@ -334,8 +320,7 @@ public class DeviceService : IDeviceService
         if (location.HomeId != gateway.HomeId.Value)
             throw new LocationHomeMismatchException(locationId, location.HomeId, gateway.HomeId.Value);
 
-        device.LocationId = locationId;
-        device.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        device.AssignLocation(locationId);
 
         await _unitOfWork.Commit();
     }
@@ -355,23 +340,22 @@ public class DeviceService : IDeviceService
             // Only clear location if homes are different (or if old/new gateway has no home assigned)
             if (oldGateway?.HomeId != newGateway.HomeId)
             {
-                device.LocationId = null;
+                device.AssignLocation(null);
             }
         }
 
-        device.GatewayId = gatewayId;
-        device.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        device.AssignGateway(gatewayId);
 
         await _unitOfWork.Commit();
 
+        // TODO: remove from old gateway whitelist
         await _gatewayService.AddDeviceToWhiteList(gatewayId, device.Identifier);
     }
 
     public async Task UpdateDevice(Guid deviceId, DeviceUpdateRequest request)
     {
         var device = await _deviceRepository.GetById(deviceId) ?? throw new DeviceNotFoundException(deviceId);
-        device.Name = request.Name;
-        device.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        device.UpdateName(request.Name);
         await _unitOfWork.Commit();
     }
 

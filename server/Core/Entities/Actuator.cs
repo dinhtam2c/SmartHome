@@ -24,6 +24,15 @@ public class Actuator
 
         States = supportedStates?.ToDictionary(state => state, state => (object?)null);
     }
+
+    public bool TryUpdateState(ActuatorState state, string? value)
+    {
+        if (States is null || !States.ContainsKey(state))
+            return false;
+
+        States[state] = value;
+        return true;
+    }
 }
 
 

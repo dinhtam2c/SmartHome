@@ -64,9 +64,7 @@ public class LocationService : ILocationService
     {
         var location = await _locationRepository.GetById(locationId) ?? throw new LocationNotFoundException(locationId);
 
-        location.Name = request.Name ?? location.Name;
-        location.Description = request.Description ?? location.Description;
-        location.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        location.Update(request.Name, request.Description);
 
         await _unitOfWork.Commit();
     }

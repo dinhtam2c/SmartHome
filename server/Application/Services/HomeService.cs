@@ -55,9 +55,7 @@ public class HomeService : IHomeService
     public async Task UpdateHome(Guid homeId, HomeUpdateRequest request)
     {
         var home = await _homeRepository.GetById(homeId) ?? throw new HomeNotFoundException(homeId);
-        home.Name = request.Name ?? home.Name;
-        home.Description = request.Description ?? home.Description;
-        home.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        home.Update(request.Name, request.Description);
 
         await _unitOfWork.Commit();
     }

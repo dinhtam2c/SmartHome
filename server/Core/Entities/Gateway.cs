@@ -34,4 +34,40 @@ public class Gateway
 
         Devices = [];
     }
+
+    public void MarkOnline()
+    {
+        IsOnline = true;
+        LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    }
+
+    public void MarkOffline()
+    {
+        IsOnline = false;
+        Uptime = 0;
+        DeviceCount = 0;
+    }
+
+    public void UpdateState(int uptime, int deviceCount)
+    {
+        Uptime = uptime;
+        DeviceCount = deviceCount;
+        LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    }
+
+    public void UpdateFromProvision(string? manufacturer, string? model, string firmwareVersion)
+    {
+        Manufacturer = manufacturer;
+        Model = model;
+        FirmwareVersion = firmwareVersion;
+        var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        LastSeenAt = now;
+        UpdatedAt = now;
+    }
+
+    public void AssignHome(Guid homeId)
+    {
+        HomeId = homeId;
+        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    }
 }
