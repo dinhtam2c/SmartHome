@@ -1,4 +1,6 @@
-﻿namespace Core.Entities;
+﻿using Core.Common;
+
+namespace Core.Entities;
 
 public class Device
 {
@@ -21,14 +23,15 @@ public class Device
     public ICollection<Sensor> Sensors { get; set; }
     public ICollection<Actuator> Actuators { get; set; }
 
-    public Device(Guid id, Guid? gatewayId, string identifier, string name, long createdAt)
+    public Device(Guid? gatewayId, string identifier, string name)
     {
-        Id = id;
+        Id = Guid.NewGuid();
         GatewayId = gatewayId;
         Identifier = identifier;
         Name = name;
-        CreatedAt = createdAt;
-        UpdatedAt = createdAt;
+        var now = Time.UnixNow();
+        CreatedAt = now;
+        UpdatedAt = now;
 
         Sensors = [];
         Actuators = [];
@@ -37,7 +40,7 @@ public class Device
     public void MarkOnline()
     {
         IsOnline = true;
-        LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        LastSeenAt = Time.UnixNow();
     }
 
     public void MarkOffline()
@@ -49,7 +52,7 @@ public class Device
     public void UpdateSystemState(int uptime)
     {
         Uptime = uptime;
-        LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        LastSeenAt = Time.UnixNow();
     }
 
     public void UpdateFromProvision(string? name, string? manufacturer, string? model, string? firmwareVersion,
@@ -60,27 +63,37 @@ public class Device
         Manufacturer = manufacturer;
         Model = model;
         FirmwareVersion = firmwareVersion;
-        LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        Sensors = sensors;
-        Actuators = actuators;
-        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        LastSeenAt = Time.UnixNow();
+
+        Sensors.Clear();
+        foreach (var sensor in sensors)
+        {
+            Sensors.Add(sensor);
+        }
+        Actuators.Clear();
+        foreach (var actuator in actuators)
+        {
+            Actuators.Add(actuator);
+        }
+
+        UpdatedAt = Time.UnixNow();
     }
 
     public void AssignLocation(Guid? locationId)
     {
         LocationId = locationId;
-        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        UpdatedAt = Time.UnixNow();
     }
 
     public void AssignGateway(Guid? gatewayId)
     {
         GatewayId = gatewayId;
-        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        UpdatedAt = Time.UnixNow();
     }
 
     public void UpdateName(string name)
     {
         Name = name;
-        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        UpdatedAt = Time.UnixNow();
     }
 }

@@ -33,7 +33,6 @@ public record DeviceSensor(
     public Sensor ToSensor(Guid deviceId)
     {
         return new(
-            id: Guid.NewGuid(),
             deviceId: deviceId,
             name: Name,
             type: Type,
@@ -54,7 +53,6 @@ public record DeviceActuator(
     public Actuator ToActuator(Guid deviceId)
     {
         return new(
-            id: Guid.NewGuid(),
             deviceId: deviceId,
             name: Name,
             type: Type,

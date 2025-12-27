@@ -13,10 +13,10 @@ public class Sensor
 
     public Device? Device { get; set; }
 
-    public Sensor(Guid id, Guid deviceId, string name, SensorType type, string unit,
+    public Sensor(Guid deviceId, string name, SensorType type, string unit,
         float min, float max, float accuracy)
     {
-        Id = id;
+        Id = Guid.NewGuid();
         DeviceId = deviceId;
         Name = name;
         Type = type;

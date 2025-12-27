@@ -11,9 +11,9 @@ public class SensorData
     public Sensor? Sensor { get; set; }
     public Location? Location { get; set; }
 
-    public SensorData(Guid id, Guid? sensorId, Guid? locationId, float value, long timestamp)
+    public SensorData(Guid? sensorId, Guid? locationId, float value, long timestamp)
     {
-        Id = id;
+        Id = Guid.NewGuid();
         SensorId = sensorId;
         LocationId = locationId;
         Value = value;

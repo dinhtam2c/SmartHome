@@ -15,13 +15,11 @@ public record GatewayProvisionRequest(
     public Gateway ToGateway()
     {
         return new(
-            id: Guid.NewGuid(),
             name: Name,
             manufacturer: Manufacturer,
             model: Model,
             firmwareVersion: FirmwareVersion,
-            mac: Mac,
-            createdAt: DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+            mac: Mac
         );
     }
 }

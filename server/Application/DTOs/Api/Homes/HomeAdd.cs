@@ -10,10 +10,8 @@ public record HomeAddRequest(
     public Home ToHome()
     {
         return new(
-            id: Guid.NewGuid(),
             name: Name,
-            description: Description,
-            createdAt: DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+            description: Description
         );
     }
 }

@@ -1,3 +1,5 @@
+using Core.Common;
+
 namespace Core.Entities;
 
 public class Location
@@ -12,14 +14,15 @@ public class Location
     public Home? Home { get; set; }
     public ICollection<Device> Devices { get; set; }
 
-    public Location(Guid id, Guid homeId, string name, string? description, long createdAt)
+    public Location(Guid homeId, string name, string? description)
     {
-        Id = id;
+        Id = Guid.NewGuid();
         HomeId = homeId;
         Name = name;
         Description = description;
-        CreatedAt = createdAt;
-        UpdatedAt = createdAt;
+        var now = Time.UnixNow();
+        CreatedAt = now;
+        UpdatedAt = now;
 
         Devices = [];
     }
@@ -30,6 +33,6 @@ public class Location
             Name = name;
         if (description is not null)
             Description = description;
-        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        UpdatedAt = Time.UnixNow();
     }
 }

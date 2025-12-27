@@ -1,3 +1,5 @@
+using Core.Common;
+
 namespace Core.Entities;
 
 public class User
@@ -15,10 +17,10 @@ public class User
 
     public ICollection<ActionLog> ActionLogs { get; set; }
 
-    public User(Guid id, string name, string username, string passwordHash, UserRole role,
-        string? email, string? phone, bool isLocked, long createdAt, long updatedAt)
+    public User(string name, string username, string passwordHash, UserRole role,
+        string? email, string? phone, bool isLocked)
     {
-        Id = id;
+        Id = Guid.NewGuid();
         Name = name;
         Username = username;
         PasswordHash = passwordHash;
@@ -26,8 +28,9 @@ public class User
         Email = email;
         Phone = phone;
         IsLocked = isLocked;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
+        var now = Time.UnixNow();
+        CreatedAt = now;
+        UpdatedAt = now;
         ActionLogs = [];
     }
 }

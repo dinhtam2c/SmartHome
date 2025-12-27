@@ -11,11 +11,9 @@ public record LocationAddRequest(
     public Location ToLocation()
     {
         return new(
-            id: Guid.NewGuid(),
             homeId: HomeId,
             name: Name,
-            description: Description,
-            createdAt: DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+            description: Description
         );
     }
 }

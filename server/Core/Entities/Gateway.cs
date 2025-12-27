@@ -1,4 +1,6 @@
-﻿namespace Core.Entities;
+﻿using Core.Common;
+
+namespace Core.Entities;
 
 public class Gateway
 {
@@ -19,18 +21,19 @@ public class Gateway
     public Home? Home { get; set; }
     public ICollection<Device> Devices { get; set; }
 
-    public Gateway(Guid id, string name, string? manufacturer, string? model,
-        string firmwareVersion, string mac, long createdAt)
+    public Gateway(string name, string? manufacturer, string? model,
+        string firmwareVersion, string mac)
     {
-        Id = id;
+        Id = Guid.NewGuid();
         Name = name;
         Manufacturer = manufacturer;
         Model = model;
         FirmwareVersion = firmwareVersion;
         Mac = mac;
-        LastSeenAt = createdAt;
-        CreatedAt = createdAt;
-        UpdatedAt = createdAt;
+        var now = Time.UnixNow();
+        LastSeenAt = now;
+        CreatedAt = now;
+        UpdatedAt = now;
 
         Devices = [];
     }
@@ -38,7 +41,7 @@ public class Gateway
     public void MarkOnline()
     {
         IsOnline = true;
-        LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        LastSeenAt = Time.UnixNow();
     }
 
     public void MarkOffline()
@@ -52,7 +55,7 @@ public class Gateway
     {
         Uptime = uptime;
         DeviceCount = deviceCount;
-        LastSeenAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        LastSeenAt = Time.UnixNow();
     }
 
     public void UpdateFromProvision(string? manufacturer, string? model, string firmwareVersion)
@@ -60,7 +63,7 @@ public class Gateway
         Manufacturer = manufacturer;
         Model = model;
         FirmwareVersion = firmwareVersion;
-        var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        var now = Time.UnixNow();
         LastSeenAt = now;
         UpdatedAt = now;
     }
@@ -68,6 +71,6 @@ public class Gateway
     public void AssignHome(Guid homeId)
     {
         HomeId = homeId;
-        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        UpdatedAt = Time.UnixNow();
     }
 }

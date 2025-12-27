@@ -11,11 +11,9 @@ public record DeviceAddRequest(
     public Device ToDevice()
     {
         return new(
-            id: Guid.NewGuid(),
             gatewayId: GatewayId,
             identifier: Identifier,
-            name: Name ?? "",
-            createdAt: DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+            name: Name ?? ""
         );
     }
 }

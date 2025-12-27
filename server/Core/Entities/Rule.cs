@@ -1,3 +1,5 @@
+using Core.Common;
+
 namespace Core.Entities;
 
 public class Rule
@@ -12,17 +14,18 @@ public class Rule
     public long CreatedAt { get; set; }
     public long UpdatedAt { get; set; }
 
-    public Rule(Guid id, string name, string? description, string[] conditions, string logic,
-        string[] actions, long createdAt)
+    public Rule(string name, string? description, string[] conditions, string logic,
+        string[] actions)
     {
-        Id = id;
+        Id = Guid.NewGuid();
         Name = name;
         Description = description;
         Conditions = conditions;
         Logic = logic;
         Actions = actions;
         IsEnabled = true;
-        CreatedAt = createdAt;
-        UpdatedAt = createdAt;
+        var now = Time.UnixNow();
+        CreatedAt = now;
+        UpdatedAt = now;
     }
 }

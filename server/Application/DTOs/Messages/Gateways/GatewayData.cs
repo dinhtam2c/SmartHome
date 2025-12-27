@@ -22,7 +22,6 @@ public record DeviceSensorData(
     public SensorData ToSensorData(Guid? locationId, long timestamp)
     {
         return new(
-            id: Guid.NewGuid(),
             sensorId: SensorId,
             locationId: locationId,
             value: Value,

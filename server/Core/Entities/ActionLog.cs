@@ -1,3 +1,5 @@
+using Core.Common;
+
 namespace Core.Entities;
 
 public class ActionLog
@@ -9,11 +11,11 @@ public class ActionLog
 
     public User? User { get; set; }
 
-    public ActionLog(Guid id, Guid userId, string action, long timestamp)
+    public ActionLog(Guid userId, string action)
     {
-        Id = id;
+        Id = Guid.NewGuid();
         UserId = userId;
         Action = action;
-        Timestamp = timestamp;
+        Timestamp = Time.UnixNow();
     }
 }

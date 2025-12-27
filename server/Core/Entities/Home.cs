@@ -1,3 +1,5 @@
+using Core.Common;
+
 namespace Core.Entities;
 
 public class Home
@@ -11,13 +13,14 @@ public class Home
     public ICollection<Location> Locations { get; set; }
     public ICollection<Gateway> Gateways { get; set; }
 
-    public Home(Guid id, string name, string? description, long createdAt)
+    public Home(string name, string? description)
     {
-        Id = id;
+        Id = Guid.NewGuid();
         Name = name;
         Description = description;
-        CreatedAt = createdAt;
-        UpdatedAt = createdAt;
+        var now = Time.UnixNow();
+        CreatedAt = now;
+        UpdatedAt = now;
 
         Locations = [];
         Gateways = [];
@@ -29,6 +32,6 @@ public class Home
             Name = name;
         if (description is not null)
             Description = description;
-        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        UpdatedAt = Time.UnixNow();
     }
 }

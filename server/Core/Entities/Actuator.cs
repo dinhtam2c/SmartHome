@@ -12,10 +12,10 @@ public class Actuator
 
     public Device? Device { get; set; }
 
-    public Actuator(Guid id, Guid deviceId, string name, ActuatorType type,
+    public Actuator(Guid deviceId, string name, ActuatorType type,
         IEnumerable<ActuatorState>? supportedStates, IEnumerable<ActuatorCommand>? supportedCommands)
     {
-        Id = id;
+        Id = Guid.NewGuid();
         DeviceId = deviceId;
         Name = name;
         Type = type;
