@@ -9,3 +9,8 @@
   font-weight: 600;
   color: var(--color-text-secondary);
 }
+
+.required {
+  color: var(--color-danger);
+  margin-left: 2px;
+}

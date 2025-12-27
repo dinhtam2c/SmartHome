@@ -1,0 +1,124 @@
+.select {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background-color: var(--bg-main);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  font-family: inherit;
+  font-size: 1rem;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.formGroup {
+  margin-bottom: 1.25rem;
+}
+
+.formGroup {
+  margin-bottom: 1.25rem;
+}
+
+.homeLabel {
+  font-size: 1rem;
+  color: var(--color-text-primary);
+}
+
+.readOnlyField {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background-color: var(--bg-secondary, #f5f5f5);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  font-size: 1rem;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.editContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.editInput {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  font-size: 0.9rem;
+  background-color: var(--bg-main);
+  color: var(--color-text-primary);
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.editActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.editBtn {
+  white-space: nowrap;
+}
+
+.viewContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.startEditBtn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.editInput:focus {
+  border-color: var(--color-primary);
+}
+
+.section {
+  margin-top: 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.cardTitle {
+  font-weight: bold;
+}
+
+.cardSubtitle {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.cardDetail {
+  font-size: 0.85em;
+  color: #555;
+}

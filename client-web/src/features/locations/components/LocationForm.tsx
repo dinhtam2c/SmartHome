@@ -1,25 +1,24 @@
 import { useState, type FormEvent } from "react";
+import type { LocationUpdateRequest } from "../locations.types";
 
-import type { HomeAddRequest, HomeUpdateRequest } from "../homes.types";
-
-import { Button } from "@/components/Button";
 import { Form } from "@/components/Form";
-import { FormActions } from "@/components/FormActions";
 import { FormGroup } from "@/components/FormGroup";
 import { Input } from "@/components/Input";
+import { FormActions } from "@/components/FormActions";
+import { Button } from "@/components/Button";
 
 interface Props {
-  initialName?: string;
-  initialDescription?: string;
+  initialName: string;
+  initialDescription: string;
   submitLabel: string;
-  isSubmitting?: boolean;
-  onSubmit: (request: HomeAddRequest | HomeUpdateRequest) => void;
-  onCancel?: () => void;
+  isSubmitting: boolean;
+  onSubmit: (request: LocationUpdateRequest) => Promise<void>;
+  onCancel: () => void;
 }
 
-export function HomeForm({
-  initialName = "",
-  initialDescription = "",
+export function LocationForm({
+  initialName,
+  initialDescription,
   submitLabel,
   isSubmitting,
   onSubmit,
@@ -28,11 +27,9 @@ export function HomeForm({
   const [name, setName] = useState(initialName);
   const [description, setDescription] = useState(initialDescription);
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!name.trim()) return;
-
-    onSubmit({ name, description });
+    await onSubmit({ name, description });
   }
 
   return (
@@ -42,7 +39,7 @@ export function HomeForm({
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Name"
+          disabled={isSubmitting}
           required
         />
       </FormGroup>
@@ -52,24 +49,17 @@ export function HomeForm({
           id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
+          disabled={isSubmitting}
         />
       </FormGroup>
 
       <FormActions>
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "..." : submitLabel}
+        <Button variant="primary" type="submit" disabled={isSubmitting}>
+          {submitLabel}
         </Button>
-        {onCancel && (
-          <Button
-            variant="secondary"
-            type="button"
-            onClick={onCancel}
-            disabled={isSubmitting}
-          >
-            Cancel
-          </Button>
-        )}
+        <Button variant="secondary" onClick={onCancel} disabled={isSubmitting}>
+          Cancel
+        </Button>
       </FormActions>
     </Form>
   );

@@ -1,7 +1,7 @@
 import type { HomeListElement } from "../homes.types";
 
-import { Cell } from "../../../components/Cell";
-import { CellGrid } from "../../../components/CellGrid";
+import { Cell } from "@/components/Cell";
+import { CellGrid } from "@/components/CellGrid";
 
 interface Props {
   homes: HomeListElement[];

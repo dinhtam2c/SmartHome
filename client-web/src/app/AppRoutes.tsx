@@ -6,8 +6,8 @@ import {
   DashboardLocationPage,
 } from "@/features/dashboard";
 import { HomesPage } from "@/features/homes";
-import GatewayList from "@/features/gateways/GatewayList";
-import DeviceList from "@/features/devices/DeviceList";
+import { GatewaysPage } from "@/features/gateways";
+import { DevicesPage } from "@/features/devices";
 
 export default function AppRoutes() {
   return (
@@ -25,8 +25,8 @@ export default function AppRoutes() {
         </Route>
 
         <Route path="homes" element={<HomesPage />} />
-        <Route path="gateways" element={<GatewayList />} />
-        <Route path="devices" element={<DeviceList />} />
+        <Route path="gateways" element={<GatewaysPage />} />
+        <Route path="devices" element={<DevicesPage />} />
       </Route>
     </Routes>
   );

@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { useHomeDetails } from "../hooks/useHomeDetails";
+import { useLocationDetails } from "../hooks/useLocationDetails";
 
-import type { HomeUpdateRequest } from "../homes.types";
+import type { LocationUpdateRequest } from "../locations.types";
 
-import { HomeForm } from "./HomeForm";
-import { LocationsSection } from "@/features/locations";
+import { LocationForm } from "./LocationForm";
 
 import { Button } from "@/components/Button";
 import { DetailsView } from "@/components/DetailsView/DetailsView";
@@ -17,22 +16,26 @@ interface Props {
   onDeleteSuccess: () => void;
 }
 
-export function HomeDetails({ id, onUpdateSuccess, onDeleteSuccess }: Props) {
+export function LocationDetails({
+  id,
+  onUpdateSuccess,
+  onDeleteSuccess,
+}: Props) {
   const {
-    home,
+    location,
     loading,
     error,
     isUpdating,
     isDeleting,
-    updateHome,
-    deleteHome,
-  } = useHomeDetails(id);
+    updateLocation,
+    deleteLocation,
+  } = useLocationDetails(id);
   const [isEditing, setIsEditing] = useState(false);
 
   async function handleDelete() {
-    if (!confirm("Are you sure to delete this home?")) return;
+    if (!confirm("Are you sure to delete this location?")) return;
 
-    await deleteHome();
+    await deleteLocation();
     onDeleteSuccess();
   }
 
@@ -44,16 +47,16 @@ export function HomeDetails({ id, onUpdateSuccess, onDeleteSuccess }: Props) {
     setIsEditing(false);
   }
 
-  async function handleUpdate(request: HomeUpdateRequest) {
-    if (!home) return;
-    await updateHome(request);
+  async function handleUpdate(request: LocationUpdateRequest) {
+    if (!location) return;
+    await updateLocation(request);
     onUpdateSuccess();
     setIsEditing(false);
   }
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-  if (!home) return <div>Home not found</div>;
+  if (!location) return <div>Location not found</div>;
 
   if (!isEditing) {
     return (
@@ -78,24 +81,22 @@ export function HomeDetails({ id, onUpdateSuccess, onDeleteSuccess }: Props) {
             </>
           }
         >
-          <DetailRow label="Name">{home.name}</DetailRow>
-          <DetailRow label="Description">{home.description}</DetailRow>
+          <DetailRow label="Name">{location.name}</DetailRow>
+          <DetailRow label="Description">{location.description}</DetailRow>
           <DetailRow label="Created at">
-            {timestampToDateTime(home.createdAt)}
+            {timestampToDateTime(location.createdAt)}
           </DetailRow>
           <DetailRow label="Updated at">
-            {timestampToDateTime(home.updatedAt)}
+            {timestampToDateTime(location.updatedAt)}
           </DetailRow>
         </DetailsView>
-
-        <LocationsSection homeId={home.id} />
       </div>
     );
   } else {
     return (
-      <HomeForm
-        initialName={home.name}
-        initialDescription={home.description ?? ""}
+      <LocationForm
+        initialName={location.name}
+        initialDescription={location.description ?? ""}
         submitLabel="Save"
         isSubmitting={isUpdating}
         onSubmit={handleUpdate}
