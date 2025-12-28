@@ -1,4 +1,4 @@
-﻿namespace Application.Common.Message;
+namespace Application.Common.Message;
 
 public record MessagePolicy(
     int Qos,

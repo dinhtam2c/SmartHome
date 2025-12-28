@@ -1,4 +1,4 @@
-﻿using Application.Common.Message;
+using Application.Common.Message;
 
 namespace Application.Interfaces;
 

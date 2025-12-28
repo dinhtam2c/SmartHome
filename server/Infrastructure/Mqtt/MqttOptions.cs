@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Mqtt;
+namespace Infrastructure.Mqtt;
 
 public class MqttOptions
 {

@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 using Application.DTOs.Api.Dashboard;
 using Application.DTOs.Api.Devices;
 using Application.DTOs.Api.Gateways;

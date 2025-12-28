@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Application.Common.Message;
 using Application.DTOs.Api.Devices;
 using Application.DTOs.Messages.Devices;
