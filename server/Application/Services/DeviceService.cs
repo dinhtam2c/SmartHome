@@ -138,8 +138,7 @@ public class DeviceService : IDeviceService
 
         if (device.GatewayId != gatewayId)
         {
-            // TODO: custom exception
-            throw new Exception("Device provisioning: GatewayId mismatch");
+            throw new DeviceGatewayMismatchException(device.GatewayId!.Value, gatewayId);
         }
 
         _logger.LogInformation("Provisioning device {DeviceId} for gateway {GatewayId}", device.Id, gatewayId);
@@ -189,8 +188,7 @@ public class DeviceService : IDeviceService
         }
         else
         {
-            // TODO: custom exception
-            throw new Exception($"Device {deviceId} sent unknown state: {availability.State}");
+            throw new InvalidStateException(availability.State, "Device");
         }
 
         await _unitOfWork.Commit();
@@ -276,17 +274,15 @@ public class DeviceService : IDeviceService
         var device = await _deviceRepository.GetByIdWithGatewayAndLocationAndCapabilities(deviceId) ??
             throw new DeviceNotFoundException(deviceId);
 
-        // TODO: custom exception
         var gateway = device.Gateway ??
-            throw new Exception("Device does not belong to any gateway");
+            throw new DeviceGatewayRequiredException(deviceId);
 
         var actuator = device.Actuators?.FirstOrDefault(a => a.Id == deviceCommandRequest.ActuatorId) ??
             throw new ActuatorNotFoundException(deviceCommandRequest.ActuatorId);
 
-        // TODO: custom exception
         if (!actuator.SupportedCommands?.Contains(deviceCommandRequest.Command) ?? false)
         {
-            throw new Exception("Command not supported");
+            throw new CommandNotSupportedException(deviceCommandRequest.Command.ToString(), deviceId);
         }
 
         _logger.LogInformation("Sending command {Command} to device {DeviceId}",

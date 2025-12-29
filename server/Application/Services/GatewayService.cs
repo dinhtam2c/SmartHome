@@ -139,8 +139,7 @@ public class GatewayService : IGatewayService
         }
         else
         {
-            // TODO: custom exception
-            throw new Exception($"Unknown state {availability.State}");
+            throw new InvalidStateException(availability.State, "Gateway");
         }
 
         await _unitOfWork.Commit();
