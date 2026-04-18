@@ -1,0 +1,40 @@
+.roomTitleRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.renameIconButton {
+  appearance: none;
+  border: 1px solid rgba(140, 167, 189, 0.8);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.98), rgba(244, 250, 255, 0.9));
+  color: #1a5a86;
+  width: 1.72rem;
+  height: 1.72rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.renameIconButton:hover {
+  transform: translateY(-1px);
+  border-color: #3c89bd;
+  box-shadow: 0 6px 16px rgba(35, 96, 140, 0.18);
+}
+
+.renameIconButton:focus-visible {
+  outline: none;
+  border-color: #2b7cad;
+  box-shadow: 0 0 0 3px rgba(43, 124, 173, 0.2);
+}
+
+.renameIcon {
+  width: 0.9rem;
+  height: 0.9rem;
+}

@@ -1,0 +1,31 @@
+.label {
+  color: var(--color-text-secondary);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+}
+
+.labelButton {
+  all: unset;
+  cursor: pointer;
+  color: inherit;
+}
+
+.labelButton:hover,
+.labelButton:focus-visible {
+  color: var(--color-primary-700);
+}
+
+.labelButton:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-primary-700) 35%, transparent);
+  outline-offset: 2px;
+}
+
+.value {
+  font-size: 0.96rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--color-text-primary);
+  word-break: break-word;
+}

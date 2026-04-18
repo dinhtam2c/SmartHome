@@ -1,0 +1,8 @@
+{
+  "switch.power": "Nguồn",
+  "light.brightness": "Độ sáng",
+  "light.effect": "Hiệu ứng đèn",
+  "sensor.temperature": "Nhiệt độ",
+  "sensor.humidity": "Độ ẩm",
+  "sensor.interval": "Chu kỳ báo cáo"
+}

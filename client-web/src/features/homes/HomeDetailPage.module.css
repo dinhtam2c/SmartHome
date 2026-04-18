@@ -1,0 +1,129 @@
+.homeTitleRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.renameIconButton {
+  appearance: none;
+  border: 1px solid rgba(140, 167, 189, 0.8);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.98), rgba(244, 250, 255, 0.9));
+  color: #1a5a86;
+  width: 1.72rem;
+  height: 1.72rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.renameIconButton:hover {
+  transform: translateY(-1px);
+  border-color: #3c89bd;
+  box-shadow: 0 6px 16px rgba(35, 96, 140, 0.18);
+}
+
+.renameIconButton:focus-visible {
+  outline: none;
+  border-color: #2b7cad;
+  box-shadow: 0 0 0 3px rgba(43, 124, 173, 0.2);
+}
+
+.renameIcon {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.quickActionGroups {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.quickActionList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.quickActionListDisabled {
+  padding-top: 0.25rem;
+}
+
+.quickActionItem {
+  appearance: none;
+  width: auto;
+  max-width: 100%;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 0.52rem 0.85rem;
+  border: 1px solid #4b9962;
+  border-radius: 999px;
+  background: linear-gradient(145deg, #62b97a, #57ab6f);
+  cursor: pointer;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base),
+    background-color var(--transition-base);
+}
+
+.quickActionItem:hover {
+  transform: translateY(-1px);
+  border-color: #3f8855;
+  box-shadow: 0 8px 20px rgba(37, 115, 64, 0.22);
+}
+
+.quickActionItem:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.quickActionItemPressed {
+  border-color: #387a4b;
+  background: linear-gradient(145deg, #4e9d64, #458b58);
+  transform: scale(0.995);
+}
+
+.quickActionItemDisabled {
+  border-color: #af6464;
+  background: linear-gradient(145deg, #d17b7b, #c76a6a);
+}
+
+.quickActionItemDisabled:hover {
+  border-color: #9f5353;
+  box-shadow: 0 8px 20px rgba(163, 71, 71, 0.22);
+}
+
+.quickActionItemDisabled.quickActionItemPressed {
+  border-color: #8e4747;
+  background: linear-gradient(145deg, #b85b5b, #aa4f4f);
+}
+
+.quickActionName {
+  width: 100%;
+  min-width: 56px;
+  max-width: min(42vw, 320px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .quickActionItem {
+    max-width: 100%;
+  }
+}

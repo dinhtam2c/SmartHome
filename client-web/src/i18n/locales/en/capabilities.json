@@ -1,0 +1,8 @@
+{
+  "switch.power": "Power",
+  "light.brightness": "Brightness",
+  "light.effect": "Light effect",
+  "sensor.temperature": "Temperature",
+  "sensor.humidity": "Humidity",
+  "sensor.interval": "Reporting Interval"
+}

@@ -1,0 +1,268 @@
+[
+	{
+		"id": "switch.power",
+		"version": 1,
+		"role": "Control",
+		"conflictsWith": [],
+		"stateSchema": {
+			"type": "object",
+			"properties": {
+				"value": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"value"
+			],
+			"additionalProperties": false
+		},
+		"operations": {
+			"set": {
+				"type": "object",
+				"properties": {
+					"value": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"value"
+				],
+				"additionalProperties": false
+			}
+		},
+		"applyStrategy": {
+			"operation": "set",
+			"stateMapping": {
+				"value": "value"
+			},
+			"readOnlyFields": [],
+			"partialUpdate": true
+		},
+		"metadata": {
+			"defaultName": "Power",
+			"primary": {
+				"state": "value",
+				"operation": "set"
+			},
+			"overviewVisible": true,
+			"order": 0
+		}
+	},
+	{
+		"id": "light.brightness",
+		"version": 1,
+		"role": "Control",
+		"conflictsWith": [],
+		"prerequisite": {
+			"capabilityId": "switch.power",
+			"requiredState": {
+				"value": true
+			},
+			"autoFix": true
+		},
+		"stateSchema": {
+			"type": "object",
+			"properties": {
+				"value": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 100
+				}
+			},
+			"required": [
+				"value"
+			],
+			"additionalProperties": false
+		},
+		"operations": {
+			"set": {
+				"type": "object",
+				"properties": {
+					"value": {
+						"type": "integer",
+						"minimum": 0,
+						"maximum": 100,
+						"step": 1
+					},
+					"transitionMs": {
+						"type": "integer",
+						"minimum": 0
+					}
+				},
+				"required": [
+					"value"
+				],
+				"additionalProperties": false
+			}
+		},
+		"applyStrategy": {
+			"operation": "set",
+			"stateMapping": {
+				"value": "value"
+			},
+			"readOnlyFields": [
+				"minLevel",
+				"maxLevel"
+			],
+			"partialUpdate": true
+		},
+		"metadata": {
+			"unit": "%",
+			"defaultName": "Brightness",
+			"primary": {
+				"state": "value",
+				"operation": "set"
+			},
+			"overviewVisible": true,
+			"order": 1
+		}
+	},
+	{
+		"id": "sensor.temperature",
+		"version": 1,
+		"role": "Sensor",
+		"conflictsWith": [],
+		"stateSchema": {
+			"type": "object",
+			"properties": {
+				"value": {
+					"type": "number"
+				}
+			},
+			"required": [
+				"value"
+			],
+			"additionalProperties": false
+		},
+		"operations": {},
+		"metadata": {
+			"unit": "°C",
+			"defaultName": "Temperature",
+			"primary": {
+				"state": "value"
+			},
+			"overviewVisible": true,
+			"order": 2
+		}
+	},
+	{
+		"id": "sensor.humidity",
+		"version": 1,
+		"role": "Sensor",
+		"conflictsWith": [],
+		"stateSchema": {
+			"type": "object",
+			"properties": {
+				"value": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 100
+				}
+			},
+			"required": [
+				"value"
+			],
+			"additionalProperties": false
+		},
+		"operations": {},
+		"metadata": {
+			"unit": "%",
+			"defaultName": "Humidity",
+			"primary": {
+				"state": "value"
+			},
+			"overviewVisible": true,
+			"order": 3
+		}
+	},
+	{
+		"id": "sensor.interval",
+		"version": 1,
+		"role": "Control",
+		"conflictsWith": [],
+		"stateSchema": {
+			"type": "object",
+			"properties": {
+				"value": {
+					"type": "integer",
+					"minimum": 1
+				}
+			},
+			"required": [
+				"value"
+			],
+			"additionalProperties": false
+		},
+		"operations": {
+			"set": {
+				"type": "object",
+				"properties": {
+					"value": {
+						"type": "integer",
+						"minimum": 1
+					}
+				},
+				"required": [
+					"value"
+				],
+				"additionalProperties": false
+			}
+		},
+		"applyStrategy": {
+			"operation": "set",
+			"stateMapping": {
+				"value": "value"
+			},
+			"readOnlyFields": [],
+			"partialUpdate": true
+		},
+		"metadata": {
+			"unit": "s",
+			"defaultName": "Reporting Interval",
+			"primary": {
+				"state": "value",
+				"operation": "set"
+			},
+			"overviewVisible": false,
+			"order": 4
+		}
+	},
+	{
+		"id": "light.effect",
+		"version": 1,
+		"role": "Actuator",
+		"conflictsWith": [],
+		"operations": {
+			"flash": {
+				"type": "object",
+				"properties": {
+					"count": {
+						"type": "integer",
+						"minimum": 1,
+						"maximum": 10
+					},
+					"intervalMs": {
+						"type": "integer",
+						"minimum": 20,
+						"maximum": 5000
+					},
+					"color": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"count"
+				],
+				"additionalProperties": false
+			}
+		},
+		"metadata": {
+			"defaultName": "Effect",
+			"primary": {
+				"operation": "flash"
+			},
+			"overviewVisible": false,
+			"order": 5
+		}
+	}
+]

@@ -1,0 +1,57 @@
+.bottomNav {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.45rem;
+  padding: 0.68rem;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(250, 253, 255, 0.96), rgba(244, 249, 255, 0.92));
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-panel);
+  border: 1px solid rgba(198, 215, 233, 0.85);
+}
+
+.bottomNav a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 16px;
+  padding: 0.6rem 0.4rem;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: transform var(--transition-fast), background-color var(--transition-base),
+    color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.label {
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.015em;
+}
+
+.description {
+  font-size: 0.68rem;
+  line-height: 1.2;
+  opacity: 0.75;
+}
+
+.bottomNav a:hover {
+  background: rgba(75, 146, 204, 0.12);
+  color: var(--color-text-primary);
+  transform: translateY(-1px);
+}
+
+.active {
+  background: linear-gradient(135deg, rgba(75, 146, 204, 0.22), rgba(72, 167, 202, 0.16));
+  color: #1f4f78 !important;
+  box-shadow: inset 0 0 0 1px rgba(75, 146, 204, 0.25), 0 8px 14px rgba(75, 146, 204, 0.14);
+}
+
+@media (min-width: 769px) {
+  .bottomNav {
+    display: none;
+  }
+}

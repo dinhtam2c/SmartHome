@@ -1,0 +1,27 @@
+.deviceHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.deviceName {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.statusChip {
+  margin-left: auto;
+  margin-block: 0 !important;
+}
+
+.deviceSubtitle {
+  display: grid;
+  gap: 0.45rem;
+  align-content: flex-start;
+}
+
+.capabilityLine {
+  line-height: 1.45;
+}

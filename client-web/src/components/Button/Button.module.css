@@ -1,0 +1,88 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.05rem;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-base),
+    background-color var(--transition-base), border-color var(--transition-base),
+    color var(--transition-base);
+  will-change: transform;
+}
+
+.btn--sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.825rem;
+}
+
+.btn--lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn,
+.btn--primary {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.18)),
+    linear-gradient(120deg, var(--color-primary-strong), var(--color-primary));
+  color: #ffffff;
+  box-shadow: -3px 4px 7px rgba(15, 109, 143, 0.22);
+}
+
+.btn:hover,
+.btn--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: -4px 5px 8px rgba(15, 109, 143, 0.26);
+}
+
+.btn:active,
+.btn--primary:active {
+  transform: translateY(0);
+  box-shadow: -2px 3px 5px rgba(15, 109, 143, 0.22);
+}
+
+.btn--secondary {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.96), rgba(243, 249, 255, 0.92));
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+
+.btn--secondary:hover {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.98), rgba(236, 246, 255, 0.94));
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+  transform: translateY(-1px);
+}
+
+.btn--secondary:active {
+  background: linear-gradient(90deg, rgba(248, 252, 255, 0.96), rgba(232, 241, 250, 0.92));
+  color: var(--color-text-primary);
+  transform: translateY(0);
+}
+
+.btn--danger {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.14)),
+    linear-gradient(120deg, #bb4c55, var(--color-danger));
+  color: #ffffff;
+  box-shadow: -3px 4px 7px rgba(191, 76, 76, 0.22);
+}
+
+.btn--danger:hover {
+  transform: translateY(-1px);
+}
+
+.btn--danger:active {
+  transform: translateY(0);
+}

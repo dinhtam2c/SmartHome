@@ -1,0 +1,39 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-block: 0.2rem;
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.025em;
+  color: #ffffff;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  box-shadow: 0 3px 8px rgba(10, 26, 42, 0.18);
+}
+
+.online {
+  background: linear-gradient(145deg, #13a35d, #0d7f46);
+}
+
+.offline {
+  background: linear-gradient(145deg, #67798c, #4f6072);
+}
+
+.pending {
+  background: linear-gradient(145deg, #de8a22, #b66a13);
+}
+
+.failed {
+  background: linear-gradient(145deg, #d9485c, #af3447);
+}
+
+.completed {
+  background: linear-gradient(145deg, #2da257, #1f7f44);
+}
+
+.neutral {
+  background: linear-gradient(145deg, #526980, #3f5468);
+}

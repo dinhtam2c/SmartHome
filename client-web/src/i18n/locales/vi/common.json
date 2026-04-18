@@ -1,0 +1,21 @@
+{
+  "close": "Đóng",
+  "header": {
+    "title": "Nhà thông minh"
+  },
+  "sidebar": {
+    "primaryNavigation": "Điều hướng chính",
+    "homes": "Nhà",
+    "homesDescription": "Quản lý nhà và chi tiết"
+  },
+  "capabilityLabels": {
+    "_example.capability_id": "Nhãn capability mẫu",
+    "switch": "Công tắc",
+    "brightness": "Độ sáng",
+    "temperature": "Nhiệt độ",
+    "humidity": "Độ ẩm",
+    "battery": "Pin",
+    "motion": "Chuyển động",
+    "contact": "Cửa/tiếp điểm"
+  }
+}

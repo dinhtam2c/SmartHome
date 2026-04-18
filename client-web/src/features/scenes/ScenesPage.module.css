@@ -1,0 +1,15 @@
+.sceneSubtitle {
+  display: grid;
+  gap: 0.26rem;
+}
+
+.sceneMeta {
+  color: var(--color-text-secondary);
+  font-size: 0.82rem;
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}

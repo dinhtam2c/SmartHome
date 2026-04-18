@@ -1,0 +1,52 @@
+.cell {
+  background: var(--bg-surface);
+  border-radius: 16px;
+  padding: 1.1rem;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-base),
+    border-color var(--transition-base), background-color var(--transition-base);
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  text-align: left;
+  font-family: inherit;
+  width: 100%;
+  appearance: none;
+}
+
+.cell:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.cell:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+  border-color: rgba(15, 109, 143, 0.35);
+}
+
+.cell:active {
+  transform: translateY(-1px) scale(0.99);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: 0.05s;
+}
+
+.title {
+  font-size: 1.06rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
