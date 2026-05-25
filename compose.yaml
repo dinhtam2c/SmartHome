@@ -1,0 +1,128 @@
+name: smarthome
+
+x-backend-image: &backend-image
+  image: smarthome-backend:local
+  build:
+    context: ./server
+
+x-mosquitto-image: &mosquitto-image
+  image: eclipse-mosquitto:2.1.2-alpine
+
+services:
+  broker-config-init:
+    <<: *mosquitto-image
+    user: "0:0"
+    restart: "no"
+    environment:
+      DYNSEC_ADMIN_USERNAME: ${MOSQUITTO_DYNSEC_ADMIN_USERNAME:-smarthome-admin}
+      DYNSEC_ADMIN_PASSWORD: ${MOSQUITTO_DYNSEC_ADMIN_PASSWORD:?Set MOSQUITTO_DYNSEC_ADMIN_PASSWORD in .env}
+    entrypoint:
+      - /bin/sh
+      - /scripts/init-dynamic-security.sh
+    volumes:
+      - type: bind
+        source: ./deploy/mosquitto/init-dynamic-security.sh
+        target: /scripts/init-dynamic-security.sh
+        read_only: true
+      - type: volume
+        source: mosquitto-data
+        target: /mosquitto/data
+
+  broker:
+    <<: *mosquitto-image
+    restart: unless-stopped
+    environment:
+      DYNSEC_ADMIN_USERNAME: ${MOSQUITTO_DYNSEC_ADMIN_USERNAME:-smarthome-admin}
+      DYNSEC_ADMIN_PASSWORD: ${MOSQUITTO_DYNSEC_ADMIN_PASSWORD:?Set MOSQUITTO_DYNSEC_ADMIN_PASSWORD in .env}
+    ports:
+      - "1883:1883"
+    volumes:
+      - type: bind
+        source: ./deploy/mosquitto/mosquitto.conf
+        target: /mosquitto/config/mosquitto.conf
+        read_only: true
+      - type: volume
+        source: mosquitto-data
+        target: /mosquitto/data
+    depends_on:
+      broker-config-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          mosquitto_sub -h 127.0.0.1 -p 1883
+          -u "$${DYNSEC_ADMIN_USERNAME}" -P "$${DYNSEC_ADMIN_PASSWORD}"
+          -t '$$SYS/broker/version' -C 1 -W 3 >/dev/null 2>&1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  backend-data-init:
+    <<: *backend-image
+    user: "0:0"
+    entrypoint:
+      - /bin/sh
+      - -c
+    command:
+      - chown -R "$${APP_UID}:$${APP_UID}" /app/data
+    restart: "no"
+    volumes:
+      - type: volume
+        source: sqlite-data
+        target: /app/data
+
+  backend:
+    <<: *backend-image
+    restart: unless-stopped
+    init: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ConnectionStrings__DefaultConnection: Data Source=/app/data/smarthome.db
+      MqttOptions__Host: broker
+      MqttOptions__Port: "1883"
+      MqttOptions__ClientId: server
+      MqttOptions__Username: ${MOSQUITTO_BACKEND_USERNAME:-smarthome-backend}
+      MqttOptions__Password: ${MOSQUITTO_BACKEND_PASSWORD:?Set MOSQUITTO_BACKEND_PASSWORD in .env}
+      MqttDynamicSecurity__Enabled: "true"
+      MqttDynamicSecurity__Host: broker
+      MqttDynamicSecurity__Port: "1883"
+      MqttDynamicSecurity__ClientId: server-dynsec-admin
+      MqttDynamicSecurity__Username: ${MOSQUITTO_DYNSEC_ADMIN_USERNAME:-smarthome-admin}
+      MqttDynamicSecurity__Password: ${MOSQUITTO_DYNSEC_ADMIN_PASSWORD:?Set MOSQUITTO_DYNSEC_ADMIN_PASSWORD in .env}
+      MqttDynamicSecurity__BackendUsername: ${MOSQUITTO_BACKEND_USERNAME:-smarthome-backend}
+      MqttDynamicSecurity__BackendPassword: ${MOSQUITTO_BACKEND_PASSWORD:?Set MOSQUITTO_BACKEND_PASSWORD in .env}
+      MqttDynamicSecurity__BackendClientId: server
+      MqttDynamicSecurity__DeviceGroup: smarthome-devices
+    expose:
+      - "8080"
+    volumes:
+      - type: volume
+        source: sqlite-data
+        target: /app/data
+    depends_on:
+      backend-data-init:
+        condition: service_completed_successfully
+      broker:
+        condition: service_healthy
+    stop_grace_period: 10s
+
+  frontend:
+    image: smarthome-frontend:local
+    build:
+      context: ./client-web
+      args:
+        VITE_API_BASE_URL: /api/v1
+    restart: unless-stopped
+    init: true
+    ports:
+      - "${SMARTHOME_HTTP_PORT:-80}:80"
+    depends_on:
+      backend:
+        condition: service_started
+
+volumes:
+  mosquitto-data:
+  sqlite-data:

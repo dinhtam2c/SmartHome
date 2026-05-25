@@ -1,0 +1,51 @@
+{
+  "id": "light.brightness",
+  "version": 1,
+  "role": "Control",
+  "conflictsWith": [],
+  "prerequisite": {
+    "capabilityId": "switch.power",
+    "requiredState": {
+      "value": true
+    },
+    "autoFix": true
+  },
+  "stateSchema": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
+      }
+    },
+    "required": [
+      "value"
+    ],
+    "additionalProperties": false
+  },
+  "operations": {
+    "set": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "multipleOf": 1
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "applyStrategy": {
+    "operation": "set",
+    "stateMapping": {
+      "value": "value"
+    },
+    "partialUpdate": true
+  }
+}

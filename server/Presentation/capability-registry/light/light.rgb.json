@@ -1,0 +1,99 @@
+{
+  "id": "light.rgb",
+  "version": 1,
+  "role": "Control",
+  "conflictsWith": [],
+  "prerequisite": {
+    "capabilityId": "switch.power",
+    "requiredState": {
+      "value": true
+    },
+    "autoFix": true
+  },
+  "stateSchema": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "object",
+        "properties": {
+          "red": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255,
+            "multipleOf": 1
+          },
+          "green": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255,
+            "multipleOf": 1
+          },
+          "blue": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255,
+            "multipleOf": 1
+          }
+        },
+        "required": [
+          "red",
+          "green",
+          "blue"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "value"
+    ],
+    "additionalProperties": false
+  },
+  "operations": {
+    "set": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "object",
+          "properties": {
+            "red": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255,
+              "multipleOf": 1
+            },
+            "green": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255,
+              "multipleOf": 1
+            },
+            "blue": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255,
+              "multipleOf": 1
+            }
+          },
+          "required": [
+            "red",
+            "green",
+            "blue"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "applyStrategy": {
+    "operation": "set",
+    "stateMapping": {
+      "value": "value"
+    },
+    "readOnlyFields": [],
+    "partialUpdate": false
+  }
+}

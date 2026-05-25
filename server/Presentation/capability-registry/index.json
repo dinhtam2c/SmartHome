@@ -1,0 +1,17 @@
+{
+  "files": [
+    "switch/switch.power.json",
+    "light/light.brightness.json",
+    "light/light.rgb.json",
+    "sensor/sensor.temperature.json",
+    "sensor/sensor.humidity.json",
+    "sensor/sensor.motion.json",
+    "sensor/sensor.illuminance.json",
+    "sensor/sensor.light.json",
+    "sensor/sensor.interval.json",
+    "light/light.effect.json",
+    "fan/fan.speed.json",
+    "lock/lock.state.json",
+    "actuator/buzzer.json"
+  ]
+}

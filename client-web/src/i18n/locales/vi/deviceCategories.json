@@ -1,0 +1,11 @@
+{
+  "deviceCategories": {
+    "light": "Đèn",
+    "fan": "Quạt",
+    "sensor": "Cảm biến",
+    "door": "Cửa",
+    "switch": "Công tắc",
+    "alarm": "Còi báo",
+    "other": "Thiết bị khác"
+  }
+}

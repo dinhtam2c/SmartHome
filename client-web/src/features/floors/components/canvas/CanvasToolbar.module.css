@@ -1,0 +1,86 @@
+.toolbar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.85rem;
+  align-items: center;
+  min-width: 0;
+  height: 100%;
+  border-radius: calc(var(--radius-md) - 2px);
+  border: 1px solid rgba(188, 209, 226, 0.92);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(243, 249, 255, 0.92)),
+    linear-gradient(120deg, rgba(103, 184, 235, 0.12), transparent 60%);
+  padding: 0.85rem 1rem;
+}
+
+.actions {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.hint {
+  min-width: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-compact);
+  text-align: right;
+}
+
+.status {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.drawingActions {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.pointCount {
+  display: inline-flex;
+  min-height: 1.75rem;
+  align-items: center;
+  border-radius: 999px;
+  background: rgba(24, 50, 73, 0.08);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  padding: 0.25rem 0.72rem;
+}
+
+@media (max-width: 768px) {
+  .toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .status {
+    align-items: flex-start;
+  }
+
+  .hint {
+    text-align: left;
+  }
+
+  .drawingActions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .actions > *,
+  .drawingActions > * {
+    flex: 1 1 100%;
+  }
+
+  .pointCount {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,74 @@
+.floorTabs {
+  display: flex;
+  min-width: 0;
+  gap: 0.65rem;
+  overflow-x: auto;
+  padding: 0.1rem 0 0.2rem;
+}
+
+.floorTab {
+  display: grid;
+  grid-template-columns: 1.1rem minmax(7rem, 1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
+  min-width: 11rem;
+  max-width: 16rem;
+  min-height: 4.2rem;
+  flex: 0 0 auto;
+  border: 1px solid rgba(24, 50, 73, 0.14);
+  border-radius: calc(var(--radius-md) - 2px);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--color-text-primary);
+  cursor: grab;
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+  transition: border-color var(--transition-base), background-color var(--transition-base),
+    box-shadow var(--transition-base), transform var(--transition-fast);
+}
+
+.floorTab:hover {
+  border-color: rgba(39, 119, 168, 0.3);
+  box-shadow: 0 8px 20px rgba(39, 83, 120, 0.08);
+  transform: translateY(-1px);
+}
+
+.floorTab:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+}
+
+.floorTabActive {
+  border-color: rgba(39, 119, 168, 0.42);
+  background: rgba(232, 244, 251, 0.96);
+}
+
+.floorTabGrip {
+  align-self: stretch;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-bold);
+  grid-row: 1 / span 2;
+  line-height: 1.1;
+}
+
+.floorTabName {
+  overflow: hidden;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.floorTabMeta {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body-sm);
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .floorTab {
+    min-width: 9.5rem;
+    max-width: 12.5rem;
+  }
+}

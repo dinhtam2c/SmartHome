@@ -1,0 +1,54 @@
+using Application.Common.Errors;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Presentation.Middlewares;
+
+public class WebApiExceptionHandler : IExceptionHandler
+{
+    private readonly ILogger<WebApiExceptionHandler> _logger;
+
+    public WebApiExceptionHandler(ILogger<WebApiExceptionHandler> logger)
+    {
+        _logger = logger;
+    }
+
+    public async ValueTask<bool> TryHandleAsync(HttpContext context, Exception ex,
+        CancellationToken cancellationToken)
+    {
+        _logger.LogError(ex, "Exception: {Message}", ex.Message);
+
+        var (statusCode, title, detail) = ex switch
+        {
+            NotFoundException => (StatusCodes.Status404NotFound, "Resource not found", ex.Message),
+            ConflictException => (StatusCodes.Status409Conflict, "Conflict", ex.Message),
+            BadRequestException => (StatusCodes.Status400BadRequest, "Bad request", ex.Message),
+            AppException => (StatusCodes.Status500InternalServerError, "Application error", ex.Message),
+            ArgumentException => (StatusCodes.Status400BadRequest, GetTitle(StatusCodes.Status400BadRequest), ex.Message),
+            _ => (StatusCodes.Status500InternalServerError, "Internal server error", "An internal error occured.")
+        };
+
+        var problemDetails = new ProblemDetails
+        {
+            Status = statusCode,
+            Title = title,
+            Detail = detail,
+            Instance = context.Request.Path
+        };
+
+        context.Response.StatusCode = statusCode;
+        await context.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+
+        return true;
+    }
+
+    private static string GetTitle(int statusCode) => statusCode switch
+    {
+        404 => "Resource not found",
+        400 => "Bad request",
+        409 => "Conflict",
+        401 => "Unauthorized",
+        403 => "Forbidden",
+        _ => "Error"
+    };
+}

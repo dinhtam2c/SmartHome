@@ -1,0 +1,9 @@
+.field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.range {
+  width: 100%;
+  accent-color: #147f5c;
+}

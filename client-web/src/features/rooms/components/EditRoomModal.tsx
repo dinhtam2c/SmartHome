@@ -1,0 +1,79 @@
+import type { SyntheticEvent } from "react";
+import { Button } from "@/shared/ui/Button";
+import { Form } from "@/shared/ui/Form";
+import { FormGroup } from "@/shared/ui/FormGroup";
+import { Input } from "@/shared/ui/Input";
+import { Modal } from "@/shared/ui/Modal";
+import { FormActions } from "@/shared/ui/FormActions";
+import styles from "./RoomModal.module.css";
+import { useTranslation } from "react-i18next";
+
+type Props = {
+  open: boolean;
+  title?: string;
+  showName?: boolean;
+  showDescription?: boolean;
+  onClose: () => void;
+  onSubmit: (event: SyntheticEvent<HTMLFormElement>) => void;
+  name: string;
+  onNameChange: (value: string) => void;
+  description: string;
+  onDescriptionChange: (value: string) => void;
+  isSaving: boolean;
+  error: string | null;
+};
+
+export function EditRoomModal({
+  open,
+  title,
+  showName = true,
+  showDescription = true,
+  onClose,
+  onSubmit,
+  name,
+  onNameChange,
+  description,
+  onDescriptionChange,
+  isSaving,
+  error,
+}: Props) {
+  const { t } = useTranslation("rooms");
+
+  return (
+    <Modal open={open} title={title ?? t("edit")} onClose={onClose}>
+      <Form onSubmit={onSubmit}>
+        {showName ? (
+          <FormGroup label={t("editName")} htmlFor="edit-room-name">
+            <Input
+              id="edit-room-name"
+              value={name}
+              onChange={(event) => onNameChange(event.target.value)}
+              required
+            />
+          </FormGroup>
+        ) : null}
+
+        {showDescription ? (
+          <FormGroup label={t("editDescription")} htmlFor="edit-room-description" required={false}>
+            <Input
+              id="edit-room-description"
+              value={description}
+              onChange={(event) => onDescriptionChange(event.target.value)}
+            />
+          </FormGroup>
+        ) : null}
+
+        {error ? <p className={styles.error}>{t(error, { defaultValue: error })}</p> : null}
+
+        <FormActions>
+          <Button type="button" variant="secondary" onClick={onClose}>
+            {t("cancel")}
+          </Button>
+          <Button type="submit" disabled={isSaving}>
+            {isSaving ? t("saving") : t("save")}
+          </Button>
+        </FormActions>
+      </Form>
+    </Modal>
+  );
+}

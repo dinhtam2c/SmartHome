@@ -1,0 +1,31 @@
+using Application.Ports.Persistence;
+using Application.Common.Errors;
+using Domain.Models.Homes;
+using MediatR;
+
+namespace Application.UseCases.Homes.UpdateHome;
+
+public class UpdateHomeCommandHandler : IRequestHandler<UpdateHomeCommand>
+{
+    private readonly IHomeRepository _homeRepository;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public UpdateHomeCommandHandler(IHomeRepository homeRepository, IUnitOfWork unitOfWork)
+    {
+        _homeRepository = homeRepository;
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task Handle(UpdateHomeCommand request, CancellationToken cancellationToken)
+    {
+        var home = await _homeRepository.GetById(request.HomeId)
+            ?? throw new HomeNotFoundException(request.HomeId);
+
+        if (string.IsNullOrWhiteSpace(request.Name))
+            throw new DomainValidationException("Home name is required.");
+
+        home.Update(request.Name, request.Description);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+    }
+}

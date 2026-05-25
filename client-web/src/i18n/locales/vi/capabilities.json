@@ -1,0 +1,15 @@
+{
+  "switch.power": "Nguồn",
+  "fan.speed": "Tốc độ quạt",
+  "light.brightness": "Độ sáng",
+  "light.rgb": "RGB",
+  "light.effect": "Hiệu ứng đèn",
+  "lock.state": "Khóa cửa",
+  "buzzer": "Còi báo",
+  "sensor.temperature": "Nhiệt độ",
+  "sensor.humidity": "Độ ẩm",
+  "sensor.illuminance": "Độ sáng",
+  "sensor.light": "Ánh sáng",
+  "sensor.motion": "Chuyển động",
+  "sensor.interval": "Chu kỳ báo cáo"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "sensor.humidity",
+  "version": 1,
+  "role": "Sensor",
+  "conflictsWith": [],
+  "stateSchema": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
+      }
+    },
+    "required": [
+      "value"
+    ],
+    "additionalProperties": false
+  },
+  "operations": {}
+}

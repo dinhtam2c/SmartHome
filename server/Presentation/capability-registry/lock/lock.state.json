@@ -1,0 +1,40 @@
+{
+  "id": "lock.state",
+  "version": 1,
+  "role": "Control",
+  "conflictsWith": [],
+  "stateSchema": {
+    "type": "object",
+    "properties": {
+      "locked": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "locked"
+    ],
+    "additionalProperties": false
+  },
+  "operations": {
+    "set": {
+      "type": "object",
+      "properties": {
+        "locked": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "locked"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "applyStrategy": {
+    "operation": "set",
+    "stateMapping": {
+      "locked": "locked"
+    },
+    "readOnlyFields": [],
+    "partialUpdate": true
+  }
+}

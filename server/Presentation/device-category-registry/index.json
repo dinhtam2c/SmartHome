@@ -1,0 +1,51 @@
+[
+  {
+    "id": "light",
+    "defaultName": "Light",
+    "iconKey": "lightbulb",
+    "color": "#f2c264",
+    "order": 10
+  },
+  {
+    "id": "fan",
+    "defaultName": "Fan",
+    "iconKey": "fan",
+    "color": "#65b7a7",
+    "order": 20
+  },
+  {
+    "id": "sensor",
+    "defaultName": "Sensor",
+    "iconKey": "sensor",
+    "color": "#68b8e8",
+    "order": 30
+  },
+  {
+    "id": "door",
+    "defaultName": "Door",
+    "iconKey": "door",
+    "color": "#72b99b",
+    "order": 40
+  },
+  {
+    "id": "switch",
+    "defaultName": "Switch",
+    "iconKey": "switch",
+    "color": "#95acd6",
+    "order": 50
+  },
+  {
+    "id": "alarm",
+    "defaultName": "Alarm",
+    "iconKey": "bell",
+    "color": "#df8176",
+    "order": 60
+  },
+  {
+    "id": "other",
+    "defaultName": "Other device",
+    "iconKey": "box",
+    "color": "#9fb0bd",
+    "order": 999
+  }
+]

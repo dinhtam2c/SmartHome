@@ -1,0 +1,138 @@
+.capabilityCardWrap {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.45rem;
+  height: auto;
+}
+
+.endpointGroup {
+  display: grid;
+  min-width: 0;
+  gap: 0.55rem;
+}
+
+.endpointGroup + .endpointGroup {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed rgba(170, 191, 209, 0.75);
+}
+
+.endpointGroupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.endpointGroupTitle {
+  min-width: 0;
+  margin: 0;
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-bold);
+  color: #135c8d;
+  overflow-wrap: anywhere;
+}
+
+.endpointGroupCount {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+}
+
+.capabilityActions {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 0 0.2rem;
+}
+
+.inlineControlArea {
+  min-width: 0;
+  flex: 1 1 min(100%, 320px);
+}
+
+.inlineNumberControl,
+.inlineSliderControl {
+  display: grid;
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.inlineQuickNumberControl {
+  display: grid;
+  gap: 0.45rem;
+  width: min(100%, max-content);
+  max-width: 100%;
+}
+
+.inlineQuickNumberRow {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.inlineQuickNumberRow :global(input),
+.inlineQuickNumberRow :global(select) {
+  width: min(100%, 9rem);
+  min-width: 6rem;
+}
+
+.inlineQuickSetButton {
+  width: min(100%, 6rem);
+  min-width: 6rem;
+  justify-content: center;
+}
+
+.inlineNumberControl :global(input) {
+  width: 100%;
+}
+
+.compactActionButton {
+  width: auto;
+  justify-self: start;
+  align-self: start;
+}
+
+.capabilityHint {
+  color: #0f6186;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.filterLabel {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.schemaBlock {
+  margin-top: 0.24rem;
+  border: 1px solid rgba(175, 196, 215, 0.5);
+  border-radius: 10px;
+  background: rgba(247, 251, 255, 0.88);
+  padding: 0.45rem 0.55rem;
+}
+
+@media (max-width: 560px) {
+  .capabilityActions {
+    padding-inline: 0;
+  }
+
+  .capabilityActions > button,
+  .inlineControlArea,
+  .inlineQuickNumberControl,
+  .inlineQuickNumberRow :global(input),
+  .inlineQuickNumberRow :global(select),
+  .inlineQuickSetButton,
+  .compactActionButton {
+    width: 100%;
+  }
+}
