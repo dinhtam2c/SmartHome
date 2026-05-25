@@ -1,0 +1,13 @@
+.formActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  justify-content: flex-end;
+}
+
+@media (max-width: 560px) {
+  .formActions {
+    justify-content: flex-start;
+  }
+}

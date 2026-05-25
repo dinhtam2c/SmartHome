@@ -1,0 +1,62 @@
+.deviceHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.deviceIdentity {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.deviceIdentity > :first-child {
+  flex: 0 0 auto;
+}
+
+.deviceName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.statusChip {
+  margin-left: auto;
+  margin-block: 0 !important;
+}
+
+.deviceSubtitle {
+  display: grid;
+  gap: 0.45rem;
+  align-content: flex-start;
+}
+
+.capabilityLine {
+  line-height: var(--line-height-compact);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 480px) {
+  .deviceHeader {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .deviceIdentity {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .deviceName {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .statusChip {
+    margin-left: 0;
+  }
+}

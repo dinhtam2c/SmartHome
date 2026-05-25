@@ -1,0 +1,30 @@
+{
+  "id": "light.effect",
+  "version": 1,
+  "role": "Actuator",
+  "conflictsWith": [],
+  "operations": {
+    "flash": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "intervalMs": {
+          "type": "integer",
+          "minimum": 20,
+          "maximum": 5000
+        },
+        "color": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "count"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

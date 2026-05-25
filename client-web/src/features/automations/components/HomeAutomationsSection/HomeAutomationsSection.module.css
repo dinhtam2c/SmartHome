@@ -1,0 +1,114 @@
+.ruleList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+  gap: 1rem;
+  padding: 0.35rem 0;
+}
+
+.ruleCard {
+  appearance: none;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 1.1rem;
+  background: var(--bg-surface);
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: transform var(--transition-fast), box-shadow var(--transition-base),
+    border-color var(--transition-base), background-color var(--transition-base);
+}
+
+.ruleCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+  border-color: rgba(15, 109, 143, 0.35);
+}
+
+.ruleCard:active {
+  transform: translateY(-1px) scale(0.99);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: 0.05s;
+}
+
+.ruleCard:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.ruleHeader {
+  display: grid;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.ruleCopy {
+  display: grid;
+  min-width: 0;
+  gap: 0.4rem;
+}
+
+.ruleTitleRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.ruleName {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-card-title);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+.ruleDescription {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body-sm);
+  line-height: var(--line-height-compact);
+}
+
+.ruleMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.42rem;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body-sm);
+}
+
+.summary {
+  width: 100%;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body-sm);
+  line-height: var(--line-height-body);
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.summary strong {
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 720px) {
+  .ruleList {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+}

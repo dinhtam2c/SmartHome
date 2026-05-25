@@ -1,0 +1,1 @@
+export const LONG_PRESS_DURATION_MS = 750;

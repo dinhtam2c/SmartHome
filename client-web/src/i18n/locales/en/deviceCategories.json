@@ -1,0 +1,11 @@
+{
+  "deviceCategories": {
+    "light": "Light",
+    "fan": "Fan",
+    "sensor": "Sensor",
+    "door": "Door",
+    "switch": "Switch",
+    "alarm": "Alarm",
+    "other": "Other device"
+  }
+}

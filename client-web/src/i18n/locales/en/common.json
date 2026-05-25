@@ -1,0 +1,21 @@
+{
+  "close": "Close",
+  "header": {
+    "title": "Smart Home"
+  },
+  "sidebar": {
+    "primaryNavigation": "Primary navigation",
+    "homes": "Homes",
+    "homesDescription": "Manage homes and details"
+  },
+  "capabilityLabels": {
+    "_example.capability_id": "Example capability label",
+    "switch": "Switch",
+    "brightness": "Brightness",
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "battery": "Battery",
+    "motion": "Motion",
+    "contact": "Contact"
+  }
+}

@@ -1,0 +1,25 @@
+.badge {
+  --device-category-color: #9fb0bd;
+  display: inline-flex;
+  flex: 0 0 auto;
+  max-width: 100%;
+  min-width: 0;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--device-category-color) 34%, #ffffff);
+  background: color-mix(in srgb, var(--device-category-color) 13%, #ffffff);
+  color: color-mix(in srgb, var(--device-category-color) 58%, #10243e);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  white-space: nowrap;
+  padding: 0.18rem 0.62rem 0.18rem 0.22rem;
+}
+
+.label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

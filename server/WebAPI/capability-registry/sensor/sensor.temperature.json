@@ -1,0 +1,19 @@
+{
+  "id": "sensor.temperature",
+  "version": 1,
+  "role": "Sensor",
+  "conflictsWith": [],
+  "stateSchema": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "value"
+    ],
+    "additionalProperties": false
+  },
+  "operations": {}
+}

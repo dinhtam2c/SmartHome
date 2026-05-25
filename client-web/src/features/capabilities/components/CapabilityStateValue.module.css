@@ -1,0 +1,254 @@
+.stateValue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.label {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.valueText {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.visualIcon {
+  --capability-visual-color: #64748b;
+  --capability-visual-bg: #eef4f8;
+  position: relative;
+  display: inline-flex;
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--capability-visual-bg);
+  color: var(--capability-visual-color);
+}
+
+.visualIcon::before,
+.visualIcon::after {
+  position: absolute;
+  display: block;
+  content: "";
+}
+
+.visualImage {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.toneAmber {
+  --capability-visual-color: #a15c05;
+  --capability-visual-bg: #fff2cf;
+}
+
+.toneBlue {
+  --capability-visual-color: #1d6f9f;
+  --capability-visual-bg: #dff2ff;
+}
+
+.toneGreen {
+  --capability-visual-color: #19734f;
+  --capability-visual-bg: #ddf5e8;
+}
+
+.toneNeutral {
+  --capability-visual-color: #5f7183;
+  --capability-visual-bg: #edf3f7;
+}
+
+.toneRed {
+  --capability-visual-color: #a9443e;
+  --capability-visual-bg: #ffe5e0;
+}
+
+.toneViolet {
+  --capability-visual-color: #6d55aa;
+  --capability-visual-bg: #eee7ff;
+}
+
+.iconPower::before {
+  width: 0.42rem;
+  height: 0.42rem;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+}
+
+.iconPower::after {
+  top: 0.22rem;
+  width: 2px;
+  height: 0.38rem;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.iconBrightness::before,
+.iconIlluminance::before,
+.iconLight::before {
+  width: 0.46rem;
+  height: 0.46rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.iconBrightness::after,
+.iconIlluminance::after,
+.iconLight::after {
+  width: 0.78rem;
+  height: 0.78rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.55;
+}
+
+.iconTemperature::before {
+  width: 0.18rem;
+  height: 0.62rem;
+  border-radius: 999px;
+  background: currentColor;
+  transform: translateY(-0.12rem);
+}
+
+.iconTemperature::after {
+  bottom: 0.22rem;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.iconHumidity::before {
+  width: 0.58rem;
+  height: 0.58rem;
+  border-radius: 50% 50% 50% 0;
+  background: currentColor;
+  transform: rotate(-45deg) translateY(-0.02rem);
+}
+
+.iconMotion::before {
+  width: 0.34rem;
+  height: 0.34rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.iconMotion::after {
+  width: 0.82rem;
+  height: 0.82rem;
+  border: 1px solid currentColor;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.iconLock::before {
+  bottom: 0.28rem;
+  width: 0.62rem;
+  height: 0.42rem;
+  border-radius: 0.12rem;
+  background: currentColor;
+}
+
+.iconLock::after {
+  top: 0.24rem;
+  width: 0.42rem;
+  height: 0.42rem;
+  border: 2px solid currentColor;
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+}
+
+.iconLockOpen::before {
+  bottom: 0.28rem;
+  width: 0.62rem;
+  height: 0.42rem;
+  border-radius: 0.12rem;
+  background: currentColor;
+}
+
+.iconLockOpen::after {
+  top: 0.2rem;
+  width: 0.42rem;
+  height: 0.42rem;
+  border: 2px solid currentColor;
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+  transform: translate(-0.18rem, -0.02rem) rotate(-28deg);
+  transform-origin: 100% 100%;
+}
+
+.iconPalette::before {
+  width: 0.72rem;
+  height: 0.58rem;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+}
+
+.iconPalette::after {
+  right: 0.28rem;
+  bottom: 0.31rem;
+  width: 0.18rem;
+  height: 0.18rem;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: -0.24rem -0.09rem 0 currentColor, -0.06rem -0.24rem 0 currentColor;
+}
+
+.iconFan::before {
+  width: 0.22rem;
+  height: 0.22rem;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 -0.34rem 0 0 currentColor, 0.29rem 0.17rem 0 0 currentColor,
+    -0.29rem 0.17rem 0 0 currentColor;
+}
+
+.iconTimer::before {
+  width: 0.62rem;
+  height: 0.62rem;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+}
+
+.iconTimer::after {
+  width: 0.22rem;
+  height: 0.28rem;
+  border-top: 2px solid currentColor;
+  border-left: 2px solid currentColor;
+  transform: translate(0.06rem, -0.04rem);
+}
+
+.iconEffect::before,
+.iconBuzzer::before {
+  width: 0.2rem;
+  height: 0.2rem;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: -0.28rem 0.1rem 0 currentColor, 0.28rem -0.1rem 0 currentColor;
+}
+
+.swatch {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  border-radius: 4px;
+  border: 1px solid rgba(20, 42, 64, 0.22);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+}
+
+.unit {
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-semibold);
+}

@@ -1,0 +1,152 @@
+{
+  "loading": "Loading floor plan...",
+  "failed": "Failed to load the floor plan.",
+  "notFound": "Home not found.",
+  "pageTitleFallback": "Floor plan",
+  "actions": {
+    "backToHome": "Back to home details",
+    "createFloor": "Add floor",
+    "editInfo": "Edit floor plan",
+    "deleteFloor": "Delete floor",
+    "deletingFloor": "Deleting..."
+  },
+  "common": {
+    "cancel": "Cancel"
+  },
+  "fields": {
+    "name": "Floor name",
+    "canvasWidth": "Plan width",
+    "canvasHeight": "Plan height"
+  },
+  "toolbar": {
+    "view": "Control",
+    "edit": "Arrange devices",
+    "drawRoom": "Draw room",
+    "undoPoint": "Undo point",
+    "finishRoom": "Finish room",
+    "cancelDrawing": "Cancel",
+    "pointCount_one": "{{count}} point",
+    "pointCount_other": "{{count}} points",
+    "idleHint": "Choose a mode to control devices, arrange positions, or draw rooms."
+  },
+  "setup": {
+    "title": "Create the first floor plan",
+    "modalTitle": "Add floor plan",
+    "defaultName": "Floor {{number}}",
+    "create": "Create plan",
+    "creating": "Creating...",
+    "helper": "The size is copied from the previous floor; you can change it before creating."
+  },
+  "floorTabs": {
+    "label": "Home floors",
+    "meta": "{{rooms}} rooms - {{devices}} devices"
+  },
+  "stats": {
+    "rooms_one": "{{count}} room",
+    "rooms_other": "{{count}} rooms",
+    "placedFloorDevices_one": "{{count}} placed device",
+    "placedFloorDevices_other": "{{count}} placed devices",
+    "unplacedFloorDevices_one": "{{count}} unplaced device",
+    "unplacedFloorDevices_other": "{{count}} unplaced devices"
+  },
+  "canvas": {
+    "drawHint": "Click room corners. Move near the first point to close the room; at least three points are needed."
+  },
+  "panels": {
+    "unplacedTitle": "Devices without a position",
+    "unplacedHelper": "Select a device, then click the floor plan to place it.",
+    "unplacedEmpty": "All devices in this home already have a place on the plan.",
+    "unplacedFilteredEmpty": "No unplaced devices in this room.",
+    "unplacedRoomFilterLabel": "Filter by room",
+    "unplacedRoomFilterAll": "All rooms ({{count}})",
+    "unplacedRoomFilterRoom": "{{label}} ({{count}})",
+    "unplacedRoomFilterUnassigned": "{{label}} ({{count}})",
+    "drawTitle": "Drawing room",
+    "drawDescription": "Click around the room edge to define its outline. Near the first point, the line will close the room.",
+    "selectionTitle": "Selection",
+    "selectionDescription": "Select a room or device on the floor to inspect or edit it.",
+    "linkedRoom": "Linked room",
+    "noLinkedRoom": "Not linked",
+    "openDeviceDetails": "Open device",
+    "removePlacedFloorDevice": "Remove from plan",
+    "removingPlacedFloorDevice": "Removing...",
+    "deviceRoom": "Position on plan",
+    "deviceHomeRoom": "Assigned room",
+    "deviceStatus": "Status",
+    "statsTitle": "Floor plan summary",
+    "statsRooms": "Rooms",
+    "statsPlacedFloorDevices": "Placed devices",
+    "statsUnplacedFloorDevices": "Unplaced devices",
+    "editRoom": "Edit room",
+    "roomPoints": "Outline points"
+  },
+  "roomForm": {
+    "createTitle": "Create room on plan",
+    "editTitle": "Edit room on plan",
+    "label": "Display name",
+    "labelPlaceholder": "Example: Living room",
+    "linkedRoom": "Linked home room",
+    "noLinkedRoom": "No linked room",
+    "fillColor": "Fill color",
+    "polygon": "Outline",
+    "polygonHint": "points",
+    "save": "Save room",
+    "saving": "Saving...",
+    "delete": "Delete room",
+    "deleting": "Deleting..."
+  },
+  "infoModal": {
+    "title": "Edit floor plan",
+    "helper": "Changing the plan size affects the space for drawing rooms and placing devices.",
+    "save": "Save changes",
+    "saving": "Saving..."
+  },
+  "device": {
+    "deletedLabel": "Device deleted",
+    "genericLabel": "Other device",
+    "openDetails": "Open device details",
+    "notFound": "This device is no longer available.",
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "events": {
+    "externalUpdateTitle": "New changes are available",
+    "externalUpdateWhileEditing": "The floor changed elsewhere. Reload when you're ready to avoid overwriting your current edits.",
+    "reloadNow": "Reload",
+    "keepEditing": "Keep editing",
+    "reasons": {
+      "Created": "A floor was created from another session.",
+      "Deleted": "A floor was deleted from another session.",
+      "InfoUpdated": "The floor settings changed.",
+      "RoomAdded": "A room was added.",
+      "RoomUpdated": "A room was updated.",
+      "RoomRemoved": "A room was removed.",
+      "DevicePlaced": "A device was placed on the floor.",
+      "DeviceMoved": "A device was moved on the floor.",
+      "DeviceRemoved": "A placed device was removed.",
+      "LinkedRoomDeleted": "A linked home room no longer exists.",
+      "DeviceDeleted": "A linked device no longer exists.",
+      "Unknown": "A remote update was received."
+    }
+  },
+  "confirmDeleteFloor": "Delete this floor?",
+  "confirmDeleteRoom": "Delete this floor room?",
+  "confirmRemovePlacedFloorDevice": "Remove this device from the floor?",
+  "errors": {
+    "nameRequired": "A name is required.",
+    "invalidWidth": "Drawing width must be at least 480.",
+    "invalidHeight": "Drawing height must be at least 320.",
+    "createFloorFailed": "Failed to create floor.",
+    "updateFloorFailed": "Failed to update floor.",
+    "deleteFloorFailed": "Failed to delete floor.",
+    "roomLabelRequired": "Room label is required.",
+    "roomPolygonRequired": "A room outline needs at least 3 points.",
+    "saveRoomFailed": "Failed to save room.",
+    "deleteRoomFailed": "Failed to delete room.",
+    "placeDeviceFailed": "Failed to place device on the floor.",
+    "moveDeviceFailed": "Failed to move placed device.",
+    "removePlacedFloorDeviceFailed": "Failed to remove placed device.",
+    "loadDevicesFailed": "Failed to load devices for this home.",
+    "reorderFloorsFailed": "Failed to reorder floors."
+  }
+}

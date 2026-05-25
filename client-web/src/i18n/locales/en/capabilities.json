@@ -1,0 +1,15 @@
+{
+  "switch.power": "Power",
+  "fan.speed": "Fan speed",
+  "light.brightness": "Brightness",
+  "light.rgb": "RGB",
+  "light.effect": "Light effect",
+  "lock.state": "Lock state",
+  "buzzer": "Buzzer",
+  "sensor.temperature": "Temperature",
+  "sensor.humidity": "Humidity",
+  "sensor.illuminance": "Illuminance",
+  "sensor.light": "Light sensor",
+  "sensor.motion": "Motion sensor",
+  "sensor.interval": "Reporting Interval"
+}

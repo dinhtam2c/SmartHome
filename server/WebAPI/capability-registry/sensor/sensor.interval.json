@@ -1,0 +1,42 @@
+{
+  "id": "sensor.interval",
+  "version": 1,
+  "role": "Control",
+  "conflictsWith": [],
+  "stateSchema": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    "required": [
+      "value"
+    ],
+    "additionalProperties": false
+  },
+  "operations": {
+    "set": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "applyStrategy": {
+    "operation": "set",
+    "stateMapping": {
+      "value": "value"
+    },
+    "readOnlyFields": [],
+    "partialUpdate": true
+  }
+}

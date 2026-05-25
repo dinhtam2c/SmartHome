@@ -1,0 +1,22 @@
+{
+  "id": "buzzer",
+  "version": 1,
+  "role": "Actuator",
+  "conflictsWith": [],
+  "operations": {
+    "beep": {
+      "type": "object",
+      "properties": {
+        "durationMs": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 10000
+        }
+      },
+      "required": [
+        "durationMs"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

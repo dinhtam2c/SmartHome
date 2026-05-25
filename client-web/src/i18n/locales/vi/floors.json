@@ -1,0 +1,148 @@
+{
+  "loading": "Đang tải sơ đồ tầng...",
+  "failed": "Không thể tải sơ đồ tầng.",
+  "notFound": "Không tìm thấy ngôi nhà.",
+  "pageTitleFallback": "Sơ đồ tầng",
+  "actions": {
+    "backToHome": "Về chi tiết nhà",
+    "createFloor": "Thêm tầng",
+    "editInfo": "Sửa sơ đồ tầng",
+    "deleteFloor": "Xóa tầng",
+    "deletingFloor": "Đang xóa..."
+  },
+  "common": {
+    "cancel": "Hủy"
+  },
+  "fields": {
+    "name": "Tên tầng",
+    "canvasWidth": "Rộng sơ đồ",
+    "canvasHeight": "Cao sơ đồ"
+  },
+  "toolbar": {
+    "view": "Điều khiển",
+    "edit": "Sắp xếp thiết bị",
+    "drawRoom": "Vẽ phòng",
+    "undoPoint": "Lùi điểm",
+    "finishRoom": "Hoàn tất phòng",
+    "cancelDrawing": "Hủy",
+    "pointCount_other": "{{count}} điểm",
+    "idleHint": "Chọn chế độ để điều khiển thiết bị, đặt lại vị trí hoặc vẽ phòng."
+  },
+  "setup": {
+    "title": "Tạo sơ đồ tầng đầu tiên",
+    "modalTitle": "Thêm sơ đồ tầng",
+    "defaultName": "Tầng {{number}}",
+    "create": "Tạo sơ đồ",
+    "creating": "Đang tạo...",
+    "helper": "Kích thước đang được lấy theo tầng trước; bạn có thể đổi lại trước khi tạo."
+  },
+  "floorTabs": {
+    "label": "Các tầng trong nhà",
+    "meta": "{{rooms}} phòng - {{devices}} thiết bị"
+  },
+  "stats": {
+    "rooms_other": "{{count}} phòng",
+    "placedFloorDevices_other": "{{count}} thiết bị đã đặt",
+    "unplacedFloorDevices_other": "{{count}} thiết bị chưa đặt"
+  },
+  "canvas": {
+    "drawHint": "Bấm các góc phòng. Đưa chuột gần điểm đầu để khép phòng; cần tối thiểu 3 điểm."
+  },
+  "panels": {
+    "unplacedTitle": "Thiết bị chưa có vị trí",
+    "unplacedHelper": "Chọn thiết bị rồi bấm lên sơ đồ tầng để đặt vị trí.",
+    "unplacedEmpty": "Tất cả thiết bị trong nhà đã có vị trí trên sơ đồ.",
+    "unplacedFilteredEmpty": "Không có thiết bị chưa đặt trong phòng này.",
+    "unplacedRoomFilterLabel": "Lọc theo phòng",
+    "unplacedRoomFilterAll": "Tất cả phòng ({{count}})",
+    "unplacedRoomFilterRoom": "{{label}} ({{count}})",
+    "unplacedRoomFilterUnassigned": "{{label}} ({{count}})",
+    "drawTitle": "Đang vẽ phòng",
+    "drawDescription": "Bấm quanh mép phòng để tạo đường bao. Khi gần điểm đầu, đường vẽ sẽ tự khép phòng.",
+    "selectionTitle": "Đối tượng được chọn",
+    "selectionDescription": "Bấm vào phòng hoặc thiết bị trên tầng để xem chi tiết hoặc chỉnh sửa.",
+    "linkedRoom": "Phòng liên kết",
+    "noLinkedRoom": "Chưa liên kết",
+    "openDeviceDetails": "Mở thiết bị",
+    "removePlacedFloorDevice": "Gỡ khỏi sơ đồ",
+    "removingPlacedFloorDevice": "Đang gỡ...",
+    "deviceRoom": "Vị trí trên sơ đồ",
+    "deviceHomeRoom": "Phòng đã gán",
+    "deviceStatus": "Trạng thái",
+    "statsTitle": "Tóm tắt sơ đồ tầng",
+    "statsRooms": "Số phòng",
+    "statsPlacedFloorDevices": "Thiết bị đã đặt",
+    "statsUnplacedFloorDevices": "Thiết bị chưa đặt",
+    "editRoom": "Sửa phòng",
+    "roomPoints": "Số đỉnh"
+  },
+  "roomForm": {
+    "createTitle": "Tạo phòng trên sơ đồ",
+    "editTitle": "Sửa phòng trên sơ đồ",
+    "label": "Tên hiển thị",
+    "labelPlaceholder": "Ví dụ: Phòng khách",
+    "linkedRoom": "Liên kết với phòng thật",
+    "noLinkedRoom": "Không liên kết phòng nào",
+    "fillColor": "Màu nền",
+    "polygon": "Đường bao",
+    "polygonHint": "điểm",
+    "save": "Lưu phòng",
+    "saving": "Đang lưu...",
+    "delete": "Xóa phòng",
+    "deleting": "Đang xóa..."
+  },
+  "infoModal": {
+    "title": "Sửa sơ đồ tầng",
+    "helper": "Đổi kích thước sơ đồ sẽ thay đổi không gian vẽ phòng và đặt thiết bị.",
+    "save": "Lưu thay đổi",
+    "saving": "Đang lưu..."
+  },
+  "device": {
+    "deletedLabel": "Thiết bị đã bị xóa",
+    "genericLabel": "Thiết bị khác",
+    "openDetails": "Mở chi tiết thiết bị",
+    "notFound": "Thiết bị này không còn tồn tại.",
+    "online": "Đang online",
+    "offline": "Mất kết nối"
+  },
+  "events": {
+    "externalUpdateTitle": "Có thay đổi mới",
+    "externalUpdateWhileEditing": "Tầng đã bị thay đổi ở nơi khác. Hãy tải lại khi bạn sẵn sàng để tránh ghi đè phần đang chỉnh sửa.",
+    "reloadNow": "Tải lại",
+    "keepEditing": "Tiếp tục sửa",
+    "reasons": {
+      "Created": "Tầng vừa được tạo từ một phiên khác.",
+      "Deleted": "Tầng vừa bị xóa từ một phiên khác.",
+      "InfoUpdated": "Thông tin tầng vừa thay đổi.",
+      "RoomAdded": "Có phòng mới được thêm vào tầng.",
+      "RoomUpdated": "Một phòng trên tầng vừa được cập nhật.",
+      "RoomRemoved": "Một phòng trên tầng vừa bị xóa.",
+      "DevicePlaced": "Có thiết bị mới được đặt lên tầng.",
+      "DeviceMoved": "Một thiết bị trên tầng vừa được di chuyển.",
+      "DeviceRemoved": "Một thiết bị đã bị gỡ khỏi tầng.",
+      "LinkedRoomDeleted": "Một phòng liên kết không còn tồn tại.",
+      "DeviceDeleted": "Một thiết bị liên kết không còn tồn tại.",
+      "Unknown": "Nhận được một thay đổi từ nơi khác."
+    }
+  },
+  "confirmDeleteFloor": "Xóa tầng này?",
+  "confirmDeleteRoom": "Xóa phòng này khỏi tầng?",
+  "confirmRemovePlacedFloorDevice": "Gỡ thiết bị này khỏi tầng?",
+  "errors": {
+    "nameRequired": "Tên là bắt buộc.",
+    "invalidWidth": "Chiều rộng bản vẽ phải tối thiểu 480.",
+    "invalidHeight": "Chiều cao bản vẽ phải tối thiểu 320.",
+    "createFloorFailed": "Không thể tạo tầng.",
+    "updateFloorFailed": "Không thể cập nhật tầng.",
+    "deleteFloorFailed": "Không thể xóa tầng.",
+    "roomLabelRequired": "Nhãn phòng là bắt buộc.",
+    "roomPolygonRequired": "Đường bao phòng phải có ít nhất 3 điểm.",
+    "saveRoomFailed": "Không thể lưu phòng.",
+    "deleteRoomFailed": "Không thể xóa phòng.",
+    "placeDeviceFailed": "Không thể đặt thiết bị lên tầng.",
+    "moveDeviceFailed": "Không thể di chuyển thiết bị đã đặt.",
+    "removePlacedFloorDeviceFailed": "Không thể gỡ thiết bị khỏi tầng.",
+    "loadDevicesFailed": "Không thể tải danh sách thiết bị của ngôi nhà.",
+    "reorderFloorsFailed": "Không thể sắp xếp lại tầng."
+  }
+}

@@ -1,0 +1,12 @@
+global using Application.Automations.Evaluation;
+global using Application.Automations.Rules;
+global using Application.ActionSets;
+global using Application.ActionSets.Planning;
+global using Application.ActionSets.Validation;
+global using Application.Common.Capabilities;
+global using Application.Common.DeviceCategories;
+global using Application.Devices.CommandLifecycle;
+global using Core.Domain.Capabilities;
+global using Core.Domain.DeviceCategories;
+global using Core.Domain.DeviceCommands;
+global using Core.Domain.DeviceTelemetry;
